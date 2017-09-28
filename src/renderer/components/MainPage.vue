@@ -1,30 +1,98 @@
 <template>
   <b-container fluid class="screen notes">
-    <b-navbar class="topbar">
-      <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
-        <b-button-group class="mx-1">
-          <b-btn><icon name="plus"></icon></b-btn>
-          <b-btn>Edit</b-btn>
-          <b-btn>Undo</b-btn>
-        </b-button-group>
-        <b-dropdown class="mx-1" right text="menu">
-          <b-dropdown-item>Item 1</b-dropdown-item>
-          <b-dropdown-item>Item 2</b-dropdown-item>
-          <b-dropdown-item>Item 3</b-dropdown-item>
-        </b-dropdown>
-        <b-button-group class="mx-1">
-          <b-btn>Save</b-btn>
-          <b-btn>Cancel</b-btn>
-        </b-button-group>
-      </b-button-toolbar>
-    </b-navbar>
+    <div class="topbar">
+      <div class="row">
+        <div class="col-6">
+          <b-button-group size="sm">
+            <b-btn class="btn btn-outline-primary btn-sm"><icon name="plus"></icon></b-btn>
+          </b-button-group size="sm">
+          <b-button-group>
+            <b-btn class="btn btn-outline-primary btn-sm"><icon name="clipboard"></icon></b-btn>
+          </b-button-group>
+        </div>
+        <div class="col-6">
+          <b-input-group size="sm">
+            <b-form-input class="text-left" placeholder="Search" autofocus="true"></b-form-input>
+            <b-button-group size="sm">
+              <b-button class="btn-outline-primary"><icon name="sticky-note"></icon></b-button>
+              <b-button class="btn-outline-primary"><icon name="trash-o"></icon></b-button>
+            </b-button-group>
+          </b-input-group>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar">
+      <b-button-group vertical class="notes-links">
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+      </b-button-group>
+    </div>
+    <div class="notes">
+      <b-card class="note active">
+        <h4 class="title">Title</h4>
+        <h6 class="card-subtitle mb-2 text-muted date">Card subtitle</h6>
+        <p class="card-text content">Some quick example text to build on the <em>card title</em> and make up the bulk of the card's content.
+        </p>
+      </b-card>
+      <b-card class="note">
+        <h4 class="title">Title</h4>
+        <h6 class="card-subtitle mb-2 text-muted date">Card subtitle</h6>
+        <p class="card-text content">
+          Some quick example text to build on the <em>card title</em> and make up the bulk of the card's content.
+        </p>
+      </b-card>
+      <b-card class="note">
+        <h4 class="title">Title</h4>
+        <h6 class="card-subtitle mb-2 text-muted date">Card subtitle</h6>
+        <p class="card-text content">
+          Some quick example text to build on the <em>card title</em> and make up the bulk of the card's content.
+        </p>
+      </b-card>
+      <b-card class="note">
+        <h4 class="title">Title</h4>
+        <h6 class="card-subtitle mb-2 text-muted date">Card subtitle</h6>
+        <p class="card-text content">
+          Some quick example text to build on the <em>card title</em> and make up the bulk of the card's content.
+        </p>
+      </b-card>
+      <b-card class="note">
+        <h4 class="title">Title</h4>
+        <h6 class="card-subtitle mb-2 text-muted date">Card subtitle</h6>
+        <p class="card-text content">
+          Some quick example text to build on the <em>card title</em> and make up the bulk of the card's content.
+        </p>
+      </b-card>
+      <b-card class="note">
+        <h4 class="title">Title</h4>
+        <h6 class="card-subtitle mb-2 text-muted date">Card subtitle</h6>
+        <p class="card-text content">
+          Some quick example text to build on the <em>card title</em> and make up the bulk of the card's content.
+        </p>
+      </b-card>
+    </div>
   </b-container>
 </template>
 
 <script>
+  import Icon from '../../../node_modules/vue-awesome/components/Icon.vue'
+
   export default {
     name: 'main-page',
-    components: {},
+    components: { Icon },
     methods: {}
   }
 </script>
