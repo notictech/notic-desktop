@@ -1,13 +1,24 @@
 <template>
-  <div class="row">
-    <template v-for="variant in ['primary','secondary','success','outline-success','warning','danger','link']">
-      <div class="col-md-4 pb-2" v-for="size in ['sm','','lg']" :key="`{variant}_${size}`">
-        <b-button :size="size" :variant="variant">
-          {{variant}} {{size}}
-        </b-button>
-      </div>
-    </template>
-  </div>
+  <b-container fluid class="screen notes">
+    <b-navbar class="topbar">
+      <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
+        <b-button-group class="mx-1">
+          <b-btn><icon name="plus"></icon></b-btn>
+          <b-btn>Edit</b-btn>
+          <b-btn>Undo</b-btn>
+        </b-button-group>
+        <b-dropdown class="mx-1" right text="menu">
+          <b-dropdown-item>Item 1</b-dropdown-item>
+          <b-dropdown-item>Item 2</b-dropdown-item>
+          <b-dropdown-item>Item 3</b-dropdown-item>
+        </b-dropdown>
+        <b-button-group class="mx-1">
+          <b-btn>Save</b-btn>
+          <b-btn>Cancel</b-btn>
+        </b-button-group>
+      </b-button-toolbar>
+    </b-navbar>
+  </b-container>
 </template>
 
 <script>
@@ -18,15 +29,4 @@
   }
 </script>
 
-<style>
-  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  body { font-family: 'Source Sans Pro', sans-serif; }
-
-</style>
+<style></style>
