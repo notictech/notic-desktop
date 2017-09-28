@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import LandingPage from '@/components/LandingPage'
+import LandingPage from '@/components/MainPage'
 
 describe('LandingPage.vue', () => {
   it('should render correct contents', () => {
