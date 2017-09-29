@@ -23,77 +23,28 @@
     </div>
     <div class="sidebar">
       <b-button-group vertical class="notes-links">
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
-        <b-button size="sm" class="note-link btn btn-outline-primary btn-sm">Title</b-button>
+        <note-link v-for="note in notes" :note="note" :key="note._id"></note-link>
       </b-button-group>
     </div>
     <div class="notes">
-      <b-card class="note active">
-        <h4 class="title">Title</h4>
-        <h6 class="card-subtitle mb-2 text-muted date">Card subtitle</h6>
-        <p class="card-text content">Some quick example text to build on the <em>card title</em> and make up the bulk of the card's content.
-        </p>
-      </b-card>
-      <b-card class="note">
-        <h4 class="title">Title</h4>
-        <h6 class="card-subtitle mb-2 text-muted date">Card subtitle</h6>
-        <p class="card-text content">
-          Some quick example text to build on the <em>card title</em> and make up the bulk of the card's content.
-        </p>
-      </b-card>
-      <b-card class="note">
-        <h4 class="title">Title</h4>
-        <h6 class="card-subtitle mb-2 text-muted date">Card subtitle</h6>
-        <p class="card-text content">
-          Some quick example text to build on the <em>card title</em> and make up the bulk of the card's content.
-        </p>
-      </b-card>
-      <b-card class="note">
-        <h4 class="title">Title</h4>
-        <h6 class="card-subtitle mb-2 text-muted date">Card subtitle</h6>
-        <p class="card-text content">
-          Some quick example text to build on the <em>card title</em> and make up the bulk of the card's content.
-        </p>
-      </b-card>
-      <b-card class="note">
-        <h4 class="title">Title</h4>
-        <h6 class="card-subtitle mb-2 text-muted date">Card subtitle</h6>
-        <p class="card-text content">
-          Some quick example text to build on the <em>card title</em> and make up the bulk of the card's content.
-        </p>
-      </b-card>
-      <b-card class="note">
-        <h4 class="title">Title</h4>
-        <h6 class="card-subtitle mb-2 text-muted date">Card subtitle</h6>
-        <p class="card-text content">
-          Some quick example text to build on the <em>card title</em> and make up the bulk of the card's content.
-        </p>
-      </b-card>
+      <note v-for="note in notes" :note="note" :key="note._id"></note>
     </div>
   </b-container>
 </template>
 
 <script>
   import Icon from '../../../node_modules/vue-awesome/components/Icon.vue'
+  import Note from '../components/MainPage/Note.vue'
+  import NoteLink from '../components/MainPage/NoteLink.vue'
 
   export default {
     name: 'main-page',
-    components: { Icon },
-    methods: {}
+    components: { Icon, Note, NoteLink },
+    computed: {
+      notes () {
+        return this.$store.getters.notes
+      }
+    }
   }
 </script>
 
