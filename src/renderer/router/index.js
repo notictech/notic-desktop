@@ -11,6 +11,11 @@ export default new Router({
       component: require('@/components/MainPage').default
     },
     {
+      path: '/editor',
+      name: 'editor-page',
+      component: require('@/components/EditorPage').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

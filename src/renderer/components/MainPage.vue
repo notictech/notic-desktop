@@ -3,19 +3,19 @@
     <div class="topbar">
       <div class="row">
         <div class="col-6">
-          <b-button-group size="sm">
-            <b-btn class="btn btn-outline-primary btn-sm"><icon name="plus"></icon></b-btn>
-          </b-button-group size="sm">
           <b-button-group>
-            <b-btn class="btn btn-outline-primary btn-sm"><icon name="clipboard"></icon></b-btn>
+            <b-btn variant="primary" @click="openAddNotePage()"><icon name="plus"></icon></b-btn>
+          </b-button-group>
+          <b-button-group>
+            <b-btn variant="primary"><icon name="clipboard"></icon></b-btn>
           </b-button-group>
         </div>
         <div class="col-6">
-          <b-input-group size="sm">
+          <b-input-group>
             <b-form-input class="text-left" placeholder="Search" autofocus="true" @input="searchNotes($event)"></b-form-input>
-            <b-button-group size="sm">
-              <b-button class="btn-outline-primary"><icon name="sticky-note"></icon></b-button>
-              <b-button class="btn-outline-primary"><icon name="trash-o"></icon></b-button>
+            <b-button-group>
+              <b-button variant="primary"><icon name="sticky-note"></icon></b-button>
+              <b-button variant="primary"><icon name="trash"></icon></b-button>
             </b-button-group>
           </b-input-group>
         </div>
@@ -53,6 +53,10 @@
     methods: {
       searchNotes (event) {
         this.$store.dispatch('searchNotes', event)
+      },
+      openAddNotePage () {
+        this.$store.dispatch('openAddNotePage')
+        this.$router.replace('/editor')
       }
     }
   }

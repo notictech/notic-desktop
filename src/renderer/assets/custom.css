@@ -80,11 +80,24 @@ button svg {
     margin-bottom: 15px;
 }
 .screen.notes .notes .note .date{
-    font-size: 14px;
+    font-size: 11px;
 }
 .screen.notes .notes .note .content{
     white-space: pre-wrap;
 }
 .screen.notes .notes .note.active {
     border-left: #51adff 3px solid;
+}
+.screen.editor.container-fluid {
+    padding: 0;
+    margin: 0;
+}
+.screen.editor .topbar {
+    width: 99%;
+    padding: 10px;
+    z-index: 3;
+    border-bottom: 1px solid #bfbfbf;
+}
+.screen.editor .content-wrap {
+    padding: 10px;
 }

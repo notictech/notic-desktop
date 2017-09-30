@@ -2,6 +2,8 @@ const Datastore = require('nedb')
 let db
 
 const state = {
+  page: '/',
+  editorMode: 'add',
   settings: {
     dbPath: 'default.ntc'
   },
@@ -9,6 +11,9 @@ const state = {
 }
 
 const mutations = {
+  set: (state, param, value) => {
+    state[param] = value
+  },
   updateNotes: (state, data) => {
     state.notes = data
   }
@@ -51,6 +56,9 @@ const actions = {
       }
       this.commit('updateNotes', docs)
     })
+  },
+  openAddNotePage () {
+    this.commit('set', 'editorMode', 'add')
   }
 }
 
