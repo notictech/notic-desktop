@@ -38,7 +38,6 @@
     },
     methods: {
       close () {
-        this.$store.dispatch('closeAddNotePage')
         this.$router.replace('/')
       }
     }
