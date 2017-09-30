@@ -12,7 +12,7 @@
         </div>
         <div class="col-6">
           <b-input-group size="sm">
-            <b-form-input class="text-left" placeholder="Search" autofocus="true"></b-form-input>
+            <b-form-input class="text-left" placeholder="Search" autofocus="true" @input="searchNotes($event)"></b-form-input>
             <b-button-group size="sm">
               <b-button class="btn-outline-primary"><icon name="sticky-note"></icon></b-button>
               <b-button class="btn-outline-primary"><icon name="trash-o"></icon></b-button>
@@ -43,6 +43,16 @@
     computed: {
       notes () {
         return this.$store.getters.notes
+      }
+    },
+    mounted () {
+      this.$store.dispatch('initDb', () => {
+        this.searchNotes('')
+      })
+    },
+    methods: {
+      searchNotes (event) {
+        this.$store.dispatch('searchNotes', event)
       }
     }
   }
