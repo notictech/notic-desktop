@@ -20,8 +20,9 @@
         </b-form-group>
         <b-form-group id="exampleInputGroup2" label-for="contentTextArea">
           <b-form-textarea id="contentTextArea"
+                           ref="content"
                            placeholder="Content"
-                           :rows="15">
+                           :rows="15" autofocus>
           </b-form-textarea>
         </b-form-group>
       </div>
@@ -32,6 +33,9 @@
 <script>
   export default {
     name: 'editor-page',
+    mounted () {
+      this.$refs.content.focus()
+    },
     methods: {
       close () {
         this.$store.dispatch('closeAddNotePage')

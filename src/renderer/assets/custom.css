@@ -35,7 +35,7 @@ button svg {
     width: 99%;
     padding: 10px;
     z-index: 3;
-    border-bottom: 1px solid #bfbfbf;
+    /*border-bottom: 1px solid #bfbfbf;*/
 }
 .screen.notes .sidebar {
     margin-top: 2px;
@@ -96,7 +96,7 @@ button svg {
     width: 99%;
     padding: 10px;
     z-index: 3;
-    border-bottom: 1px solid #bfbfbf;
+    /*border-bottom: 1px solid #bfbfbf;*/
 }
 .screen.editor .content-wrap {
     padding: 10px;
