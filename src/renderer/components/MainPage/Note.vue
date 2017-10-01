@@ -8,7 +8,7 @@
                 <b-dropdown class="m-md-2">
                     <b-dropdown-item><icon name="edit"></icon> Edit</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item><icon name="trash"></icon> Delete</b-dropdown-item>
+                    <b-dropdown-item @click="actionDeleteNote(note._id)"><icon name="trash"></icon> Delete</b-dropdown-item>
                 </b-dropdown>
             </b-col>
         </b-row>
@@ -19,7 +19,14 @@
 
 <script>
   export default {
-    props: ['note']
+    props: ['note'],
+    methods: {
+      actionDeleteNote (id) {
+        if (confirm('Are you sure you want to delete this note?')) {
+          this.$store.dispatch('actionDeleteNote', id)
+        }
+      }
+    }
   }
 </script>
 
