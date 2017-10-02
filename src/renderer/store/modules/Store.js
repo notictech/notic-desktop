@@ -102,20 +102,26 @@ const actions = {
       alert('Content must be not empty.')
       return
     }
-
     if (!state.note.title.length) {
       this.commit('updateNoteTitle', '#untitled ' + state.note.content.substr(0, 30) + '...')
     }
-    let dateNow = new Date()
-    this.commit('setNoteCreatedAt', dateNow)
-    this.commit('setNoteUpdatedAt', dateNow)
-
-    db.insert(state.note, (err) => {
-      if (err) console.log(err)
-      this.commit('updateNote', copyObject(blankNote))
-      successCallback()
-      this.dispatch('searchNotes', context.searchQuery)
-    })
+    if (state.editorMode === 'add') {
+      let dateNow = new Date()
+      this.commit('setNoteCreatedAt', dateNow)
+      this.commit('setNoteUpdatedAt', dateNow)
+      db.insert(state.note, (err) => {
+        if (err) console.log(err)
+        this.commit('updateNote', copyObject(blankNote))
+        successCallback()
+        this.dispatch('searchNotes', context.searchQuery)
+      })
+    } else {
+      db.update({ _id: state.note._id }, state.note, {}, () => {
+        this.commit('updateNote', copyObject(blankNote))
+        successCallback()
+        this.dispatch('searchNotes', context.searchQuery)
+      })
+    }
   }
 }
 
