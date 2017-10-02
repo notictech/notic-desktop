@@ -65,8 +65,8 @@ button svg {
 .screen.notes .sidebar .note-link:focus {
     background: #a0d3ff;
 }
-.screen.notes .sidebar .note-link:active {
-    background: #51adff;
+.screen.notes .sidebar .note-link.active {
+    background: #a0d3ff !important;
 }
 .screen.notes .notes .note .card-title {
     font-size: 0.9em;

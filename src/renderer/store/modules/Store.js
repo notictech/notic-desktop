@@ -12,6 +12,7 @@ const blankNote = {
 
 const state = {
   page: '/',
+  activeNoteId: null,
   editorMode: 'add',
   settings: {
     dbPath: 'default.ntc'
@@ -25,6 +26,7 @@ const mutations = {
   set: (state, param, value) => {
     state[param] = value
   },
+  setActiveNoteId: (state, data) => { state.activeNoteId = data },
   setEditorMode: (state, data) => { state.editorMode = data },
   updateNotes: (state, data) => { state.notes = data },
   updateNote: (state, data) => { state.note = data },
@@ -70,6 +72,7 @@ const actions = {
       }
       this.commit('updateNotes', docs)
       this.commit('set', 'searchQuery', query)
+      this.commit('setActiveNoteId', docs[0]._id)
     })
   },
   actionDeleteNote (context, id) {

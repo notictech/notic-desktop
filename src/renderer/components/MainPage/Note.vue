@@ -1,5 +1,5 @@
 <template>
-    <b-card class="note active" @mousedown.middle="openEditNotePage(note._id)">
+    <b-card :class="{note: true, active: activeNoteId == note._id}" @mousedown.middle="openEditNotePage(note._id)">
         <b-row>
             <b-col cols="12" md="8">
                 <h4 class="title">{{ note.title }}</h4>
@@ -20,6 +20,11 @@
 <script>
   export default {
     props: ['note'],
+    computed: {
+      activeNoteId () {
+        return this.$store.state.Store.activeNoteId
+      }
+    },
     methods: {
       actionDeleteNote (id) {
         if (confirm('Are you sure you want to delete this note?')) {
