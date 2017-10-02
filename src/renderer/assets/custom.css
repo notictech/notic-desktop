@@ -84,6 +84,7 @@ button svg {
 }
 .screen.notes .notes .note .content{
     white-space: pre-wrap;
+    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 .screen.notes .notes .note.active {
     border-left: #51adff 3px solid;
@@ -100,4 +101,14 @@ button svg {
 }
 .screen.editor .content-wrap {
     padding: 10px;
+}
+.screen.editor .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #212529;
+}
+.screen.editor .content {
+    color: #212529;
+    font-size: 90%;
+    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }

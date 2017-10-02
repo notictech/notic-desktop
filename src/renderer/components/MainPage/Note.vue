@@ -1,12 +1,12 @@
 <template>
-    <b-card class="note active">
+    <b-card class="note active" @mousedown.middle="openEditNotePage(note._id)">
         <b-row>
             <b-col cols="12" md="8">
                 <h4 class="title">{{ note.title }}</h4>
             </b-col>
             <b-col cols="6" md="4" style="text-align: right">
                 <b-dropdown class="m-md-2">
-                    <b-dropdown-item><icon name="edit"></icon> Edit</b-dropdown-item>
+                    <b-dropdown-item @click="openEditNotePage(note._id)"><icon name="edit"></icon> Edit</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
                     <b-dropdown-item @click="actionDeleteNote(note._id)"><icon name="trash"></icon> Delete</b-dropdown-item>
                 </b-dropdown>
@@ -25,6 +25,10 @@
         if (confirm('Are you sure you want to delete this note?')) {
           this.$store.dispatch('actionDeleteNote', id)
         }
+      },
+      openEditNotePage (id) {
+        this.$store.dispatch('openEditNotePage', id)
+        this.$router.replace('/editor')
       }
     }
   }

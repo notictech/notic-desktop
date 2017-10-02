@@ -1,6 +1,15 @@
 const Datastore = require('nedb')
 let db
 
+const blankNote = {
+  doctype: 'note',
+  title: '',
+  content: '',
+  createdAt: '',
+  updatedAt: '',
+  deleted: false
+}
+
 const state = {
   page: '/',
   editorMode: 'add',
@@ -8,14 +17,7 @@ const state = {
     dbPath: 'default.ntc'
   },
   notes: [],
-  note: {
-    doctype: 'note',
-    title: '',
-    content: '',
-    createdAt: '',
-    updatedAt: '',
-    deleted: false
-  },
+  note: {},
   searchQuery: ''
 }
 
@@ -23,11 +25,13 @@ const mutations = {
   set: (state, param, value) => {
     state[param] = value
   },
-  updateNotes: (state, data) => {
-    state.notes = data
-  },
+  setEditorMode: (state, data) => { state.editorMode = data },
+  updateNotes: (state, data) => { state.notes = data },
+  updateNote: (state, data) => { state.note = data },
   updateNoteTitle: (state, text) => { state.note.title = text },
-  updateNoteContent: (state, text) => { state.note.content = text }
+  updateNoteContent: (state, text) => { state.note.content = text },
+  setNoteCreatedAt: (state, text) => { state.note.createdAt = text },
+  setNoteUpdatedAt: (state, text) => { state.note.updatedAt = text }
 }
 
 const getters = {
@@ -60,14 +64,6 @@ const actions = {
     })
   },
   searchNotes (context, query) {
-    // var query = trim(query)
-    // db.find({doctype: 'note', title: new RegExp(query, 'i')}, (err, docs) => {
-    //   if (err) {
-    //     console.log(err)
-    //   }
-    //   this.commit('updateNotes', docs)
-    //   this.commit('set', 'searchQuery', query)
-    // })
     db.find({doctype: 'note', title: new RegExp(query, 'i')}).sort({createdAt: -1}).exec((err, docs) => {
       if (err) {
         console.log(err)
@@ -81,8 +77,16 @@ const actions = {
       this.dispatch('searchNotes', context.searchQuery)
     })
   },
-  openAddNotePage () {
-    this.commit('set', 'editorMode', 'add')
+  openAddNotePage (context) {
+    this.commit('updateNote', copyObject(blankNote))
+    this.commit('setEditorMode', 'add')
+  },
+  openEditNotePage (context, id) {
+    db.findOne({_id: id}, (err, doc) => {
+      if (err) console.log(err)
+      this.commit('updateNote', doc)
+      this.commit('setEditorMode', 'edit')
+    })
   },
   editorChangeTitle (context, text) {
     this.commit('updateNoteTitle', text)
@@ -99,15 +103,21 @@ const actions = {
     if (!state.note.title.length) {
       this.commit('updateNoteTitle', '#untitled ' + state.note.content.substr(0, 30) + '...')
     }
-
-    state.note.createdAt = state.note.updatedAt = new Date()
+    let dateNow = new Date()
+    this.commit('setNoteCreatedAt', dateNow)
+    this.commit('setNoteUpdatedAt', dateNow)
 
     db.insert(state.note, (err) => {
       if (err) console.log(err)
-      this.dispatch('searchNotes', context.searchQuery)
+      this.commit('updateNote', copyObject(blankNote))
       successCallback()
+      this.dispatch('searchNotes', context.searchQuery)
     })
   }
+}
+
+function copyObject (obj) {
+  return JSON.parse(JSON.stringify(obj))
 }
 
 export default {

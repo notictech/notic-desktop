@@ -5,7 +5,8 @@
             <div class="topbar">
                 <div class="row" align-h="between">
                     <div class="col-6">
-                        <h4>Add note</h4>
+                        <h4 v-if="editorMode === 'add'">Add note</h4>
+                        <h4 v-else>Edit note</h4>
                     </div>
                     <div class="col-6" style="text-align: right">
                         <b-button type="submit" variant="success"><icon name="save"></icon> Save & close</b-button>
@@ -17,13 +18,14 @@
             </div>
             <div class="content-wrap">
                 <b-form-group id="exampleInputGroup1" label-for="titleInput">
-                    <b-form-input id="titleInput" type="text" placeholder="Title" @input="editorChangeTitle($event)"></b-form-input>
+                    <b-form-input id="titleInput" type="text" class="title" placeholder="Title" @input="editorChangeTitle($event)" :value="noteTitle"></b-form-input>
                 </b-form-group>
                 <b-form-group id="exampleInputGroup2" label-for="contentTextArea">
                     <b-form-textarea id="contentTextArea"
                                      ref="content"
+                                     class="content"
                                      placeholder="Content"
-                                     :rows="15" autofocus @input="editorChangeContent($event)">
+                                     :rows="15" autofocus @input="editorChangeContent($event)"  :value="noteContent">
                     </b-form-textarea>
                 </b-form-group>
             </div>
@@ -35,6 +37,17 @@
 <script>
   export default {
     name: 'editor-page',
+    computed: {
+      editorMode () {
+        return this.$store.state.Store.editorMode
+      },
+      noteTitle () {
+        return this.$store.state.Store.note.title
+      },
+      noteContent () {
+        return this.$store.state.Store.note.content
+      }
+    },
     mounted () {
       this.$refs.content.focus()
     },
@@ -49,7 +62,6 @@
         this.$store.dispatch('editorChangeContent', event)
       },
       editorSaveAndClose () {
-        console.log('11')
         this.$store.dispatch('editorSaveAndClose', () => {
           this.$router.replace('/')
         })
