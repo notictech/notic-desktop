@@ -22,7 +22,8 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    useContentSize: true
+    useContentSize: true,
+    icon: 'app/icons/notic-logo.png'
   })
 
   mainWindow.loadURL(winURL)

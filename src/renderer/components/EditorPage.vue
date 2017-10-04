@@ -1,5 +1,5 @@
 <template>
-    <b-form @submit="editorSaveAndClose()">
+    <b-form>
         <b-container fluid class="screen editor">
 
             <div class="topbar">
@@ -9,7 +9,7 @@
                         <h4 v-else>Edit note</h4>
                     </div>
                     <div class="col-6" style="text-align: right">
-                        <b-button type="submit" variant="success"><icon name="save"></icon> Save & close</b-button>
+                        <b-button type="button" variant="success" @click="editorSaveAndClose()"><icon name="save"></icon> Save & close</b-button>
                         <b-button-group>
                             <b-btn @click="close()"><icon name="times"></icon></b-btn>
                         </b-button-group>

@@ -112,14 +112,14 @@ const actions = {
       db.insert(state.note, (err) => {
         if (err) console.log(err)
         this.commit('updateNote', copyObject(blankNote))
-        successCallback()
         this.dispatch('searchNotes', context.searchQuery)
+        successCallback()
       })
     } else {
       db.update({ _id: state.note._id }, state.note, {}, () => {
         this.commit('updateNote', copyObject(blankNote))
-        successCallback()
         this.dispatch('searchNotes', context.searchQuery)
+        successCallback()
       })
     }
   }
