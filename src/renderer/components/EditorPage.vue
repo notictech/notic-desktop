@@ -17,22 +17,31 @@
                 </div>
             </div>
             <div class="content-wrap">
-                <b-form-group id="exampleInputGroup1" label-for="titleInput">
-                    <b-form-input id="titleInput" type="text" class="title" placeholder="Title" @input="editorChangeTitle($event)" :value="noteTitle"></b-form-input>
-                </b-form-group>
-                <b-form-group id="exampleInputGroup2" label-for="contentTextArea">
-                    <b-form-textarea id="contentTextArea"
-                                     ref="content"
-                                     class="content"
-                                     placeholder="Content"
-                                     :rows="15" autofocus @input="editorChangeContent($event)"  :value="noteContent">
-                    </b-form-textarea>
-                </b-form-group>
-                <h4>Secrets</h4>
-                <div class="secrets">
-                    <editor-secret v-for="(secret, index) in noteSecrets" :key="index" :index="index" :secret="secret"></editor-secret>
-                </div>
-                <b-button style="margin-top: 10px;" @click="editorAddSecret()"><icon name="key"></icon> Add secret</b-button>
+
+                <b-tabs card small no-fade>
+                    <b-tab title="Editor" active>
+                        <b-form-group id="exampleInputGroup1" label-for="titleInput">
+                            <b-form-input id="titleInput" type="text" class="title" placeholder="Title" @input="editorChangeTitle($event)" :value="noteTitle"></b-form-input>
+                        </b-form-group>
+                        <b-form-group id="exampleInputGroup2" label-for="contentTextArea">
+                            <b-form-textarea id="contentTextArea"
+                                             ref="content"
+                                             class="content"
+                                             placeholder="Content"
+                                             :rows="20" autofocus @input="editorChangeContent($event)"  :value="noteContent"
+                            ></b-form-textarea>
+                        </b-form-group>
+                    </b-tab>
+                    <b-tab title="Secrets">
+                        <div class="secrets">
+                            <editor-secret v-for="(secret, index) in noteSecrets" :key="index" :index="index" :secret="secret"></editor-secret>
+                        </div>
+                        <b-button style="margin-top: 10px;" @click="editorAddSecret()"><icon name="plus"></icon> Add</b-button>
+                    </b-tab>
+                    <b-tab title="Reminder" >
+
+                    </b-tab>
+                </b-tabs>
             </div>
         </b-container>
     </b-form>
