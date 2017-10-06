@@ -5,7 +5,7 @@
                 <h4 class="title">{{ note.title }}</h4>
             </b-col>
             <b-col cols="6" md="4" style="text-align: right">
-                <b-dropdown class="m-md-2">
+                <b-dropdown class="m-md-2" size="sm">
                     <b-dropdown-item @click="openEditNotePage(note._id)"><icon name="edit"></icon> Edit</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
                     <b-dropdown-item @click="actionDeleteNote(note._id)"><icon name="trash"></icon> Delete</b-dropdown-item>
@@ -13,7 +13,10 @@
             </b-col>
         </b-row>
         <h6 class="card-subtitle mb-2 text-muted date">{{ note.createdAt }}</h6>
-        <div class="card-text content"><pre>{{ note.content }}</pre></div>
+        <div class="secrets" v-show="note.secrets.length">
+            <b-button size="sm" class="btn-default secret" v-for="(secret, index) in note.secrets" :key="index"><icon name="key"></icon> {{secret.title}}</b-button>
+        </div>
+        <div class="card-text content">{{ note.content }}</div>
     </b-card>
 </template>
 

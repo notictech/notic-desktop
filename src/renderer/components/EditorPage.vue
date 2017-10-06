@@ -28,15 +28,21 @@
                                      :rows="15" autofocus @input="editorChangeContent($event)"  :value="noteContent">
                     </b-form-textarea>
                 </b-form-group>
+                <h4>Secrets</h4>
+                <div class="secrets">
+                    <editor-secret v-for="(secret, index) in noteSecrets" :key="index" :index="index" :secret="secret"></editor-secret>
+                </div>
+                <b-button style="margin-top: 10px;" @click="editorAddSecret()"><icon name="key"></icon> Add secret</b-button>
             </div>
-
         </b-container>
     </b-form>
 </template>
 
 <script>
+  import EditorSecret from '../components/MainPage/EditorSecret.vue'
   export default {
     name: 'editor-page',
+    components: { EditorSecret },
     computed: {
       editorMode () {
         return this.$store.state.Store.editorMode
@@ -46,6 +52,9 @@
       },
       noteContent () {
         return this.$store.state.Store.note.content
+      },
+      noteSecrets () {
+        return this.$store.state.Store.note.secrets
       }
     },
     mounted () {
@@ -65,6 +74,9 @@
         this.$store.dispatch('editorSaveAndClose', () => {
           this.$router.replace('/')
         })
+      },
+      editorAddSecret () {
+        this.$store.dispatch('editorAddSecret')
       }
     }
   }

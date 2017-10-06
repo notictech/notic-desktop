@@ -7,7 +7,8 @@ const blankNote = {
   content: '',
   createdAt: '',
   updatedAt: '',
-  deleted: false
+  deleted: false,
+  secrets: []
 }
 
 const state = {
@@ -29,11 +30,34 @@ const mutations = {
   setActiveNoteId: (state, data) => { state.activeNoteId = data },
   setEditorMode: (state, data) => { state.editorMode = data },
   updateNotes: (state, data) => { state.notes = data },
-  updateNote: (state, data) => { state.note = data },
+  updateNote: (state, data) => {
+    state.note = data
+  },
   updateNoteTitle: (state, text) => { state.note.title = text },
   updateNoteContent: (state, text) => { state.note.content = text },
   setNoteCreatedAt: (state, text) => { state.note.createdAt = text },
-  setNoteUpdatedAt: (state, text) => { state.note.updatedAt = text }
+  setNoteUpdatedAt: (state, text) => { state.note.updatedAt = text },
+  addSecretToNote: (state) => {
+    let secret = genPassword()
+    state.note.secrets.push({
+      title: 'password',
+      content: secret,
+      contentRepeat: secret,
+      visibility: false
+    })
+  },
+  deleteSecretFromNote: (state, index) => { state.note.secrets.splice(index, 1) },
+  updateSecretTitle (state, obj) {
+    state.note.secrets[obj.index].title = obj.data
+  },
+  updateSecretContent (state, obj) { state.note.secrets[obj.index].content = obj.data },
+  toggleSecretVisibility (state, index) { state.note.secrets[index].visibility = !state.note.secrets[index].visibility },
+  genSecret (state, index) {
+    let secret = genPassword()
+    state.note.secrets[index].content = secret
+    state.note.secrets[index].contentRepeat = secret
+  }
+
 }
 
 const getters = {
@@ -57,7 +81,11 @@ const actions = {
           content: `Welcome! I'm your first note.\nYou can edit or delete me.`,
           createdAt: new Date(),
           updatedAt: new Date(),
-          deleted: false
+          deleted: false,
+          secrets: [
+            {title: 'password', content: 'nE3LbJwKEm06xY98cp12y32508Du699f'},
+            {title: 'another password', content: 'R46zq8xc0eTt90qGkQ1hKl1b7Jym621Y'}
+          ]
         })
       } else {
         callback()
@@ -87,6 +115,12 @@ const actions = {
   openEditNotePage (context, id) {
     db.findOne({_id: id}, (err, doc) => {
       if (err) console.log(err)
+
+      for (let i = 0; i < doc.secrets.length; i++) {
+        doc.secrets[i].contentRepeat = doc.secrets[i].content
+        doc.secrets[i].visibility = false
+      }
+
       this.commit('updateNote', doc)
       this.commit('setEditorMode', 'edit')
     })
@@ -122,11 +156,38 @@ const actions = {
         successCallback()
       })
     }
+  },
+  editorAddSecret (context) {
+    this.commit('addSecretToNote')
+  },
+  editorDeleteSecret (context, index) {
+    this.commit('deleteSecretFromNote', index)
+  },
+  editorUpdateSecretTitle (context, obj) {
+    this.commit('updateSecretTitle', obj)
+  },
+  editorUpdateSecretContent (context, obj) {
+    this.commit('updateSecretContent', obj)
+  },
+  toggleSecretVisibility (context, index) {
+    this.commit('toggleSecretVisibility', index)
+  },
+  genSecret (context, index) {
+    this.commit('genSecret', index)
   }
 }
 
 function copyObject (obj) {
   return JSON.parse(JSON.stringify(obj))
+}
+
+function genPassword (len = 32) {
+  var text = ''
+  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789012345678901234567890123456789'
+  for (var i = 0; i < len; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length))
+  }
+  return text
 }
 
 export default {

@@ -4,10 +4,10 @@
       <div class="row">
         <div class="col-6">
           <b-button-group>
-            <b-btn variant="primary" @click="openAddNotePage()"><icon name="plus"></icon></b-btn>
+            <b-btn variant="primary" @click="openAddNotePage()" v-b-tooltip.hover.auto title="Add note (Ctrl+N)"><icon name="plus"></icon></b-btn>
           </b-button-group>
           <b-button-group>
-            <b-btn variant="primary"><icon name="clipboard"></icon></b-btn>
+            <b-btn variant="primary" v-b-tooltip.hover.auto title="Clips (Ctrl+K)"><icon name="clipboard"></icon></b-btn>
           </b-button-group>
         </div>
         <div class="col-6">
