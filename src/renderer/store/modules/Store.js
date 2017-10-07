@@ -8,7 +8,8 @@ const blankNote = {
   createdAt: '',
   updatedAt: '',
   deleted: false,
-  secrets: []
+  secrets: [],
+  secretsHaveErrors: false
 }
 
 const state = {
@@ -43,19 +44,53 @@ const mutations = {
       title: 'password',
       content: secret,
       contentRepeat: secret,
-      visibility: false
+      visibility: false,
+      errorNotEquals: null,
+      errorTitleEmpty: null
     })
   },
   deleteSecretFromNote: (state, index) => { state.note.secrets.splice(index, 1) },
   updateSecretTitle (state, obj) {
     state.note.secrets[obj.index].title = obj.data
+    state.note.secretsHaveErrors = null
+    state.note.secrets[obj.index].errorTitleEmpty = null
+    if (!state.note.secrets[obj.index].title.length) {
+      state.note.secretsHaveErrors = false
+      state.note.secrets[obj.index].errorTitleEmpty = false
+    }
   },
-  updateSecretContent (state, obj) { state.note.secrets[obj.index].content = obj.data },
+  updateSecretContent (state, obj) {
+    state.note.secrets[obj.index].content = obj.data
+    state.note.secretsHaveErrors = null
+    state.note.secrets[obj.index].errorNotEquals = null
+    if (state.note.secrets[obj.index].content !== state.note.secrets[obj.index].contentRepeat) {
+      state.note.secretsHaveErrors = false
+      state.note.secrets[obj.index].errorNotEquals = false
+    }
+  },
+  updateSecretContentRepeat (state, obj) {
+    state.note.secrets[obj.index].contentRepeat = obj.data
+    state.note.secretsHaveErrors = null
+    state.note.secrets[obj.index].errorNotEquals = null
+    if (state.note.secrets[obj.index].content !== state.note.secrets[obj.index].contentRepeat) {
+      state.note.secretsHaveErrors = false
+      state.note.secrets[obj.index].errorNotEquals = false
+    }
+  },
   toggleSecretVisibility (state, index) { state.note.secrets[index].visibility = !state.note.secrets[index].visibility },
   genSecret (state, index) {
     let secret = genPassword()
     state.note.secrets[index].content = secret
     state.note.secrets[index].contentRepeat = secret
+  },
+  cleanNote (state) {
+    delete state.note.secretsHaveErrors
+    for (let i = 0; i < state.note.secrets.length; i++) {
+      delete state.note.secrets[i].contentRepeat
+      delete state.note.secrets[i].errorNotEquals
+      delete state.note.secrets[i].errorTitleEmpty
+      delete state.note.secrets[i].visibility
+    }
   }
 
 }
@@ -119,6 +154,8 @@ const actions = {
       for (let i = 0; i < doc.secrets.length; i++) {
         doc.secrets[i].contentRepeat = doc.secrets[i].content
         doc.secrets[i].visibility = false
+        doc.secrets[i].errorNotEquals = null
+        doc.secrets[i].errorTitleEmpty = null
       }
 
       this.commit('updateNote', doc)
@@ -136,6 +173,13 @@ const actions = {
       alert('Content must be not empty.')
       return
     }
+    if (state.note.secretsHaveErrors === false) {
+      alert('Invalid secrets data.')
+      return
+    }
+
+    this.commit('cleanNote')
+
     if (!state.note.title.length) {
       this.commit('updateNoteTitle', '#untitled ' + state.note.content.substr(0, 30) + '...')
     }
@@ -168,6 +212,9 @@ const actions = {
   },
   editorUpdateSecretContent (context, obj) {
     this.commit('updateSecretContent', obj)
+  },
+  editorUpdateSecretContentRepeat (context, obj) {
+    this.commit('updateSecretContentRepeat', obj)
   },
   toggleSecretVisibility (context, index) {
     this.commit('toggleSecretVisibility', index)

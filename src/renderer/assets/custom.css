@@ -128,4 +128,11 @@ button svg {
 .screen.editor .editor-secret {
     margin-top: 10px;
 }
-
+.invalid-feedback {
+    font-size: 0.7em;
+}
+.editor-secret {
+    height: 32px;
+    max-height: 32px;
+    margin-bottom: 20px;
+}

@@ -1,7 +1,6 @@
 <template>
     <b-form>
         <b-container fluid class="screen editor">
-
             <div class="topbar">
                 <div class="row" align-h="between">
                     <div class="col-6">
