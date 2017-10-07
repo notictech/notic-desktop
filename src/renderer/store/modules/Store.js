@@ -50,32 +50,29 @@ const mutations = {
     })
   },
   deleteSecretFromNote: (state, index) => { state.note.secrets.splice(index, 1) },
+  secretsCheckErrors (state) {
+    state.note.secretsHaveErrors = null
+    for (let i = 0; i < state.note.secrets.length; i++) {
+      state.note.secrets[i].errorNotEquals = null
+      state.note.secrets[i].errorTitleEmpty = null
+      if (!state.note.secrets[i].title.length) {
+        state.note.secretsHaveErrors = false
+        state.note.secrets[i].errorTitleEmpty = false
+      }
+      if (state.note.secrets[i].content !== state.note.secrets[i].contentRepeat) {
+        state.note.secretsHaveErrors = false
+        state.note.secrets[i].errorNotEquals = false
+      }
+    }
+  },
   updateSecretTitle (state, obj) {
     state.note.secrets[obj.index].title = obj.data
-    state.note.secretsHaveErrors = null
-    state.note.secrets[obj.index].errorTitleEmpty = null
-    if (!state.note.secrets[obj.index].title.length) {
-      state.note.secretsHaveErrors = false
-      state.note.secrets[obj.index].errorTitleEmpty = false
-    }
   },
   updateSecretContent (state, obj) {
     state.note.secrets[obj.index].content = obj.data
-    state.note.secretsHaveErrors = null
-    state.note.secrets[obj.index].errorNotEquals = null
-    if (state.note.secrets[obj.index].content !== state.note.secrets[obj.index].contentRepeat) {
-      state.note.secretsHaveErrors = false
-      state.note.secrets[obj.index].errorNotEquals = false
-    }
   },
   updateSecretContentRepeat (state, obj) {
     state.note.secrets[obj.index].contentRepeat = obj.data
-    state.note.secretsHaveErrors = null
-    state.note.secrets[obj.index].errorNotEquals = null
-    if (state.note.secrets[obj.index].content !== state.note.secrets[obj.index].contentRepeat) {
-      state.note.secretsHaveErrors = false
-      state.note.secrets[obj.index].errorNotEquals = false
-    }
   },
   toggleSecretVisibility (state, index) { state.note.secrets[index].visibility = !state.note.secrets[index].visibility },
   genSecret (state, index) {
@@ -209,12 +206,15 @@ const actions = {
   },
   editorUpdateSecretTitle (context, obj) {
     this.commit('updateSecretTitle', obj)
+    this.commit('secretsCheckErrors')
   },
   editorUpdateSecretContent (context, obj) {
     this.commit('updateSecretContent', obj)
+    this.commit('secretsCheckErrors')
   },
   editorUpdateSecretContentRepeat (context, obj) {
     this.commit('updateSecretContentRepeat', obj)
+    this.commit('secretsCheckErrors')
   },
   toggleSecretVisibility (context, index) {
     this.commit('toggleSecretVisibility', index)
