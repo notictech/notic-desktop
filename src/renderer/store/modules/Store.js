@@ -9,7 +9,7 @@ const blankNote = {
   updatedAt: '',
   deleted: false,
   secrets: [],
-  secretsHaveErrors: false
+  secretsHaveErrors: null
 }
 
 const state = {
