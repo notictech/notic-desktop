@@ -191,6 +191,7 @@ const actions = {
         successCallback()
       })
     } else {
+      this.commit('setNoteUpdatedAt', new Date())
       db.update({ _id: state.note._id }, state.note, {}, () => {
         this.commit('updateNote', copyObject(blankNote))
         this.dispatch('searchNotes', context.searchQuery)
