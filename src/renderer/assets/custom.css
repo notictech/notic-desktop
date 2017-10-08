@@ -136,3 +136,6 @@ button svg {
     max-height: 32px;
     margin-bottom: 20px;
 }
+.search-filter.active {
+    background: #767f86;
+}

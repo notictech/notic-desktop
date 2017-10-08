@@ -14,6 +14,7 @@ const blankNote = {
 
 const state = {
   page: '/',
+  searchFilter: 'notes',
   activeNoteId: null,
   editorMode: 'add',
   settings: {
@@ -88,6 +89,9 @@ const mutations = {
       delete state.note.secrets[i].errorTitleEmpty
       delete state.note.secrets[i].visibility
     }
+  },
+  setSearchFilter (state, filter) {
+    state.searchFilter = filter
   }
 
 }
@@ -95,6 +99,9 @@ const mutations = {
 const getters = {
   notes: state => {
     return state.notes
+  },
+  searchFilter: state => {
+    return state.searchFilter
   }
 }
 
@@ -126,7 +133,14 @@ const actions = {
     })
   },
   searchNotes (context, query) {
-    db.find({doctype: 'note', title: new RegExp(query, 'i')}).sort({createdAt: -1}).exec((err, docs) => {
+    let cond = {doctype: 'note', title: new RegExp(query, 'i')}
+    if (state.searchFilter === 'notes') {
+      cond.deleted = false
+    }
+    if (state.searchFilter === 'deleted') {
+      cond.deleted = true
+    }
+    db.find(cond).sort({createdAt: -1}).exec((err, docs) => {
       if (err) {
         console.log(err)
       }
@@ -137,6 +151,11 @@ const actions = {
   },
   actionDeleteNote (context, id) {
     db.remove({ _id: id }, {}, () => {
+      this.dispatch('searchNotes', context.searchQuery)
+    })
+  },
+  actionMarkNoteAsDeleted (context, id) {
+    db.update({ _id: id }, { $set: { deleted: true } }, () => {
       this.dispatch('searchNotes', context.searchQuery)
     })
   },
@@ -222,6 +241,27 @@ const actions = {
   },
   genSecret (context, index) {
     this.commit('genSecret', index)
+  },
+  setSearchFilter (context, filter) {
+    this.commit('setSearchFilter', filter)
+    this.dispatch('searchNotes', context.searchQuery)
+  },
+  restoreAllDeletedNotes (context) {
+    db.update({doctype: 'note', deleted: true}, {$set: {deleted: false}}, {multi: true}, () => {
+      this.commit('setSearchFilter', 'notes')
+      this.dispatch('searchNotes', context.searchQuery)
+    })
+  },
+  emptyTrash (context) {
+    db.remove({doctype: 'note', deleted: true}, {multi: true}, () => {
+      this.commit('setSearchFilter', 'notes')
+      this.dispatch('searchNotes', context.searchQuery)
+    })
+  },
+  restoreDeletedNote (context, id) {
+    db.update({ _id: id }, {$set: {deleted: false}}, () => {
+      this.dispatch('searchNotes', context.searchQuery)
+    })
   }
 }
 
