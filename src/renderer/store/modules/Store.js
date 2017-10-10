@@ -146,7 +146,9 @@ const actions = {
       }
       this.commit('updateNotes', docs)
       this.commit('set', 'searchQuery', query)
-      this.commit('setActiveNoteId', docs[0]._id)
+      if (docs.length) {
+        this.commit('setActiveNoteId', docs[0]._id)
+      }
     })
   },
   actionDeleteNote (context, id) {
