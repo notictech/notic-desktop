@@ -9,7 +9,10 @@ const blankNote = {
   updatedAt: '',
   deleted: false,
   secrets: [],
-  secretsHaveErrors: null
+  secretsHaveErrors: null,
+  reminder: false,
+  reminder_date: null,
+  reminder_repeat: 0
 }
 
 const state = {
@@ -114,18 +117,18 @@ const actions = {
         return
       }
       if (!count) {
-        db.insert({
-          doctype: 'note',
-          title: 'Hello, Notic!',
-          content: `Welcome! I'm your first note.\nYou can edit or delete me.`,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          deleted: false,
-          secrets: [
-            {title: 'password', content: 'nE3LbJwKEm06xY98cp12y32508Du699f'},
-            {title: 'another password', content: 'R46zq8xc0eTt90qGkQ1hKl1b7Jym621Y'}
-          ]
-        })
+        let date = new Date()
+        let note = copyObject(blankNote)
+        note.title = 'Hello, Notic!'
+        note.content = `Welcome! I'm your first note.\nYou can edit or delete me.`
+        note.createdAt = new Date()
+        note.updatedAt = new Date()
+        note.secrets = [
+          {title: 'password', content: 'nE3LbJwKEm06xY98cp12y32508Du699f'},
+          {title: 'another password', content: 'R46zq8xc0eTt90qGkQ1hKl1b7Jym621Y'}
+        ]
+        note.reminder_date = date.setDate(date.getDate() + 1)
+        db.insert(note)
       } else {
         callback()
       }
@@ -162,7 +165,10 @@ const actions = {
     })
   },
   openAddNotePage (context) {
-    this.commit('updateNote', copyObject(blankNote))
+    let note = copyObject(blankNote)
+    let date = new Date()
+    note.reminder_date = date.setDate(date.getDate() + 1)
+    this.commit('updateNote', note)
     this.commit('setEditorMode', 'add')
   },
   openEditNotePage (context, id) {

@@ -14,6 +14,9 @@
             </b-col>
         </b-row>
         <h6 class="card-subtitle mb-2 text-muted date">{{ note.createdAt }}</h6>
+        <div class="reminder" v-show="!note.reminder">
+            <icon name="bell"></icon> <span class="details">{{ note.reminder_date }}</span>
+        </div>
         <div class="secrets" v-show="note.secrets.length">
             <b-button size="sm" class="btn-default secret" v-for="(secret, index) in note.secrets" :key="index"><icon name="key"></icon> {{secret.title}}</b-button>
         </div>
@@ -22,7 +25,10 @@
 </template>
 
 <script>
+  import Icon from '../../../../node_modules/vue-awesome/components/Icon.vue'
+
   export default {
+    components: {Icon},
     props: ['note'],
     computed: {
       activeNoteId () {

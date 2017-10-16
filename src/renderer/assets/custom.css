@@ -88,6 +88,10 @@ button svg {
 .screen.notes .notes .note .date{
     font-size: 11px;
 }
+.screen.notes .notes .note .reminder {
+    color: #dc3545;
+    font-size: 11px;
+}
 .screen.notes .notes .note .content{
     white-space: pre-wrap;
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
