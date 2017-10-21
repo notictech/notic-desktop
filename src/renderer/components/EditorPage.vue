@@ -38,6 +38,7 @@
                         <b-button style="margin-top: 10px;" @click="editorAddSecret()"><icon name="plus"></icon> Add</b-button>
                     </b-tab>
                     <b-tab title="Reminder">
+                        <b-alert show variant="warning">Remember that you're won't getting reminders when you're not logged in.</b-alert>
                         <b-button-toolbar aria-label="Toolbar with button groups and input groups">
                             <b-button-group size="sm" class="mx-1">
                                 <b-form-checkbox id="checkbox1" value="true" :checked="noteReminder" @change="editorToggleReminder()">Remind me </b-form-checkbox>
