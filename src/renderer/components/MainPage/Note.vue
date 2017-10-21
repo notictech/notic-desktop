@@ -13,9 +13,9 @@
                 </b-dropdown>
             </b-col>
         </b-row>
-        <h6 class="card-subtitle mb-2 text-muted date">{{ note.createdAt }}</h6>
-        <div class="reminder" v-show="!note.reminder">
-            <icon name="bell"></icon> <span class="details">{{ note.reminder_date }}</span>
+        <h6 class="card-subtitle mb-2 text-muted date">{{ formattedNoteDate }}</h6>
+        <div class="reminder" v-show="note.reminder">
+            <icon name="bell"></icon> <span class="details">{{ formattedReminderInfo }}</span>
         </div>
         <div class="secrets" v-show="note.secrets.length">
             <b-button size="sm" class="btn-default secret" v-for="(secret, index) in note.secrets" :key="index"><icon name="key"></icon> {{secret.title}}</b-button>
@@ -26,7 +26,7 @@
 
 <script>
   import Icon from '../../../../node_modules/vue-awesome/components/Icon.vue'
-
+  import moment from 'moment'
   export default {
     components: {Icon},
     props: ['note'],
@@ -36,6 +36,41 @@
       },
       searchFilter () {
         return this.$store.getters.searchFilter
+      },
+      formattedReminderInfo () {
+        let date = moment(this.note.reminderDate).format('DD.MM.YYYY')
+        let time = this.note.reminderTime
+        let repeat = this.note.reminderRepeat
+        switch (parseInt(this.note.reminderRepeat)) {
+          case 0:
+            repeat = ''
+            break
+          case 10:
+            repeat = 'and every minute'
+            break
+          case 20:
+            repeat = 'and every hour'
+            break
+          case 30:
+            repeat = 'and every day'
+            break
+          case 40:
+            repeat = 'and every week'
+            break
+          case 50:
+            repeat = 'and every month'
+            break
+          case 60:
+            repeat = 'and every year'
+            break
+        }
+
+        return `${date} at ${time} ${repeat}`
+      },
+      formattedNoteDate () {
+        let createdAt = moment(this.note.createdAt).format('DD.MM.YYYY HH:mm')
+        let updatedAt = moment(this.note.updatedAt).format('DD.MM.YYYY HH:mm')
+        return (this.note.createdAt === this.note.updatedAt) ? `${createdAt}` : `${createdAt}, upd: ${updatedAt}`
       }
     },
     methods: {

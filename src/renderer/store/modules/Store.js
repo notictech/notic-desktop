@@ -1,4 +1,5 @@
 const Datastore = require('nedb')
+const moment = require('moment')
 let db
 
 const blankNote = {
@@ -11,8 +12,9 @@ const blankNote = {
   secrets: [],
   secretsHaveErrors: null,
   reminder: false,
-  reminder_date: null,
-  reminder_repeat: 0
+  reminderDate: null,
+  reminderTime: null,
+  reminderRepeat: 0
 }
 
 const state = {
@@ -95,6 +97,18 @@ const mutations = {
   },
   setSearchFilter (state, filter) {
     state.searchFilter = filter
+  },
+  toggleNoteReminder (state) {
+    state.note.reminder = !state.note.reminder
+  },
+  changeNoteReminderDate (state, event) {
+    state.note.reminderDate = moment(event).valueOf()
+  },
+  changeNoteReminderTime (state, event) {
+    state.note.reminderTime = event
+  },
+  changeNoteReminderRepeat (state, event) {
+    state.note.reminderRepeat = event
   }
 
 }
@@ -117,17 +131,18 @@ const actions = {
         return
       }
       if (!count) {
-        let date = new Date()
+        let now = moment()
         let note = copyObject(blankNote)
         note.title = 'Hello, Notic!'
         note.content = `Welcome! I'm your first note.\nYou can edit or delete me.`
-        note.createdAt = new Date()
-        note.updatedAt = new Date()
+        note.createdAt = now.valueOf()
+        note.updatedAt = now.valueOf()
         note.secrets = [
           {title: 'password', content: 'nE3LbJwKEm06xY98cp12y32508Du699f'},
           {title: 'another password', content: 'R46zq8xc0eTt90qGkQ1hKl1b7Jym621Y'}
         ]
-        note.reminder_date = date.setDate(date.getDate() + 1)
+        note.reminderDate = now.add(1, 'day').valueOf()
+        note.reminderTime = '09:00'
         db.insert(note)
       } else {
         callback()
@@ -166,8 +181,9 @@ const actions = {
   },
   openAddNotePage (context) {
     let note = copyObject(blankNote)
-    let date = new Date()
-    note.reminder_date = date.setDate(date.getDate() + 1)
+    let now = moment()
+    note.reminderDate = now.add(1, 'day').valueOf()
+    note.reminderTime = '09:00'
     this.commit('updateNote', note)
     this.commit('setEditorMode', 'add')
   },
@@ -207,10 +223,10 @@ const actions = {
     if (!state.note.title.length) {
       this.commit('updateNoteTitle', '#untitled ' + state.note.content.substr(0, 30) + '...')
     }
+    let now = moment()
     if (state.editorMode === 'add') {
-      let dateNow = new Date()
-      this.commit('setNoteCreatedAt', dateNow)
-      this.commit('setNoteUpdatedAt', dateNow)
+      this.commit('setNoteCreatedAt', now.valueOf())
+      this.commit('setNoteUpdatedAt', now.valueOf())
       db.insert(state.note, (err) => {
         if (err) console.log(err)
         this.commit('updateNote', copyObject(blankNote))
@@ -218,7 +234,7 @@ const actions = {
         successCallback()
       })
     } else {
-      this.commit('setNoteUpdatedAt', new Date())
+      this.commit('setNoteUpdatedAt', now.valueOf())
       db.update({ _id: state.note._id }, state.note, {}, () => {
         this.commit('updateNote', copyObject(blankNote))
         this.dispatch('searchNotes', context.searchQuery)
@@ -270,7 +286,20 @@ const actions = {
     db.update({ _id: id }, {$set: {deleted: false}}, () => {
       this.dispatch('searchNotes', context.searchQuery)
     })
+  },
+  editorToggleReminder (context) {
+    this.commit('toggleNoteReminder')
+  },
+  editorChangeReminderDate (context, event) {
+    this.commit('changeNoteReminderDate', event)
+  },
+  editorChangeReminderTime (context, event) {
+    this.commit('changeNoteReminderTime', event)
+  },
+  editorChangeReminderRepeat (context, event) {
+    this.commit('changeNoteReminderRepeat', event)
   }
+
 }
 
 function copyObject (obj) {
