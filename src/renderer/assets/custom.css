@@ -97,8 +97,12 @@ button svg {
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: 0.9em;
 }
+.screen.notes .notes .note {
+    border-left: #fff 4px solid;
+}
 .screen.notes .notes .note.active {
-    border-left: #51adff 3px solid;
+    border-left: #51adff 4px solid;
+    background: #fafafa;
 }
 .screen.editor.container-fluid {
     padding: 0;

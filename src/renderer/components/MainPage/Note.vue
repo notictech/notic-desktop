@@ -1,5 +1,5 @@
 <template>
-    <b-card :class="{note: true, active: activeNoteId == note._id}" @mousedown.middle="openEditNotePage(note._id)">
+    <b-card :class="{note: true, active: activeNoteIndex == index}" @mousedown.middle="openEditNotePage(note._id)">
         <b-row>
             <b-col cols="12" md="8">
                 <h4 class="title">{{ note.title }}</h4>
@@ -29,10 +29,10 @@
   import moment from 'moment'
   export default {
     components: {Icon},
-    props: ['note'],
+    props: ['note', 'index'],
     computed: {
-      activeNoteId () {
-        return this.$store.state.Store.activeNoteId
+      activeNoteIndex () {
+        return this.$store.state.Store.activeNoteIndex
       },
       searchFilter () {
         return this.$store.getters.searchFilter

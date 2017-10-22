@@ -27,11 +27,11 @@
         </div>
         <div class="sidebar">
             <b-button-group vertical class="notes-links">
-                <note-link v-for="note in notes" :note="note" :key="note._id"></note-link>
+                <note-link v-for="(note, index) in notes" :note="note" :key="note._id" :index="index"></note-link>
             </b-button-group>
         </div>
         <div class="notes">
-            <note v-for="note in notes" :note="note" :key="note._id"></note>
+            <note v-for="(note, index) in notes" :note="note" :key="note._id" :index="index"></note>
         </div>
     </b-container>
 </template>
