@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid class="screen notes">
+    <b-container fluid class="screen notes" v-hotkey="keymap">
         <div class="topbar">
             <div class="row">
                 <div class="col-6">
@@ -44,14 +44,6 @@
   export default {
     name: 'main-page',
     components: { Icon, Note, NoteLink },
-    computed: {
-      notes () {
-        return this.$store.getters.notes
-      },
-      searchFilter () {
-        return this.$store.getters.searchFilter
-      }
-    },
     mounted () {
       this.$refs.search.focus()
       this.$store.dispatch('initDb', () => {
@@ -78,6 +70,26 @@
         if (confirm('Are you sure you want to empty trash?')) {
           this.$store.dispatch('emptyTrash')
         }
+      },
+      goToNextNote () {
+        this.$store.dispatch('goToNextNote')
+      },
+      goToPreviousNote () {
+        this.$store.dispatch('goToPreviousNote')
+      }
+    },
+    computed: {
+      keymap () {
+        return {
+          'ctrl+down': this.goToNextNote,
+          'ctrl+up': this.goToPreviousNote
+        }
+      },
+      notes () {
+        return this.$store.getters.notes
+      },
+      searchFilter () {
+        return this.$store.getters.searchFilter
       }
     }
   }

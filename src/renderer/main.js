@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import axios from 'axios'
+import VueHotkey from 'v-hotkey'
 
 import App from './App'
 import router from './router'
@@ -14,6 +15,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/custom.css'
 
 Vue.use(BootstrapVue)
+Vue.use(VueHotkey)
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false

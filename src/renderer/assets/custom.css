@@ -63,7 +63,7 @@ button svg {
     font-size: 0.9em;
 }
 .screen.notes .sidebar .note-link:focus {
-    background: #a0d3ff;
+    box-shadow: 0;
 }
 .screen.notes .sidebar .note-link:hover {
     background: #007bff;

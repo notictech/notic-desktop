@@ -313,8 +313,21 @@ const actions = {
     this.commit('setActiveNoteIndex', index)
   },
   showNoteContextMenu (context, id) {
-    console.log(id)
     noteContextMenu.popup(remote.getCurrentWindow())
+  },
+  goToNextNote (context) {
+    if (state.activeNoteIndex === state.notes.length - 1) {
+      this.commit('setActiveNoteIndex', 0)
+    } else {
+      this.commit('setActiveNoteIndex', state.activeNoteIndex + 1)
+    }
+  },
+  goToPreviousNote (context) {
+    if (state.activeNoteIndex === 0) {
+      this.commit('setActiveNoteIndex', state.notes.length - 1)
+    } else {
+      this.commit('setActiveNoteIndex', state.activeNoteIndex - 1)
+    }
   }
 
 }
