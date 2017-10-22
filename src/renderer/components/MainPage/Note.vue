@@ -1,5 +1,5 @@
 <template>
-    <b-card :class="{note: true, active: activeNoteIndex == index}" @mousedown.middle="openEditNotePage(note._id)" @contextmenu="showNoteContextMenu(note._id)">
+    <b-card :id="'note_index_' + index" :class="{note: true, active: activeNoteIndex == index}" @mousedown.middle="openEditNotePage(note._id)" @contextmenu="showNoteContextMenu(note._id)">
         <b-row>
             <b-col cols="12" md="8">
                 <h4 class="title">{{ note.title }}</h4>

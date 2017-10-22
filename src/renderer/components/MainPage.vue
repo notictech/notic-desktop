@@ -30,7 +30,7 @@
                 <note-link v-for="(note, index) in notes" :note="note" :key="note._id" :index="index"></note-link>
             </b-button-group>
         </div>
-        <div class="notes">
+        <div class="notes" ref="notes" id="notes">
             <note v-for="(note, index) in notes" :note="note" :key="note._id" :index="index"></note>
         </div>
     </b-container>

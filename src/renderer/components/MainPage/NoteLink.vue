@@ -13,6 +13,7 @@
     methods: {
       goToNote (index) {
         this.$store.dispatch('setActiveNoteIndex', index)
+        this.$store.dispatch('scrollToActiveNote')
       }
     }
   }

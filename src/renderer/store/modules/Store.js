@@ -321,12 +321,21 @@ const actions = {
     } else {
       this.commit('setActiveNoteIndex', state.activeNoteIndex + 1)
     }
+    this.dispatch('scrollToActiveNote')
   },
   goToPreviousNote (context) {
     if (state.activeNoteIndex === 0) {
       this.commit('setActiveNoteIndex', state.notes.length - 1)
     } else {
       this.commit('setActiveNoteIndex', state.activeNoteIndex - 1)
+    }
+    this.dispatch('scrollToActiveNote')
+  },
+  scrollToActiveNote (context) {
+    const href = '#note_index_' + state.activeNoteIndex
+    const el = href ? document.querySelector(href) : null
+    if (el) {
+      document.querySelector('#notes').scrollTop = el.offsetTop
     }
   }
 
