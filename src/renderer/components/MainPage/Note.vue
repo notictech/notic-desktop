@@ -1,5 +1,5 @@
 <template>
-    <b-card :class="{note: true, active: activeNoteIndex == index}" @mousedown.middle="openEditNotePage(note._id)">
+    <b-card :class="{note: true, active: activeNoteIndex == index}" @mousedown.middle="openEditNotePage(note._id)" @contextmenu="showNoteContextMenu(note._id)">
         <b-row>
             <b-col cols="12" md="8">
                 <h4 class="title">{{ note.title }}</h4>
@@ -91,6 +91,9 @@
         if (confirm('Are you sure you want to restore this note?')) {
           this.$store.dispatch('restoreDeletedNote', id)
         }
+      },
+      showNoteContextMenu (id) {
+        this.$store.dispatch('showNoteContextMenu', id)
       }
     }
   }

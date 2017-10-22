@@ -1,6 +1,16 @@
+const {Menu} = require('electron').remote
+const remote = require('electron').remote
 const Datastore = require('nedb')
 const moment = require('moment')
 let db
+
+const noteContextMenu = Menu.buildFromTemplate([
+  {
+    label: 'unfinished...',
+    accelerator: 'CmdOrCtrl+C',
+    click () {}
+  }
+])
 
 const blankNote = {
   doctype: 'note',
@@ -301,6 +311,10 @@ const actions = {
   },
   setActiveNoteIndex (context, index) {
     this.commit('setActiveNoteIndex', index)
+  },
+  showNoteContextMenu (context, id) {
+    console.log(id)
+    noteContextMenu.popup(remote.getCurrentWindow())
   }
 
 }
