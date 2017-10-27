@@ -86,7 +86,7 @@ button svg {
     margin-bottom: 15px;
 }
 .screen.notes mark {
-    background: yellow;
+    background: cyan;
     padding: 0;
 }
 .screen.notes .notes .note .date{
