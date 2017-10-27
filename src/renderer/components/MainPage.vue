@@ -3,21 +3,21 @@
         <div class="topbar">
             <div class="row">
                 <div class="col-6">
-                    <b-button-group>
+                    <b-button-group size="sm">
                         <b-btn variant="primary" @click="openAddNotePage()" v-b-tooltip.hover.auto title="Add note (Ctrl+N)"><icon name="plus"></icon></b-btn>
                     </b-button-group>
-                    <b-button-group>
+                    <b-button-group size="sm">
                         <b-btn variant="primary" v-b-tooltip.hover.auto title="Clips (Ctrl+K)"><icon name="clipboard"></icon></b-btn>
                     </b-button-group>
-                    <b-button-group v-show="searchFilter === 'deleted'">
+                    <b-button-group size="sm" v-show="searchFilter === 'deleted'">
                         <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
                         <b-btn variant="danger" @click="emptyTrash()">Empty trash</b-btn>
                     </b-button-group>
                 </div>
                 <div class="col-6">
-                    <b-input-group>
+                    <b-input-group size="sm">
                         <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" ref="search"></b-form-input>
-                        <b-button-group>
+                        <b-button-group size="sm">
                             <b-button :class="['search-filter', {active: searchFilter == 'notes'}]" @click="setSearchFilter('notes')"><icon name="sticky-note"></icon></b-button>
                             <b-button :class="['search-filter', {active: searchFilter == 'reminder'}]" @click="setSearchFilter('reminder')"><icon name="bell-o"></icon></b-button>
                             <b-button :class="['search-filter', {active: searchFilter == 'deleted'}]" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-button>
