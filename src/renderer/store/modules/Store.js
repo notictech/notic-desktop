@@ -41,9 +41,6 @@ const state = {
 }
 
 const mutations = {
-  set: (state, param, value) => {
-    state[param] = value
-  },
   setActiveNoteIndex: (state, data) => { state.activeNoteIndex = data },
   setEditorMode: (state, data) => { state.editorMode = data },
   updateNotes: (state, data) => { state.notes = data },
@@ -105,6 +102,7 @@ const mutations = {
       delete state.note.secrets[i].visibility
     }
   },
+  setSearchQuery: (state, data) => { state.searchQuery = data },
   setSearchFilter (state, filter) {
     state.searchFilter = filter
   },
@@ -161,19 +159,36 @@ const actions = {
     })
   },
   searchNotes (context, query) {
-    let cond = {doctype: 'note', title: new RegExp(query, 'i')}
+    this.commit('setSearchQuery', query)
+    let queryWords = query.trim().split(' ')
+    let and = []
+    for (let i = 0; i < queryWords.length; i++) {
+      let or = []
+      or.push({title: new RegExp(queryWords[i], 'i')})
+      or.push({title: new RegExp(remapString(queryWords[i], 'en', 'ru'), 'i')})
+      or.push({title: new RegExp(remapString(queryWords[i], 'ru', 'en'), 'i')})
+      or.push({content: new RegExp(queryWords[i], 'i')})
+      or.push({content: new RegExp(remapString(queryWords[i], 'en', 'ru'), 'i')})
+      or.push({content: new RegExp(remapString(queryWords[i], 'ru', 'en'), 'i')})
+      and.push({$or: or})
+    }
+
     if (state.searchFilter === 'notes') {
-      cond.deleted = false
+      and.push({deleted: false})
     }
     if (state.searchFilter === 'deleted') {
-      cond.deleted = true
+      and.push({deleted: true})
     }
+
+    and.push({doctype: 'note'})
+
+    let cond = {$and: and}
+
     db.find(cond).sort({createdAt: -1}).exec((err, docs) => {
       if (err) {
         console.log(err)
       }
       this.commit('updateNotes', docs)
-      this.commit('set', 'searchQuery', query)
       if (docs.length) {
         this.commit('setActiveNoteIndex', 0)
       }
@@ -181,12 +196,12 @@ const actions = {
   },
   actionDeleteNote (context, id) {
     db.remove({ _id: id }, {}, () => {
-      this.dispatch('searchNotes', context.searchQuery)
+      this.dispatch('searchNotes', state.searchQuery)
     })
   },
   actionMarkNoteAsDeleted (context, id) {
     db.update({ _id: id }, { $set: { deleted: true } }, () => {
-      this.dispatch('searchNotes', context.searchQuery)
+      this.dispatch('searchNotes', state.searchQuery)
     })
   },
   openAddNotePage (context) {
@@ -240,14 +255,14 @@ const actions = {
       db.insert(state.note, (err) => {
         if (err) console.log(err)
         this.commit('updateNote', copyObject(blankNote))
-        this.dispatch('searchNotes', context.searchQuery)
+        this.dispatch('searchNotes', state.searchQuery)
         successCallback()
       })
     } else {
       this.commit('setNoteUpdatedAt', now.valueOf())
       db.update({ _id: state.note._id }, state.note, {}, () => {
         this.commit('updateNote', copyObject(blankNote))
-        this.dispatch('searchNotes', context.searchQuery)
+        this.dispatch('searchNotes', state.searchQuery)
         successCallback()
       })
     }
@@ -278,23 +293,23 @@ const actions = {
   },
   setSearchFilter (context, filter) {
     this.commit('setSearchFilter', filter)
-    this.dispatch('searchNotes', context.searchQuery)
+    this.dispatch('searchNotes', state.searchQuery)
   },
   restoreAllDeletedNotes (context) {
     db.update({doctype: 'note', deleted: true}, {$set: {deleted: false}}, {multi: true}, () => {
       this.commit('setSearchFilter', 'notes')
-      this.dispatch('searchNotes', context.searchQuery)
+      this.dispatch('searchNotes', state.searchQuery)
     })
   },
   emptyTrash (context) {
     db.remove({doctype: 'note', deleted: true}, {multi: true}, () => {
       this.commit('setSearchFilter', 'notes')
-      this.dispatch('searchNotes', context.searchQuery)
+      this.dispatch('searchNotes', state.searchQuery)
     })
   },
   restoreDeletedNote (context, id) {
     db.update({ _id: id }, {$set: {deleted: false}}, () => {
-      this.dispatch('searchNotes', context.searchQuery)
+      this.dispatch('searchNotes', state.searchQuery)
     })
   },
   editorToggleReminder (context) {
@@ -352,6 +367,29 @@ function genPassword (len = 32) {
     text += possible.charAt(Math.floor(Math.random() * possible.length))
   }
   return text
+}
+
+function remapString (str, from, to) {
+  const keymap = {
+    en: [
+      'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '\\[', '\\]',
+      'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'',
+      'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '\\.'
+    ],
+    ru: [
+      'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ',
+      'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э',
+      'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю'
+    ]
+  }
+  for (let i = 0; i < keymap[from].length; i++) {
+    let reg = new RegExp(keymap[from][i], 'mig')
+    str = str.replace(reg, (a) => {
+      return a === a.toLowerCase() ? keymap[to][i] : keymap[to][i].toUpperCase()
+    })
+  }
+
+  return str
 }
 
 export default {
