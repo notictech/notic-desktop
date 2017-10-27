@@ -2,6 +2,7 @@ const {Menu} = require('electron').remote
 const remote = require('electron').remote
 const Datastore = require('nedb')
 const moment = require('moment')
+const Mark = require('mark.js')
 let db
 
 const noteContextMenu = Menu.buildFromTemplate([
@@ -190,6 +191,7 @@ const actions = {
         console.log(err)
       }
       this.commit('updateNotes', docs)
+      highlightNotes()
       if (docs.length) {
         this.commit('setActiveNoteIndex', 0)
       }
@@ -395,6 +397,19 @@ function remapString (str, from, to) {
 
 RegExp.quote = (str) => {
   return str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1')
+}
+
+function highlightNotes () {
+  let markInstance = new Mark(document.querySelector('.notes'))
+  let options = ['separateWordSearch']
+  let keyword = state.searchQuery + ' ' +
+    remapString(state.searchQuery, 'en', 'ru') + ' ' +
+    remapString(state.searchQuery, 'ru', 'en')
+  markInstance.unmark({
+    done: () => {
+      markInstance.mark(keyword, options)
+    }
+  })
 }
 
 export default {

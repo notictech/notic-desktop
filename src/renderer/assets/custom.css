@@ -85,6 +85,10 @@ button svg {
     font-weight: bold;
     margin-bottom: 15px;
 }
+.screen.notes mark {
+    background: yellow;
+    padding: 0;
+}
 .screen.notes .notes .note .date{
     font-size: 11px;
 }

@@ -4995,6 +4995,10 @@ map-obj@^1.0.0, map-obj@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
 
+mark.js@^8.11.0:
+  version "8.11.0"
+  resolved "https://registry.yarnpkg.com/mark.js/-/mark.js-8.11.0.tgz#70eb177b9a4c41f7e073d7d6f371b70775108a03"
+
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
   resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.17.tgz#de819fdbcd84dccd8fae59c6aeb79615b9d266ac"
@@ -7483,6 +7487,10 @@ uuid@^3.0.0, uuid@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
 
+v-hotkey@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/v-hotkey/-/v-hotkey-0.2.0.tgz#26cd4a3d7459cba7c47337ee3f637246e32276c1"
+
 validate-npm-package-license@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.1.tgz#2804babe712ad3379459acfbe24746ab2c303fbc"
@@ -7563,12 +7571,6 @@ vue-loader@^13.0.5:
 vue-router@^2.5.3:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-2.7.0.tgz#16d424493aa51c3c8cce8b7c7210ea4c3a89aff1"
-
-vue-shortcuts@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/vue-shortcuts/-/vue-shortcuts-1.1.2.tgz#56fa55057325198d356671c77eb366f26701a801"
-  dependencies:
-    vue "^2.1.0"
 
 vue-style-loader@^3.0.0, vue-style-loader@^3.0.1:
   version "3.0.3"
