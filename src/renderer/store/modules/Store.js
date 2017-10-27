@@ -175,9 +175,10 @@ const actions = {
 
     if (state.searchFilter === 'notes') {
       and.push({deleted: false})
-    }
-    if (state.searchFilter === 'deleted') {
+    } else if (state.searchFilter === 'deleted') {
       and.push({deleted: true})
+    } else if (state.searchFilter === 'reminder') {
+      and.push({reminder: true})
     }
 
     and.push({doctype: 'note'})
