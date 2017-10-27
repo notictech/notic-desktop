@@ -164,12 +164,12 @@ const actions = {
     let and = []
     for (let i = 0; i < queryWords.length; i++) {
       let or = []
-      or.push({title: new RegExp(queryWords[i], 'i')})
-      or.push({title: new RegExp(remapString(queryWords[i], 'en', 'ru'), 'i')})
-      or.push({title: new RegExp(remapString(queryWords[i], 'ru', 'en'), 'i')})
-      or.push({content: new RegExp(queryWords[i], 'i')})
-      or.push({content: new RegExp(remapString(queryWords[i], 'en', 'ru'), 'i')})
-      or.push({content: new RegExp(remapString(queryWords[i], 'ru', 'en'), 'i')})
+      or.push({title: new RegExp(RegExp.quote(queryWords[i]), 'i')})
+      or.push({title: new RegExp(remapString(RegExp.quote(queryWords[i]), 'en', 'ru'), 'i')})
+      or.push({title: new RegExp(remapString(RegExp.quote(queryWords[i]), 'ru', 'en'), 'i')})
+      or.push({content: new RegExp(RegExp.quote(queryWords[i]), 'i')})
+      or.push({content: new RegExp(remapString(RegExp.quote(queryWords[i]), 'en', 'ru'), 'i')})
+      or.push({content: new RegExp(remapString(RegExp.quote(queryWords[i]), 'ru', 'en'), 'i')})
       and.push({$or: or})
     }
 
@@ -390,6 +390,10 @@ function remapString (str, from, to) {
   }
 
   return str
+}
+
+RegExp.quote = (str) => {
+  return str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1')
 }
 
 export default {
