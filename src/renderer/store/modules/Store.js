@@ -35,7 +35,9 @@ const state = {
   activeNoteId: null,
   editorMode: 'add',
   settings: {
-    dbPath: 'default.ntc'
+    dbPath: 'default.ntc',
+    localKeymap: 'ru',
+    historyMaxLength: 100
   },
   notes: [],
   note: {},
@@ -124,6 +126,9 @@ const mutations = {
   },
   setHistory: (state, data) => { state.history = data },
   addNoteToHistory: (state, id) => {
+    if (state.history.length === state.settings.historyMaxLength - 1) {
+      state.history.shift()
+    }
     state.history.push({
       s: state.searchQuery,
       n: id
@@ -177,11 +182,11 @@ const actions = {
     for (let i = 0; i < queryWords.length; i++) {
       let or = []
       or.push({title: new RegExp(RegExp.quote(queryWords[i]), 'i')})
-      or.push({title: new RegExp(remapString(RegExp.quote(queryWords[i]), 'en', 'ru'), 'i')})
-      or.push({title: new RegExp(remapString(RegExp.quote(queryWords[i]), 'ru', 'en'), 'i')})
+      or.push({title: new RegExp(remapString(RegExp.quote(queryWords[i]), 'en', state.settings.localKeymap), 'i')})
+      or.push({title: new RegExp(remapString(RegExp.quote(queryWords[i]), state.settings.localKeymap, 'en'), 'i')})
       or.push({content: new RegExp(RegExp.quote(queryWords[i]), 'i')})
-      or.push({content: new RegExp(remapString(RegExp.quote(queryWords[i]), 'en', 'ru'), 'i')})
-      or.push({content: new RegExp(remapString(RegExp.quote(queryWords[i]), 'ru', 'en'), 'i')})
+      or.push({content: new RegExp(remapString(RegExp.quote(queryWords[i]), 'en', state.settings.localKeymap), 'i')})
+      or.push({content: new RegExp(remapString(RegExp.quote(queryWords[i]), state.settings.localKeymap, 'en'), 'i')})
       and.push({$or: or})
     }
 
@@ -346,6 +351,9 @@ const actions = {
     this.commit('setActiveNoteId', id)
   },
   addNoteToHistory (context, id) {
+    if (state.history[state.history.length - 1].n === id) {
+      return
+    }
     this.commit('addNoteToHistory', id)
     this.dispatch('updateHistory')
   },
@@ -435,8 +443,8 @@ function highlightNotes () {
   let markInstance = new Mark(document.querySelector('.notes'))
   let options = ['separateWordSearch']
   let keyword = state.searchQuery + ' ' +
-    remapString(state.searchQuery, 'en', 'ru') + ' ' +
-    remapString(state.searchQuery, 'ru', 'en')
+    remapString(state.searchQuery, 'en', state.settings.localKeymap) + ' ' +
+    remapString(state.searchQuery, state.settings.localKeymap, 'en')
   markInstance.unmark({
     done: () => {
       markInstance.mark(keyword, options)
