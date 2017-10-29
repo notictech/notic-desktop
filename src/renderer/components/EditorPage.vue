@@ -1,6 +1,6 @@
 <template>
     <b-form>
-        <b-container fluid class="screen editor">
+        <b-container fluid class="screen editor" v-hotkey="keymap">
             <div class="topbar">
                 <div class="row" align-h="between">
                     <div class="col-6">
@@ -102,6 +102,12 @@
       },
       noteReminderRepeat () {
         return this.$store.state.Store.note.reminderRepeat
+      },
+      keymap () {
+        return {
+          'esc': this.close,
+          'ctrl+s': this.editorSaveAndClose
+        }
       }
     },
     mounted () {

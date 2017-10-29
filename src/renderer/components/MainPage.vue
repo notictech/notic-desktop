@@ -63,6 +63,15 @@
       setSearchFilter (filter) {
         this.$store.dispatch('setSearchFilter', filter)
       },
+      setSearchFilterNotes () {
+        this.$store.dispatch('setSearchFilter', 'notes')
+      },
+      setSearchFilterReminder () {
+        this.$store.dispatch('setSearchFilter', 'reminder')
+      },
+      setSearchFilterDeleted () {
+        this.$store.dispatch('setSearchFilter', 'deleted')
+      },
       restoreAllDeletedNotes () {
         if (confirm('Are you sure you want to restore all deleted notes?')) {
           this.$store.dispatch('restoreAllDeletedNotes')
@@ -84,7 +93,11 @@
       keymap () {
         return {
           'ctrl+down': this.goToNextNote,
-          'ctrl+up': this.goToPreviousNote
+          'ctrl+up': this.goToPreviousNote,
+          'ctrl+N': this.openAddNotePage,
+          'ctrl+1': this.setSearchFilterNotes,
+          'ctrl+2': this.setSearchFilterReminder,
+          'ctrl+3': this.setSearchFilterDeleted
         }
       },
       notes () {
