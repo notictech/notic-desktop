@@ -48,6 +48,7 @@
     mounted () {
       this.$refs.search.focus()
       this.$store.dispatch('initDb', () => {
+        this.$store.dispatch('loadHistory')
         this.searchNotes('')
       })
     },

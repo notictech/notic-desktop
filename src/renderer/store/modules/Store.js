@@ -39,7 +39,8 @@ const state = {
   },
   notes: [],
   note: {},
-  searchQuery: ''
+  searchQuery: '',
+  history: []
 }
 
 const mutations = {
@@ -120,6 +121,13 @@ const mutations = {
   },
   changeNoteReminderRepeat (state, event) {
     state.note.reminderRepeat = event
+  },
+  setHistory: (state, data) => { state.history = data },
+  addNoteToHistory: (state, id) => {
+    state.history.push({
+      s: state.searchQuery,
+      n: id
+    })
   }
 
 }
@@ -155,6 +163,7 @@ const actions = {
         note.reminderDate = now.add(1, 'day').valueOf()
         note.reminderTime = '09:00'
         db.insert(note)
+        db.insert({doctype: 'history', data: state.history})
       } else {
         callback()
       }
@@ -336,6 +345,10 @@ const actions = {
   setActiveNoteId (context, id) {
     this.commit('setActiveNoteId', id)
   },
+  addNoteToHistory (context, id) {
+    this.commit('addNoteToHistory', id)
+    this.dispatch('updateHistory')
+  },
   showNoteContextMenu (context, id) {
     noteContextMenu.popup(remote.getCurrentWindow())
   },
@@ -363,6 +376,17 @@ const actions = {
     if (el) {
       document.querySelector('#notes').scrollTop = el.offsetTop
     }
+  },
+  loadHistory (context) {
+    db.findOne({doctype: 'history'}, (err, doc) => {
+      if (err) {
+        console.log(err)
+      }
+      this.commit('setHistory', doc.data)
+    })
+  },
+  updateHistory (context) {
+    db.update({doctype: 'history'}, { $set: { data: state.history } })
   }
 
 }
