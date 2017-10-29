@@ -8,15 +8,14 @@
                         <h4 v-else>Edit note</h4>
                     </div>
                     <div class="col-6" style="text-align: right">
-                        <b-button type="button" variant="success" @click="editorSaveAndClose()"><icon name="save"></icon> Save & close</b-button>
-                        <b-button-group>
+                        <b-button size="sm" type="button" variant="success" @click="editorSaveAndClose()"><icon name="save"></icon> Save & close</b-button>
+                        <b-button-group size="sm">
                             <b-btn @click="close()"><icon name="times"></icon></b-btn>
                         </b-button-group>
                     </div>
                 </div>
             </div>
             <div class="content-wrap">
-
                 <b-tabs card small no-fade>
                     <b-tab title="Editor" active>
                         <b-form-group id="exampleInputGroup1" label-for="titleInput">
@@ -27,7 +26,7 @@
                                              ref="content"
                                              class="content"
                                              placeholder="Content"
-                                             :rows="20" autofocus @input="editorChangeContent($event)"  :value="noteContent"
+                                             :rows="22" autofocus @input="editorChangeContent($event)"  :value="noteContent"
                             ></b-form-textarea>
                         </b-form-group>
                     </b-tab>
@@ -35,7 +34,7 @@
                         <div class="secrets">
                             <editor-secret v-for="(secret, index) in noteSecrets" :key="index" :index="index" :secret="secret"></editor-secret>
                         </div>
-                        <b-button style="margin-top: 10px;" @click="editorAddSecret()"><icon name="plus"></icon> Add</b-button>
+                        <b-button size="sm" style="margin-top: 10px;" @click="editorAddSecret()"><icon name="plus"></icon> Add</b-button>
                     </b-tab>
                     <b-tab title="Reminder">
                         <b-alert show variant="warning">Remember that you're won't getting reminders when you're not logged in.</b-alert>

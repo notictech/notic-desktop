@@ -129,10 +129,13 @@ button svg {
     padding: 10px;
     z-index: 3;
     /*border-bottom: 1px solid #bfbfbf;*/
+    position: fixed;
+    background: #fff;
 }
 .screen.editor .content-wrap {
-    padding: 10px;
+    padding-top: 42px;
 }
+
 .screen.editor .title {
     font-size: 18px;
     font-weight: bold;
@@ -156,4 +159,8 @@ button svg {
 }
 .search-filter.active {
     background: #767f86;
+}
+
+h4 {
+    font-size: 20px;
 }
