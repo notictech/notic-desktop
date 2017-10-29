@@ -32,6 +32,7 @@ const state = {
   page: '/',
   searchFilter: 'notes',
   activeNoteIndex: null,
+  activeNoteId: null,
   editorMode: 'add',
   settings: {
     dbPath: 'default.ntc'
@@ -43,6 +44,7 @@ const state = {
 
 const mutations = {
   setActiveNoteIndex: (state, data) => { state.activeNoteIndex = data },
+  setActiveNoteId: (state, data) => { state.activeNoteId = data },
   setEditorMode: (state, data) => { state.editorMode = data },
   updateNotes: (state, data) => { state.notes = data },
   updateNote: (state, data) => {
@@ -194,6 +196,7 @@ const actions = {
       highlightNotes()
       if (docs.length) {
         this.commit('setActiveNoteIndex', 0)
+        this.commit('setActiveNoteId', docs[0]._id)
       }
     })
   },
@@ -330,6 +333,9 @@ const actions = {
   setActiveNoteIndex (context, index) {
     this.commit('setActiveNoteIndex', index)
   },
+  setActiveNoteId (context, id) {
+    this.commit('setActiveNoteId', id)
+  },
   showNoteContextMenu (context, id) {
     noteContextMenu.popup(remote.getCurrentWindow())
   },
@@ -339,6 +345,7 @@ const actions = {
     } else {
       this.commit('setActiveNoteIndex', state.activeNoteIndex + 1)
     }
+    this.commit('setActiveNoteId', state.notes[state.activeNoteIndex]._id)
     this.dispatch('scrollToActiveNote')
   },
   goToPreviousNote (context) {
@@ -347,6 +354,7 @@ const actions = {
     } else {
       this.commit('setActiveNoteIndex', state.activeNoteIndex - 1)
     }
+    this.commit('setActiveNoteId', state.notes[state.activeNoteIndex]._id)
     this.dispatch('scrollToActiveNote')
   },
   scrollToActiveNote (context) {

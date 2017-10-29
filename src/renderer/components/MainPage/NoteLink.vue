@@ -13,6 +13,7 @@
     methods: {
       goToNote (index) {
         this.$store.dispatch('setActiveNoteIndex', index)
+        this.$store.dispatch('setActiveNoteId', this.$store.state.Store.notes[index]._id)
         this.$store.dispatch('scrollToActiveNote')
       }
     }
