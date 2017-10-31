@@ -1,5 +1,5 @@
 <template>
-    <b-button size="sm" class="note-link btn btn-outline-primary btn-sm" :class="[{active: activeNoteIndex == index}, 'note-link', 'btn', 'btn-outline-primary', 'btn-sm']" @click="goToNote(index)">{{ note.title }}</b-button>
+    <b-button size="sm" class="note-link btn btn-outline-primary btn-sm" :class="[{active: activeNoteIndex == index}, 'note-link', 'btn', 'btn-outline-primary', 'btn-sm']" @click="goToNote(index)" @mousedown.middle="openEditNotePage(note._id)">{{ note.title }}</b-button>
 </template>
 
 <script>
@@ -16,6 +16,10 @@
         this.$store.dispatch('setActiveNoteId', this.$store.state.Store.notes[index]._id)
         this.$store.dispatch('addNoteToHistory', this.$store.state.Store.notes[index]._id)
         this.$store.dispatch('scrollToActiveNote')
+      },
+      openEditNotePage (id) {
+        this.$store.dispatch('openEditNotePage', id)
+        this.$router.replace('/editor')
       }
     }
   }
