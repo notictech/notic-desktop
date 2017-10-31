@@ -1,15 +1,20 @@
+import bus from '../../bus'
+
 const {Menu} = require('electron').remote
 const remote = require('electron').remote
 const Datastore = require('nedb')
 const moment = require('moment')
 const Mark = require('mark.js')
+
 let db
 
 const noteContextMenu = Menu.buildFromTemplate([
   {
-    label: 'unfinished...',
+    label: 'Copy',
     accelerator: 'CmdOrCtrl+C',
-    click () {}
+    click () {
+      bus.$emit('copyText')
+    }
   }
 ])
 

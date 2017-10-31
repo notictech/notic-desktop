@@ -38,14 +38,20 @@
 </template>
 
 <script>
+  import bus from '../bus'
   import Icon from '../../../node_modules/vue-awesome/components/Icon.vue'
   import Note from '../components/MainPage/Note.vue'
   import NoteLink from '../components/MainPage/NoteLink.vue'
+  const {clipboard} = require('electron')
 
   export default {
     name: 'main-page',
     components: { Icon, Note, NoteLink },
     mounted () {
+      bus.$on('copyText', () => {
+        // event logic
+        this.copyText()
+      })
       this.$refs.search.focus()
       this.$store.dispatch('initDb', () => {
         this.$store.dispatch('loadHistory')
@@ -87,6 +93,10 @@
       },
       goToPreviousNote () {
         this.$store.dispatch('goToPreviousNote')
+      },
+      copyText () {
+        let selectedText = window.getSelection().getRangeAt(0).toString()
+        clipboard.writeText(selectedText)
       }
     },
     computed: {
@@ -97,7 +107,8 @@
           'ctrl+N': this.openAddNotePage,
           'ctrl+1': this.setSearchFilterNotes,
           'ctrl+2': this.setSearchFilterReminder,
-          'ctrl+3': this.setSearchFilterDeleted
+          'ctrl+3': this.setSearchFilterDeleted,
+          'ctrl+c': this.copyText
         }
       },
       notes () {
