@@ -42,7 +42,6 @@
   import Icon from '../../../node_modules/vue-awesome/components/Icon.vue'
   import Note from '../components/MainPage/Note.vue'
   import NoteLink from '../components/MainPage/NoteLink.vue'
-  const {clipboard} = require('electron')
 
   export default {
     name: 'main-page',
@@ -95,8 +94,7 @@
         this.$store.dispatch('goToPreviousNote')
       },
       copyText () {
-        let selectedText = window.getSelection().getRangeAt(0).toString()
-        clipboard.writeText(selectedText)
+        this.$store.dispatch('copyText')
       }
     },
     computed: {

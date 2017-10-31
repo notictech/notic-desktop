@@ -5,6 +5,7 @@ const remote = require('electron').remote
 const Datastore = require('nedb')
 const moment = require('moment')
 const Mark = require('mark.js')
+const {clipboard} = require('electron')
 
 let db
 
@@ -400,6 +401,10 @@ const actions = {
   },
   updateHistory (context) {
     db.update({doctype: 'history'}, { $set: { data: state.history } })
+  },
+  copyText (context) {
+    let selectedText = window.getSelection().getRangeAt(0).toString()
+    clipboard.writeText(selectedText)
   }
 
 }
