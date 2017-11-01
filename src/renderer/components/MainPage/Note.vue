@@ -6,6 +6,7 @@
             </b-col>
             <b-col cols="6" md="4" style="text-align: right">
                 <b-button size="sm" variant="success" v-show="searchFilter === 'deleted'" @click="restoreNote(note._id)">Restore</b-button>
+                <b-button size="sm" v-show="!note.deleted" :variant="note.star ? 'outline-warning' : 'outline-secondary'" @click="toggleStar(note._id, index)"><icon name="star"></icon></b-button>
                 <b-dropdown class="m-md-2" size="sm">
                     <b-dropdown-item @click="openEditNotePage(note._id)"><icon name="edit"></icon> Edit</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
@@ -13,10 +14,12 @@
                 </b-dropdown>
             </b-col>
         </b-row>
-        <h6 class="card-subtitle mb-2 text-muted date">{{ formattedNoteDate }}</h6>
-        <div class="reminder" v-show="note.reminder">
-            <icon name="bell"></icon> <span class="details">{{ formattedReminderInfo }}</span>
-        </div>
+        <h6 class="card-subtitle mb-2 text-muted date">{{ formattedNoteDate }}
+            <span class="reminder" v-show="note.reminder">
+                <icon name="bell"></icon> <span class="details">{{ formattedReminderInfo }}</span>
+            </span>
+        </h6>
+
         <div class="secrets" v-show="note.secrets.length">
             <b-button size="sm" class="btn-default secret" v-for="(secret, index) in note.secrets" :key="index"><icon name="key"></icon> {{secret.title}}</b-button>
         </div>
@@ -97,6 +100,9 @@
       },
       clickNote (id) {
         this.$store.dispatch('addNoteToHistory', id)
+      },
+      toggleStar (id, index) {
+        this.$store.dispatch('toggleNoteStar', {id: id, index: index})
       }
     }
   }

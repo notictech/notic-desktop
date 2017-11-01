@@ -31,7 +31,8 @@ const blankNote = {
   reminder: false,
   reminderDate: null,
   reminderTime: null,
-  reminderRepeat: 0
+  reminderRepeat: 0,
+  star: false
 }
 
 const state = {
@@ -63,6 +64,9 @@ const mutations = {
   updateNoteContent: (state, text) => { state.note.content = text },
   setNoteCreatedAt: (state, text) => { state.note.createdAt = text },
   setNoteUpdatedAt: (state, text) => { state.note.updatedAt = text },
+  toggleNoteStar (state, index) {
+    state.notes[index].star = !state.notes[index].star
+  },
   addSecretToNote: (state) => {
     let secret = genPassword()
     state.note.secrets.push({
@@ -201,7 +205,9 @@ const actions = {
     } else if (state.searchFilter === 'deleted') {
       and.push({deleted: true})
     } else if (state.searchFilter === 'reminder') {
-      and.push({reminder: true})
+      and.push({reminder: true, deleted: false})
+    } else if (state.searchFilter === 'star') {
+      and.push({star: true, deleted: false})
     }
 
     and.push({doctype: 'note'})
@@ -357,7 +363,7 @@ const actions = {
     this.commit('setActiveNoteId', id)
   },
   addNoteToHistory (context, id) {
-    if (state.history[state.history.length - 1].n === id) {
+    if (state.history.length && state.history[state.history.length - 1].n === id) {
       return
     }
     this.commit('addNoteToHistory', id)
@@ -405,6 +411,14 @@ const actions = {
   copyText (context) {
     let selectedText = window.getSelection().getRangeAt(0).toString()
     clipboard.writeText(selectedText)
+  },
+  toggleNoteStar (context, obj) {
+    db.update({_id: obj.id}, { $set: { star: !state.notes[obj.index].star } }, {}, (err, num) => {
+      if (err) {
+        console.log(err)
+      }
+      this.commit('toggleNoteStar', obj.index)
+    })
   }
 
 }

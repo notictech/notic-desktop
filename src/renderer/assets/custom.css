@@ -100,6 +100,7 @@ button svg {
 .screen.notes .notes .note .reminder {
     color: #dc3545;
     font-size: 11px;
+    margin-left: 10px;
 }
 .screen.notes .notes .note .content{
     margin-top: 20px;

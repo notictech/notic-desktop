@@ -19,6 +19,7 @@
                         <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" ref="search"></b-form-input>
                         <b-button-group size="sm">
                             <b-button :class="['search-filter', {active: searchFilter == 'notes'}]" @click="setSearchFilter('notes')"><icon name="sticky-note"></icon></b-button>
+                            <b-button :class="['search-filter', {active: searchFilter == 'star'}]" @click="setSearchFilter('star')"><icon name="star-o"></icon></b-button>
                             <b-button :class="['search-filter', {active: searchFilter == 'reminder'}]" @click="setSearchFilter('reminder')"><icon name="bell-o"></icon></b-button>
                             <b-button :class="['search-filter', {active: searchFilter == 'deleted'}]" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-button>
                         </b-button-group>
@@ -77,6 +78,9 @@
       setSearchFilterDeleted () {
         this.$store.dispatch('setSearchFilter', 'deleted')
       },
+      setSearchFilterStar () {
+        this.$store.dispatch('setSearchFilter', 'star')
+      },
       restoreAllDeletedNotes () {
         if (confirm('Are you sure you want to restore all deleted notes?')) {
           this.$store.dispatch('restoreAllDeletedNotes')
@@ -104,8 +108,9 @@
           'ctrl+up': this.goToPreviousNote,
           'ctrl+N': this.openAddNotePage,
           'ctrl+1': this.setSearchFilterNotes,
-          'ctrl+2': this.setSearchFilterReminder,
-          'ctrl+3': this.setSearchFilterDeleted,
+          'ctrl+2': this.setSearchFilterStar,
+          'ctrl+3': this.setSearchFilterReminder,
+          'ctrl+4': this.setSearchFilterDeleted,
           'ctrl+c': this.copyText
         }
       },

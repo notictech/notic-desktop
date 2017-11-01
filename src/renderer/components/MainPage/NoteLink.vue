@@ -1,9 +1,12 @@
 <template>
-    <b-button size="sm" class="note-link btn btn-outline-primary btn-sm" :class="[{active: activeNoteIndex == index}, 'note-link', 'btn', 'btn-outline-primary', 'btn-sm']" @click="goToNote(index)" @mousedown.middle="openEditNotePage(note._id)">{{ note.title }}</b-button>
+    <b-button size="sm" class="note-link btn btn-outline-primary btn-sm" :class="[{active: activeNoteIndex == index}, 'note-link', 'btn', 'btn-outline-primary', 'btn-sm']" @click="goToNote(index)" @mousedown.middle="openEditNotePage(note._id)"><icon v-show="note.star && !note.deleted" name="star"></icon> {{ note.title }}</b-button>
 </template>
 
 <script>
+  import Icon from '../../../../node_modules/vue-awesome/components/Icon.vue'
+
   export default {
+    components: {Icon},
     props: ['note', 'index'],
     computed: {
       activeNoteIndex () {
