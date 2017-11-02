@@ -397,6 +397,13 @@ const actions = {
       document.querySelector('#notes').scrollTop = el.offsetTop
     }
   },
+  scrollToActiveNoteLink (context) {
+    const href = '#notelink_index_' + state.activeNoteIndex
+    const el = href ? document.querySelector(href) : null
+    if (el) {
+      document.querySelector('.sidebar').scrollTop = el.offsetTop
+    }
+  },
   loadHistory (context) {
     db.findOne({doctype: 'history'}, (err, doc) => {
       if (err) {

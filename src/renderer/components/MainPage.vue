@@ -2,19 +2,16 @@
     <b-container fluid class="screen notes" v-hotkey="keymap">
         <div class="topbar">
             <div class="row">
-                <div class="col-6">
+                <div class="col-2">
                     <b-button-group size="sm">
-                        <b-btn variant="primary" @click="openAddNotePage()" v-b-tooltip.hover.auto title="Add note (Ctrl+N)"><icon name="plus"></icon></b-btn>
-                    </b-button-group>
-                    <b-button-group size="sm">
-                        <b-btn variant="primary" v-b-tooltip.hover.auto title="Clips (Ctrl+K)"><icon name="clipboard"></icon></b-btn>
+                        <b-btn variant="primary" @click="openAddNotePage()" v-b-tooltip.hover.auto title="Add note (Ctrl+`)"><icon name="plus"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm" v-show="searchFilter === 'deleted'">
                         <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
                         <b-btn variant="danger" @click="emptyTrash()">Empty trash</b-btn>
                     </b-button-group>
                 </div>
-                <div class="col-6">
+                <div class="col-8">
                     <b-input-group size="sm">
                         <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" ref="search"></b-form-input>
                         <b-button-group size="sm">
@@ -25,10 +22,18 @@
                         </b-button-group>
                     </b-input-group>
                 </div>
+                <div class="col-2">
+                    <b-input-group size="sm">
+                        <b-button-group size="sm">
+                            <b-button><icon name="arrow-left"></icon></b-button>
+                            <b-button><icon name="arrow-right"></icon></b-button>
+                        </b-button-group>
+                    </b-input-group>
+                </div>
             </div>
         </div>
         <div class="sidebar">
-            <b-button-group vertical class="notes-links">
+            <b-button-group vertical class="notes-links" id="notes-links">
                 <note-link v-for="(note, index) in notes" :note="note" :key="note._id" :index="index"></note-link>
             </b-button-group>
         </div>
@@ -106,7 +111,7 @@
         return {
           'ctrl+down': this.goToNextNote,
           'ctrl+up': this.goToPreviousNote,
-          'ctrl+N': this.openAddNotePage,
+          'ctrl+space': this.openAddNotePage,
           'ctrl+1': this.setSearchFilterNotes,
           'ctrl+2': this.setSearchFilterStar,
           'ctrl+3': this.setSearchFilterReminder,

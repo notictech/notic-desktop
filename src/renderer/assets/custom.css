@@ -65,6 +65,7 @@ button svg {
 }
 .screen.notes .sidebar .note-link:focus {
     box-shadow: none;
+    background: #e8e8e8;
 }
 .screen.notes .sidebar .note-link:hover {
     background: #007bff;

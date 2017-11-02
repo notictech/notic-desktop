@@ -1,5 +1,5 @@
 <template>
-    <b-card :id="'note_index_' + index" :class="{note: true, active: activeNoteIndex == index}" @mousedown.middle="openEditNotePage(note._id)" @contextmenu="showNoteContextMenu(note._id)" @click="clickNote(note._id)">
+    <b-card :id="'note_index_' + index" :class="{note: true, active: activeNoteIndex == index}" @mousedown.middle="openEditNotePage(note._id)" @contextmenu="showNoteContextMenu(note._id)" @click="clickNote(note._id, index)">
         <b-row>
             <b-col cols="12" md="8">
                 <h4 class="title">{{ note.title }}</h4>
@@ -98,8 +98,11 @@
       showNoteContextMenu (id) {
         this.$store.dispatch('showNoteContextMenu', id)
       },
-      clickNote (id) {
+      clickNote (id, index) {
+        this.$store.dispatch('setActiveNoteIndex', index)
+        this.$store.dispatch('setActiveNoteId', id)
         this.$store.dispatch('addNoteToHistory', id)
+        // this.$store.dispatch('scrollToActiveNoteLink')
       },
       toggleStar (id, index) {
         this.$store.dispatch('toggleNoteStar', {id: id, index: index})
