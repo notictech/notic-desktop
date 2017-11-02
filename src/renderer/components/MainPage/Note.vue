@@ -6,7 +6,7 @@
             </b-col>
             <b-col cols="6" md="4" style="text-align: right">
                 <b-button size="sm" variant="success" v-show="searchFilter === 'deleted'" @click="restoreNote(note._id)">Restore</b-button>
-                <b-button size="sm" v-show="!note.deleted" :variant="note.star ? 'outline-warning' : 'outline-secondary'" @click="toggleStar(note._id, index)"><icon name="star"></icon></b-button>
+                <b-button v-b-tooltip.hover.auto title="Mark as favorite" size="sm" v-show="!note.deleted" :variant="note.star ? 'outline-warning' : 'outline-secondary'" @click="toggleStar(note._id, index)"><icon name="star"></icon></b-button>
                 <b-dropdown class="m-md-2" size="sm">
                     <b-dropdown-item @click="openEditNotePage(note._id)"><icon name="edit"></icon> Edit</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
