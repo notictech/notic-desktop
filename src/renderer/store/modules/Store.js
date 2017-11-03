@@ -49,7 +49,8 @@ const state = {
   notes: [],
   note: {},
   searchQuery: '',
-  history: []
+  history: [],
+  historyIndex: 0
 }
 
 const mutations = {
@@ -135,13 +136,15 @@ const mutations = {
     state.note.reminderRepeat = event
   },
   setHistory: (state, data) => { state.history = data },
+  setHistoryIndex: (state, data) => { state.historyIndex = data },
   addNoteToHistory: (state, id) => {
     if (state.history.length === state.settings.historyMaxLength - 1) {
       state.history.shift()
     }
     state.history.push({
-      s: state.searchQuery,
-      n: id
+      q: state.searchQuery,
+      f: state.searchFilter,
+      i: id
     })
   }
 
@@ -151,8 +154,21 @@ const getters = {
   notes: state => {
     return state.notes
   },
+  searchQuery: state => {
+    return state.searchQuery
+  },
   searchFilter: state => {
     return state.searchFilter
+  },
+  getNoteIndexById: (state) => (id) => {
+    let index
+    for (let i = 0; i < state.notes.length; i++) {
+      if (state.notes[i]._id === id) {
+        index = i
+        break
+      }
+    }
+    return index
   }
 }
 
@@ -183,9 +199,10 @@ const actions = {
       callback()
     })
   },
-  searchNotes (context, query) {
-    this.commit('setSearchQuery', query)
-    let queryWords = query.trim().split(' ')
+  searchNotes (context, obj) {
+    console.log('search')
+    this.commit('setSearchQuery', obj.query)
+    let queryWords = obj.query.trim().split(' ')
     let and = []
     for (let i = 0; i < queryWords.length; i++) {
       let or = []
@@ -221,17 +238,18 @@ const actions = {
       if (docs.length) {
         this.commit('setActiveNoteIndex', 0)
         this.commit('setActiveNoteId', docs[0]._id)
+        if (obj.cb) obj.cb()
       }
     })
   },
   actionDeleteNote (context, id) {
     db.remove({ _id: id }, {}, () => {
-      this.dispatch('searchNotes', state.searchQuery)
+      this.dispatch('searchNotes', {query: state.searchQuery})
     })
   },
   actionMarkNoteAsDeleted (context, id) {
     db.update({ _id: id }, { $set: { deleted: true } }, () => {
-      this.dispatch('searchNotes', state.searchQuery)
+      this.dispatch('searchNotes', {query: state.searchQuery})
     })
   },
   openAddNotePage (context) {
@@ -285,14 +303,14 @@ const actions = {
       db.insert(state.note, (err) => {
         if (err) console.log(err)
         this.commit('updateNote', copyObject(blankNote))
-        this.dispatch('searchNotes', state.searchQuery)
+        this.dispatch('searchNotes', {query: state.searchQuery})
         successCallback()
       })
     } else {
       this.commit('setNoteUpdatedAt', now.valueOf())
       db.update({ _id: state.note._id }, state.note, {}, () => {
         this.commit('updateNote', copyObject(blankNote))
-        this.dispatch('searchNotes', state.searchQuery)
+        this.dispatch('searchNotes', {query: state.searchQuery})
         successCallback()
       })
     }
@@ -323,23 +341,23 @@ const actions = {
   },
   setSearchFilter (context, filter) {
     this.commit('setSearchFilter', filter)
-    this.dispatch('searchNotes', state.searchQuery)
+    this.dispatch('searchNotes', {query: state.searchQuery})
   },
   restoreAllDeletedNotes (context) {
     db.update({doctype: 'note', deleted: true}, {$set: {deleted: false}}, {multi: true}, () => {
       this.commit('setSearchFilter', 'notes')
-      this.dispatch('searchNotes', state.searchQuery)
+      this.dispatch('searchNotes', {query: state.searchQuery})
     })
   },
   emptyTrash (context) {
     db.remove({doctype: 'note', deleted: true}, {multi: true}, () => {
       this.commit('setSearchFilter', 'notes')
-      this.dispatch('searchNotes', state.searchQuery)
+      this.dispatch('searchNotes', {query: state.searchQuery})
     })
   },
   restoreDeletedNote (context, id) {
     db.update({ _id: id }, {$set: {deleted: false}}, () => {
-      this.dispatch('searchNotes', state.searchQuery)
+      this.dispatch('searchNotes', {query: state.searchQuery})
     })
   },
   editorToggleReminder (context) {
@@ -361,7 +379,7 @@ const actions = {
     this.commit('setActiveNoteId', id)
   },
   addNoteToHistory (context, id) {
-    if (state.history.length && state.history[state.history.length - 1].n === id) {
+    if (state.history.length && state.history[state.history.length - 1].i === id) {
       return
     }
     this.commit('addNoteToHistory', id)
@@ -408,6 +426,7 @@ const actions = {
         console.log(err)
       }
       this.commit('setHistory', doc.data)
+      this.commit('setHistoryIndex', (state.history.length > 0) ? state.history.length - 1 : 0)
     })
   },
   updateHistory (context) {
@@ -423,6 +442,40 @@ const actions = {
         console.log(err)
       }
       this.commit('toggleNoteStar', obj.index)
+    })
+  },
+  historyForward (context) {
+    if (!state.history.length) return
+    if (state.historyIndex === state.history.length - 1) {
+      this.commit('setHistoryIndex', 0)
+    } else {
+      this.commit('setHistoryIndex', state.historyIndex + 1)
+    }
+    this.commit('setSearchFilter', state.history[state.historyIndex].f)
+    this.dispatch('searchNotes', {
+      query: state.history[state.historyIndex].q,
+      cb: () => {
+        this.commit('setActiveNoteId', state.history[state.historyIndex].i)
+        this.commit('setActiveNoteIndex', this.getters.getNoteIndexById(state.history[state.historyIndex].i))
+        this.dispatch('scrollToActiveNote')
+      }
+    })
+  },
+  historyBack (context) {
+    if (!state.history.length) return
+    if (state.historyIndex === 0) {
+      this.commit('setHistoryIndex', state.history.length - 1)
+    } else {
+      this.commit('setHistoryIndex', state.historyIndex - 1)
+    }
+    this.commit('setSearchFilter', state.history[state.historyIndex].f)
+    this.dispatch('searchNotes', {
+      query: state.history[state.historyIndex].q,
+      cb: () => {
+        this.commit('setActiveNoteId', state.history[state.historyIndex].i)
+        this.commit('setActiveNoteIndex', this.getters.getNoteIndexById(state.history[state.historyIndex].i))
+        this.dispatch('scrollToActiveNote')
+      }
     })
   }
 

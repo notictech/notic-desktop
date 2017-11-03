@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-8">
                     <b-input-group size="sm">
-                        <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" ref="search"></b-form-input>
+                        <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" ref="search" :value="searchQuery"></b-form-input>
                         <b-button-group size="sm">
                             <b-button v-b-tooltip.hover.auto title="Notes (Ctrl+1)" :class="['search-filter', {active: searchFilter == 'notes'}]" @click="setSearchFilter('notes')"><icon name="sticky-note"></icon></b-button>
                             <b-button v-b-tooltip.hover.auto title="Favorites (Ctrl+2)" :class="['search-filter', {active: searchFilter == 'star'}]" @click="setSearchFilter('star')"><icon name="star-o"></icon></b-button>
@@ -21,8 +21,8 @@
                             <b-button v-b-tooltip.hover.auto title="Deleted (Ctrl+4)" :class="['search-filter', {active: searchFilter == 'deleted'}]" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-button>
                         </b-button-group>
                         <b-button-group size="sm" style="margin-left: 10px">
-                            <b-button v-b-tooltip.hover.auto title="History back (Ctrl+Left)"><icon name="arrow-left"></icon></b-button>
-                            <b-button v-b-tooltip.hover.auto title="History forward (Ctrl+Right)"><icon name="arrow-right"></icon></b-button>
+                            <b-button v-b-tooltip.hover.auto title="History back (Ctrl+Left)" @click="historyBack()"><icon name="arrow-left"></icon></b-button>
+                            <b-button v-b-tooltip.hover.auto title="History forward (Ctrl+Right)" @click="historyForward()"><icon name="arrow-right"></icon></b-button>
                         </b-button-group>
                     </b-input-group>
                 </div>
@@ -61,7 +61,7 @@
     },
     methods: {
       searchNotes (event) {
-        this.$store.dispatch('searchNotes', event)
+        this.$store.dispatch('searchNotes', {query: event, cb: () => {}})
       },
       openAddNotePage () {
         this.$store.dispatch('openAddNotePage')
@@ -100,6 +100,12 @@
       },
       copyText () {
         this.$store.dispatch('copyText')
+      },
+      historyForward () {
+        this.$store.dispatch('historyForward')
+      },
+      historyBack () {
+        this.$store.dispatch('historyBack')
       }
     },
     computed: {
@@ -107,6 +113,8 @@
         return {
           'ctrl+down': this.goToNextNote,
           'ctrl+up': this.goToPreviousNote,
+          'ctrl+left': this.historyBack,
+          'ctrl+right': this.historyForward,
           'ctrl+space': this.openAddNotePage,
           'ctrl+1': this.setSearchFilterNotes,
           'ctrl+2': this.setSearchFilterStar,
@@ -120,6 +128,9 @@
       },
       searchFilter () {
         return this.$store.getters.searchFilter
+      },
+      searchQuery () {
+        return this.$store.getters.searchQuery
       }
     }
   }
