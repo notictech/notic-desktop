@@ -2,7 +2,7 @@
     <b-container fluid class="screen notes" v-hotkey="keymap">
         <div class="topbar">
             <div class="row">
-                <div class="col-2">
+                <div class="col-4">
                     <b-button-group size="sm">
                         <b-btn variant="primary" @click="openAddNotePage()" v-b-tooltip.hover.auto title="Add note (Ctrl+Space)"><icon name="plus"></icon></b-btn>
                     </b-button-group>
@@ -20,11 +20,7 @@
                             <b-button v-b-tooltip.hover.auto title="Reminders (Ctrl+3)" :class="['search-filter', {active: searchFilter == 'reminder'}]" @click="setSearchFilter('reminder')"><icon name="bell-o"></icon></b-button>
                             <b-button v-b-tooltip.hover.auto title="Deleted (Ctrl+4)" :class="['search-filter', {active: searchFilter == 'deleted'}]" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-button>
                         </b-button-group>
-                    </b-input-group>
-                </div>
-                <div class="col-2">
-                    <b-input-group size="sm">
-                        <b-button-group size="sm">
+                        <b-button-group size="sm" style="margin-left: 10px">
                             <b-button v-b-tooltip.hover.auto title="History back (Ctrl+Left)"><icon name="arrow-left"></icon></b-button>
                             <b-button v-b-tooltip.hover.auto title="History forward (Ctrl+Right)"><icon name="arrow-right"></icon></b-button>
                         </b-button-group>

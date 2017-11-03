@@ -179,8 +179,6 @@ const actions = {
         note.reminderTime = '09:00'
         db.insert(note)
         db.insert({doctype: 'history', data: state.history})
-      } else {
-        callback()
       }
       callback()
     })
