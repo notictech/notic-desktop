@@ -146,6 +146,14 @@ const mutations = {
       f: state.searchFilter,
       i: id
     })
+  },
+  deleteFromHistory: (state, id) => {
+    for (let i = 0; i < state.history.length; i++) {
+      if (state.history[i].i === id) {
+        state.history.splice(i, 1)
+        i--
+      }
+    }
   }
 
 }
@@ -244,11 +252,13 @@ const actions = {
   },
   actionDeleteNote (context, id) {
     db.remove({ _id: id }, {}, () => {
+      this.commit('deleteFromHistory', id)
       this.dispatch('searchNotes', {query: state.searchQuery})
     })
   },
   actionMarkNoteAsDeleted (context, id) {
     db.update({ _id: id }, { $set: { deleted: true } }, () => {
+      this.commit('deleteFromHistory', id)
       this.dispatch('searchNotes', {query: state.searchQuery})
     })
   },
@@ -478,7 +488,6 @@ const actions = {
       }
     })
   }
-
 }
 
 function copyObject (obj) {
