@@ -56,7 +56,9 @@
       this.$refs.search.focus()
       this.$store.dispatch('initDb', () => {
         this.$store.dispatch('loadHistory')
-        this.searchNotes('')
+        if (this.$store.state.Store.searchQuery === null) {
+          this.searchNotes('')
+        }
       })
     },
     methods: {

@@ -48,7 +48,7 @@ const state = {
   },
   notes: [],
   note: {},
-  searchQuery: '',
+  searchQuery: null,
   history: [],
   historyIndex: 0
 }
