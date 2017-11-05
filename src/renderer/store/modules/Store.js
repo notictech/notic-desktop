@@ -253,12 +253,14 @@ const actions = {
   actionDeleteNote (context, id) {
     db.remove({ _id: id }, {}, () => {
       this.commit('deleteFromHistory', id)
+      this.dispatch('updateHistory')
       this.dispatch('searchNotes', {query: state.searchQuery})
     })
   },
   actionMarkNoteAsDeleted (context, id) {
     db.update({ _id: id }, { $set: { deleted: true } }, () => {
       this.commit('deleteFromHistory', id)
+      this.dispatch('updateHistory')
       this.dispatch('searchNotes', {query: state.searchQuery})
     })
   },
@@ -310,18 +312,28 @@ const actions = {
     if (state.editorMode === 'add') {
       this.commit('setNoteCreatedAt', now.valueOf())
       this.commit('setNoteUpdatedAt', now.valueOf())
-      db.insert(state.note, (err) => {
+      db.insert(state.note, (err, newDoc) => {
         if (err) console.log(err)
         this.commit('updateNote', copyObject(blankNote))
-        this.dispatch('searchNotes', {query: state.searchQuery})
-        successCallback()
+        this.dispatch('addNoteToHistory', newDoc._id)
+        this.dispatch('searchNotes', {
+          query: state.searchQuery,
+          cb: () => {
+            successCallback()
+          }
+        })
       })
     } else {
       this.commit('setNoteUpdatedAt', now.valueOf())
       db.update({ _id: state.note._id }, state.note, {}, () => {
         this.commit('updateNote', copyObject(blankNote))
-        this.dispatch('searchNotes', {query: state.searchQuery})
-        successCallback()
+        this.dispatch('addNoteToHistory', state.note._id)
+        this.dispatch('searchNotes', {
+          query: state.searchQuery,
+          cb: () => {
+            successCallback()
+          }
+        })
       })
     }
   },
