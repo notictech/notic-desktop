@@ -414,6 +414,7 @@ const actions = {
     noteContextMenu.popup(remote.getCurrentWindow())
   },
   goToNextNote (context) {
+    if (!state.notes.length) return
     if (state.activeNoteIndex === state.notes.length - 1) {
       this.commit('setActiveNoteIndex', 0)
     } else {
@@ -423,6 +424,7 @@ const actions = {
     this.dispatch('scrollToActiveNote')
   },
   goToPreviousNote (context) {
+    if (!state.notes.length) return
     if (state.activeNoteIndex === 0) {
       this.commit('setActiveNoteIndex', state.notes.length - 1)
     } else {
