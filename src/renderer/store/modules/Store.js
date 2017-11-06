@@ -48,9 +48,10 @@ const state = {
   },
   notes: [],
   note: {},
-  searchQuery: null,
+  searchQuery: '',
   history: [],
-  historyIndex: 0
+  historyIndex: 0,
+  appJustStarted: true
 }
 
 const mutations = {
@@ -154,6 +155,9 @@ const mutations = {
         i--
       }
     }
+  },
+  setAppJustStarted: (state, data) => {
+    state.appJustStarted = data
   }
 
 }
@@ -499,6 +503,9 @@ const actions = {
         this.dispatch('scrollToActiveNote')
       }
     })
+  },
+  setAppJustStarted (context, data) {
+    this.commit('setAppJustStarted', data)
   }
 }
 
