@@ -11,7 +11,7 @@ let db
 
 const noteContextMenu = Menu.buildFromTemplate([
   {
-    label: 'Copy',
+    label: 'Copy selected',
     accelerator: 'CmdOrCtrl+C',
     click () {
       bus.$emit('copyText')
