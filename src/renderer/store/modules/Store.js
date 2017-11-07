@@ -325,6 +325,7 @@ const actions = {
         if (err) console.log(err)
         this.commit('updateNote', copyObject(blankNote))
         this.dispatch('addNoteToHistory', newDoc._id)
+        this.commit('setRecentNoteId', newDoc._id)
         this.dispatch('searchNotes', {
           query: state.searchQuery,
           cb: () => {
