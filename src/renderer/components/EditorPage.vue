@@ -75,6 +75,7 @@
 <script>
   import EditorSecret from '../components/MainPage/EditorSecret.vue'
   import moment from 'moment'
+
   export default {
     name: 'editor-page',
     components: { EditorSecret },
@@ -106,7 +107,9 @@
       keymap () {
         return {
           'esc': this.close,
-          'ctrl+s': this.editorSaveAndClose
+          'ctrl+s': this.editorSaveAndClose,
+          'ctrl+left': this.historyBack,
+          'ctrl+right': this.historyForward
         }
       }
     },
@@ -142,6 +145,12 @@
       },
       editorChangeReminderRepeat (event) {
         this.$store.dispatch('editorChangeReminderRepeat', event)
+      },
+      historyForward () {
+        this.$store.dispatch('historyForwardEditor')
+      },
+      historyBack () {
+        this.$store.dispatch('historyBackEditor')
       }
     }
   }

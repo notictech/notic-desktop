@@ -51,12 +51,14 @@ const state = {
   searchQuery: '',
   history: [],
   historyIndex: 0,
-  appJustStarted: true
+  appJustStarted: true,
+  recentNoteId: null
 }
 
 const mutations = {
   setActiveNoteIndex: (state, data) => { state.activeNoteIndex = data },
   setActiveNoteId: (state, data) => { state.activeNoteId = data },
+  setRecentNoteId: (state, data) => { state.recentNoteId = data },
   setEditorMode: (state, data) => { state.editorMode = data },
   updateNotes: (state, data) => { state.notes = data },
   updateNote: (state, data) => {
@@ -288,7 +290,11 @@ const actions = {
 
       this.commit('updateNote', doc)
       this.commit('setEditorMode', 'edit')
+      this.commit('setRecentNoteId', id)
     })
+  },
+  openRecentNote (context) {
+    this.dispatch('openEditNotePage', state.recentNoteId)
   },
   editorChangeTitle (context, text) {
     this.commit('updateNoteTitle', text)
@@ -471,7 +477,7 @@ const actions = {
       this.commit('toggleNoteStar', obj.index)
     })
   },
-  historyForward (context) {
+  historyForward (context, cb) {
     if (!state.history.length) return
     if (state.historyIndex === state.history.length - 1) {
       this.commit('setHistoryIndex', 0)
@@ -485,10 +491,11 @@ const actions = {
         this.commit('setActiveNoteId', state.history[state.historyIndex].i)
         this.commit('setActiveNoteIndex', this.getters.getNoteIndexById(state.history[state.historyIndex].i))
         this.dispatch('scrollToActiveNote')
+        if (cb) cb()
       }
     })
   },
-  historyBack (context) {
+  historyBack (context, cb) {
     if (!state.history.length) return
     if (state.historyIndex === 0) {
       this.commit('setHistoryIndex', state.history.length - 1)
@@ -502,11 +509,24 @@ const actions = {
         this.commit('setActiveNoteId', state.history[state.historyIndex].i)
         this.commit('setActiveNoteIndex', this.getters.getNoteIndexById(state.history[state.historyIndex].i))
         this.dispatch('scrollToActiveNote')
+        if (cb) cb()
       }
     })
   },
   setAppJustStarted (context, data) {
     this.commit('setAppJustStarted', data)
+  },
+  historyBackEditor (context) {
+    this.dispatch('historyBack', () => {
+      this.commit('updateNote', copyObject(blankNote))
+      this.dispatch('openEditNotePage', state.history[state.historyIndex].i)
+    })
+  },
+  historyForwardEditor (context) {
+    this.dispatch('historyForward', () => {
+      this.commit('updateNote', copyObject(blankNote))
+      this.dispatch('openEditNotePage', state.history[state.historyIndex].i)
+    })
   }
 }
 

@@ -6,6 +6,9 @@
                     <b-button-group size="sm">
                         <b-btn variant="primary" @click="openAddNotePage()" v-b-tooltip.hover.auto title="Add note (Ctrl+Space)"><icon name="plus"></icon></b-btn>
                     </b-button-group>
+                    <b-button-group size="sm">
+                        <b-btn variant="primary" @click="openRecentNote()" v-b-tooltip.hover.auto title="Open recent note (Ctrl+E)"><icon name="pencil-square-o"></icon></b-btn>
+                    </b-button-group>
                     <b-button-group size="sm" v-show="searchFilter === 'deleted'">
                         <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
                         <b-btn variant="danger" @click="emptyTrash()">Empty trash</b-btn>
@@ -70,6 +73,11 @@
         this.$store.dispatch('openAddNotePage')
         this.$router.replace('/editor')
       },
+      openRecentNote () {
+        if (!this.$store.state.Store.recentNoteId) return
+        this.$store.dispatch('openRecentNote')
+        this.$router.replace('/editor')
+      },
       setSearchFilter (filter) {
         this.$store.dispatch('setSearchFilter', filter)
       },
@@ -119,6 +127,7 @@
           'ctrl+left': this.historyBack,
           'ctrl+right': this.historyForward,
           'ctrl+space': this.openAddNotePage,
+          'ctrl+e': this.openRecentNote,
           'ctrl+1': this.setSearchFilterNotes,
           'ctrl+2': this.setSearchFilterStar,
           'ctrl+3': this.setSearchFilterReminder,
