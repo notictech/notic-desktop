@@ -258,6 +258,9 @@ const actions = {
   actionDeleteNote (context, id) {
     db.remove({ _id: id }, {}, () => {
       this.commit('deleteFromHistory', id)
+      if (state.recentNoteId === id) {
+        this.commit('setRecentNoteId', null)
+      }
       this.dispatch('updateHistory')
       this.dispatch('searchNotes', {query: state.searchQuery})
     })
