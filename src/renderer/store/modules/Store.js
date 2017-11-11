@@ -52,13 +52,15 @@ const state = {
   history: [],
   historyIndex: 0,
   appJustStarted: true,
-  recentNoteId: null
+  misc: {
+    recentNoteId: null
+  }
 }
 
 const mutations = {
   setActiveNoteIndex: (state, data) => { state.activeNoteIndex = data },
   setActiveNoteId: (state, data) => { state.activeNoteId = data },
-  setRecentNoteId: (state, data) => { state.recentNoteId = data },
+  setRecentNoteId: (state, data) => { state.misc.recentNoteId = data },
   setEditorMode: (state, data) => { state.editorMode = data },
   updateNotes: (state, data) => { state.notes = data },
   updateNote: (state, data) => {
@@ -158,6 +160,7 @@ const mutations = {
       }
     }
   },
+  setMiscData: (state, data) => { state.misc = data },
   setAppJustStarted: (state, data) => {
     state.appJustStarted = data
   }
@@ -209,6 +212,7 @@ const actions = {
         note.reminderTime = '09:00'
         db.insert(note)
         db.insert({doctype: 'history', data: state.history})
+        db.insert({doctype: 'misc', data: state.misc})
       }
       callback()
     })
@@ -258,8 +262,9 @@ const actions = {
   actionDeleteNote (context, id) {
     db.remove({ _id: id }, {}, () => {
       this.commit('deleteFromHistory', id)
-      if (state.recentNoteId === id) {
+      if (state.misc.recentNoteId === id) {
         this.commit('setRecentNoteId', null)
+        this.dispatch('updateMiscData')
       }
       this.dispatch('updateHistory')
       this.dispatch('searchNotes', {query: state.searchQuery})
@@ -294,10 +299,11 @@ const actions = {
       this.commit('updateNote', doc)
       this.commit('setEditorMode', 'edit')
       this.commit('setRecentNoteId', id)
+      this.dispatch('updateMiscData')
     })
   },
   openRecentNote (context) {
-    this.dispatch('openEditNotePage', state.recentNoteId)
+    this.dispatch('openEditNotePage', state.misc.recentNoteId)
   },
   editorChangeTitle (context, text) {
     this.commit('updateNoteTitle', text)
@@ -329,6 +335,7 @@ const actions = {
         this.commit('updateNote', copyObject(blankNote))
         this.dispatch('addNoteToHistory', newDoc._id)
         this.commit('setRecentNoteId', newDoc._id)
+        this.dispatch('updateMiscData')
         this.dispatch('searchNotes', {
           query: state.searchQuery,
           cb: () => {
@@ -468,6 +475,17 @@ const actions = {
   },
   updateHistory (context) {
     db.update({doctype: 'history'}, { $set: { data: state.history } })
+  },
+  loadMiscData (context) {
+    db.findOne({doctype: 'misc'}, (err, doc) => {
+      if (err) {
+        console.log(err)
+      }
+      this.commit('setMiscData', doc.data)
+    })
+  },
+  updateMiscData (context) {
+    db.update({doctype: 'misc'}, { $set: { data: state.misc } })
   },
   copyText (context) {
     let selectedText = window.getSelection().getRangeAt(0).toString()

@@ -59,6 +59,7 @@
       this.$refs.search.focus()
       this.$store.dispatch('initDb', () => {
         this.$store.dispatch('loadHistory')
+        this.$store.dispatch('loadMiscData')
         if (this.$store.state.Store.appJustStarted) {
           this.searchNotes(this.$store.state.Store.searchQuery)
           this.$store.dispatch('setAppJustStarted', false)
@@ -74,7 +75,7 @@
         this.$router.replace('/editor')
       },
       openRecentNote () {
-        if (!this.$store.state.Store.recentNoteId) return
+        if (!this.$store.state.Store.misc.recentNoteId) return
         this.$store.dispatch('openRecentNote')
         this.$router.replace('/editor')
       },
