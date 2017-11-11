@@ -392,9 +392,20 @@ const actions = {
     })
   },
   emptyTrash (context) {
-    db.remove({doctype: 'note', deleted: true}, {multi: true}, () => {
-      this.commit('setSearchFilter', 'notes')
-      this.dispatch('searchNotes', {query: state.searchQuery})
+    db.find({doctype: 'note', deleted: true}, (err, docs) => {
+      if (err) console.log(err)
+      for (let i = 0; i < docs.length; i++) {
+        this.commit('deleteFromHistory', docs[i]._id)
+        if (state.misc.recentNoteId === docs[i]._id) {
+          this.commit('setRecentNoteId', null)
+        }
+      }
+      this.dispatch('updateHistory')
+      this.dispatch('updateMiscData')
+      db.remove({doctype: 'note', deleted: true}, {multi: true}, () => {
+        this.commit('setSearchFilter', 'notes')
+        this.dispatch('searchNotes', {query: state.searchQuery})
+      })
     })
   },
   restoreDeletedNote (context, id) {
