@@ -67,6 +67,9 @@
       })
     },
     methods: {
+      focusOnSearch () {
+        this.$refs.search.focus()
+      },
       searchNotes (event) {
         this.$store.dispatch('searchNotes', {query: event, cb: () => {}})
       },
@@ -123,6 +126,7 @@
     computed: {
       keymap () {
         return {
+          'ctrl+f': this.focusOnSearch,
           'ctrl+down': this.goToNextNote,
           'ctrl+up': this.goToPreviousNote,
           'ctrl+left': this.historyBack,
