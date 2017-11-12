@@ -52,12 +52,14 @@ const state = {
   history: [],
   historyIndex: 0,
   appJustStarted: true,
+  noteIsModified: false,
   misc: {
     recentNoteId: null
   }
 }
 
 const mutations = {
+  setNoteIsModified: (state, data) => { state.noteIsModified = data },
   setActiveNoteIndex: (state, data) => { state.activeNoteIndex = data },
   setActiveNoteId: (state, data) => { state.activeNoteId = data },
   setRecentNoteId: (state, data) => { state.misc.recentNoteId = data },
@@ -346,8 +348,8 @@ const actions = {
     } else {
       this.commit('setNoteUpdatedAt', now.valueOf())
       db.update({ _id: state.note._id }, state.note, {}, () => {
-        this.commit('updateNote', copyObject(blankNote))
         this.dispatch('addNoteToHistory', state.note._id)
+        this.commit('updateNote', copyObject(blankNote))
         this.dispatch('searchNotes', {
           query: state.searchQuery,
           cb: () => {
@@ -435,6 +437,16 @@ const actions = {
     if (state.history.length && state.history[state.history.length - 1].i === id) {
       return
     }
+    // let alreadyInHistory = false
+    // for (let i = 0; i < state.history.length; i++) {
+    //   if (state.history[i].i === id) {
+    //     alreadyInHistory = true
+    //   }
+    // }
+    // if (!alreadyInHistory) {
+    //   this.commit('addNoteToHistory', id)
+    //   this.dispatch('updateHistory')
+    // }
     this.commit('addNoteToHistory', id)
     this.dispatch('updateHistory')
   },
@@ -560,6 +572,11 @@ const actions = {
       this.commit('updateNote', copyObject(blankNote))
       this.dispatch('openEditNotePage', state.history[state.historyIndex].i)
     })
+  },
+  setNoteIsModified (context, data) {
+    if (state.editorMode === 'edit') {
+      this.commit('setNoteIsModified', data)
+    }
   }
 }
 

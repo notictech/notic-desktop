@@ -8,6 +8,7 @@
                         <h4 v-else>Edit note</h4>
                     </div>
                     <div class="col-6" style="text-align: right">
+                        <b-button size="sm" type="button" variant="warning" v-show="this.$store.state.Store.noteIsModified" @click="editorSave()"><icon name="save"></icon></b-button>
                         <b-button size="sm" type="button" variant="success" @click="editorSaveAndClose()"><icon name="save"></icon> Save & close</b-button>
                         <b-button-group size="sm">
                             <b-btn @click="close()"><icon name="times"></icon></b-btn>
@@ -15,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <div class="content-wrap">
+            <div class="content-wrap" @input="modify()">
                 <b-tabs card small no-fade>
                     <b-tab title="Editor" active>
                         <b-form-group id="exampleInputGroup1" label-for="titleInput">
@@ -83,6 +84,9 @@
       editorMode () {
         return this.$store.state.Store.editorMode
       },
+      noteIsModified () {
+        return this.$store.state.Store.noteIsModified
+      },
       noteTitle () {
         return this.$store.state.Store.note.title
       },
@@ -108,6 +112,7 @@
         return {
           'esc': this.close,
           'ctrl+s': this.editorSaveAndClose,
+          'ctrl+shift+s': this.editorSave,
           'ctrl+left': this.historyBack,
           'ctrl+right': this.historyForward
         }
@@ -115,8 +120,12 @@
     },
     mounted () {
       this.$refs.content.focus()
+      this.$store.dispatch('setNoteIsModified', false)
     },
     methods: {
+      modify () {
+        this.$store.dispatch('setNoteIsModified', true)
+      },
       close () {
         this.$router.replace('/')
       },
@@ -126,6 +135,16 @@
       editorChangeContent (event) {
         this.$store.dispatch('editorChangeContent', event)
       },
+      editorSave () {
+        if (this.$store.state.Store.editorMode === 'add') {
+          return
+        }
+        let id = this.$store.state.Store.note._id
+        this.$store.dispatch('editorSaveAndClose', () => {
+          this.$store.dispatch('openEditNotePage', id)
+          this.$store.dispatch('setNoteIsModified', false)
+        })
+      },
       editorSaveAndClose () {
         this.$store.dispatch('editorSaveAndClose', () => {
           this.$router.replace('/')
@@ -133,9 +152,11 @@
       },
       editorAddSecret () {
         this.$store.dispatch('editorAddSecret')
+        this.modify()
       },
       editorToggleReminder () {
         this.$store.dispatch('editorToggleReminder')
+        this.modify()
       },
       editorChangeReminderDate (event) {
         this.$store.dispatch('editorChangeReminderDate', event)
@@ -147,9 +168,15 @@
         this.$store.dispatch('editorChangeReminderRepeat', event)
       },
       historyForward () {
+        if (this.$store.state.Store.noteIsModified) {
+          return
+        }
         this.$store.dispatch('historyForwardEditor')
       },
       historyBack () {
+        if (this.$store.state.Store.noteIsModified) {
+          return
+        }
         this.$store.dispatch('historyBackEditor')
       }
     }
