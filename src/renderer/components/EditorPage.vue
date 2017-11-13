@@ -119,6 +119,9 @@
       }
     },
     mounted () {
+      if (this.$store.state.Store.appJustStarted) {
+        this.$router.replace('/')
+      }
       this.$refs.content.focus()
       this.$store.dispatch('setNoteIsModified', false)
     },
