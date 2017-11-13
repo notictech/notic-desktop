@@ -21,7 +21,7 @@
         </h6>
 
         <div class="secrets" v-show="note.secrets.length">
-            <b-button size="sm" class="btn-default secret" v-for="(secret, index) in note.secrets" :key="index"><icon name="key"></icon> {{secret.title}}</b-button>
+            <b-button size="sm" class="btn-info secret" v-for="(secret, index) in note.secrets" :key="index"><icon name="key"></icon> {{secret.title}}</b-button>
         </div>
         <div class="card-text content">{{ note.content }}</div>
     </b-card>
