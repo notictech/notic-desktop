@@ -62,6 +62,7 @@
         this.$store.dispatch('loadMiscData')
         if (this.$store.state.Store.appJustStarted) {
           this.searchNotes(this.$store.state.Store.searchQuery)
+          this.$store.dispatch('loadReminders')
           this.$store.dispatch('setAppJustStarted', false)
         }
       })

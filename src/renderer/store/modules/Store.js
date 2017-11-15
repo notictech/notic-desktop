@@ -55,7 +55,8 @@ const state = {
   noteIsModified: false,
   misc: {
     recentNoteId: null
-  }
+  },
+  reminders: []
 }
 
 const mutations = {
@@ -163,6 +164,7 @@ const mutations = {
     }
   },
   setMiscData: (state, data) => { state.misc = data },
+  setReminders: (state, data) => { state.reminders = data },
   setAppJustStarted: (state, data) => {
     state.appJustStarted = data
   }
@@ -276,6 +278,7 @@ const actions = {
     db.update({ _id: id }, { $set: { deleted: true } }, () => {
       this.commit('deleteFromHistory', id)
       this.dispatch('updateHistory')
+      this.dispatch('loadReminders')
       this.dispatch('searchNotes', {query: state.searchQuery})
     })
   },
@@ -338,6 +341,7 @@ const actions = {
         this.dispatch('addNoteToHistory', newDoc._id)
         this.commit('setRecentNoteId', newDoc._id)
         this.dispatch('updateMiscData')
+        this.dispatch('loadReminders')
         this.dispatch('searchNotes', {
           query: state.searchQuery,
           cb: () => {
@@ -349,6 +353,7 @@ const actions = {
       this.commit('setNoteUpdatedAt', now.valueOf())
       db.update({ _id: state.note._id }, state.note, {}, () => {
         this.dispatch('addNoteToHistory', state.note._id)
+        this.dispatch('loadReminders')
         this.commit('updateNote', copyObject(blankNote))
         this.dispatch('searchNotes', {
           query: state.searchQuery,
@@ -413,6 +418,7 @@ const actions = {
   restoreDeletedNote (context, id) {
     db.update({ _id: id }, {$set: {deleted: false}}, () => {
       this.dispatch('searchNotes', {query: state.searchQuery})
+      this.dispatch('loadReminders')
     })
   },
   editorToggleReminder (context) {
@@ -509,6 +515,20 @@ const actions = {
   },
   updateMiscData (context) {
     db.update({doctype: 'misc'}, { $set: { data: state.misc } })
+  },
+  loadReminders (context) {
+    db.find({deleted: false, reminder: true}, {
+      _id: 1,
+      reminderDate: 1,
+      reminderTime: 1,
+      reminderRepeat: 1
+    }, (err, docs) => {
+      if (err) {
+        console.log(err)
+      }
+      this.commit('setReminders', docs)
+      // console.log('remainders are loaded ', docs)
+    })
   },
   copyText (context) {
     let selectedText = window.getSelection().getRangeAt(0).toString()
