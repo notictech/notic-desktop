@@ -23,7 +23,7 @@ function createWindow () {
     width: 800,
     height: 600,
     useContentSize: true,
-    icon: 'app/icons/notic-logo.png'
+    icon: `${__static}/icons/notic-logo.png`
   })
 
   mainWindow.loadURL(winURL)

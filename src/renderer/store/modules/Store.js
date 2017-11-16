@@ -31,7 +31,7 @@ const blankNote = {
   reminder: false,
   reminderDate: null,
   reminderTime: null,
-  reminderRepeat: 0,
+  reminderRepeat: '0',
   star: false
 }
 
@@ -547,7 +547,7 @@ const actions = {
         continue
       }
 
-      const alarm = new Audio('app/sound/alarm1.wav')
+      const alarm = new Audio('static/sound/alarm1.wav')
       alarm.play()
 
       // notification.onclick = () => {
@@ -563,7 +563,7 @@ const actions = {
         let msg = moment(state.reminders[i].reminderDate).format('DD.MM.YYYY') + ' at ' + state.reminders[i].reminderTime + '\n\r' + doc.title + '\n\r\n\r' + doc.content
         let notification = new Notification('', {
           body: msg,
-          icon: 'app/icons/notic-logo.png'
+          icon: 'static/icons/notic-logo.png'
         })
 
         doc.reminder = false
