@@ -595,10 +595,11 @@ const actions = {
             this.commit('setNoteReminderTime', doc.reminderTime)
           }
           for (let i = 0; i < state.notes.length; i++) {
-            if (state.notes[i]._id === state.reminders[i]._id) {
+            if (state.notes[i]._id === doc._id) {
               this.commit('setNoteReminderByIndex', {index: i, data: doc.reminder})
               this.commit('setNoteReminderDateByIndex', {index: i, data: doc.reminderDate})
               this.commit('setNoteReminderTimeByIndex', {index: i, data: doc.reminderTime})
+              break
             }
           }
           this.dispatch('loadReminders')
