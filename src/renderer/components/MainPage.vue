@@ -63,6 +63,9 @@
         if (this.$store.state.Store.appJustStarted) {
           this.searchNotes(this.$store.state.Store.searchQuery)
           this.$store.dispatch('loadReminders')
+          setInterval(() => {
+            this.$store.dispatch('checkReminders')
+          }, 1000)
           this.$store.dispatch('setAppJustStarted', false)
         }
       })

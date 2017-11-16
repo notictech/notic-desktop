@@ -69,10 +69,17 @@ const mutations = {
   updateNote: (state, data) => {
     state.note = data
   },
-  updateNoteTitle: (state, text) => { state.note.title = text },
-  updateNoteContent: (state, text) => { state.note.content = text },
-  setNoteCreatedAt: (state, text) => { state.note.createdAt = text },
-  setNoteUpdatedAt: (state, text) => { state.note.updatedAt = text },
+  updateNoteTitle: (state, data) => { state.note.title = data },
+  updateNoteContent: (state, data) => { state.note.content = data },
+  setNoteCreatedAt: (state, data) => { state.note.createdAt = data },
+  setNoteUpdatedAt: (state, data) => { state.note.updatedAt = data },
+  setNoteReminder: (state, data) => { state.note.reminder = data },
+  setNoteReminderDate: (state, data) => { state.note.reminderDate = data },
+  setNoteReminderTime: (state, data) => { state.note.reminderTime = data },
+  setNoteReminderByIndex: (state, obj) => { state.notes[obj.index].reminder = obj.data },
+  setNoteReminderDateByIndex: (state, obj) => { state.notes[obj.index].reminderDate = obj.data },
+  setNoteReminderTimeByIndex: (state, obj) => { state.notes[obj.index].reminderTime = obj.data },
+
   toggleNoteStar (state, index) {
     state.notes[index].star = !state.notes[index].star
   },
@@ -529,6 +536,77 @@ const actions = {
       this.commit('setReminders', docs)
       // console.log('remainders are loaded ', docs)
     })
+  },
+  checkReminders (context) {
+    for (let i = 0; i < state.reminders.length; i++) {
+
+      let currentTimestamp = moment().valueOf()
+      let remindDateObj = moment(moment(state.reminders[i].reminderDate).format('YYYY-MM-DD') + ' ' + state.reminders[i].reminderTime)
+      let remindTimestamp = remindDateObj.valueOf()
+
+      if (currentTimestamp < remindTimestamp) {
+        continue
+      }
+
+      const alarm = new Audio('app/sound/alarm1.wav')
+      alarm.play()
+
+      // notification.onclick = () => {
+      //   require('electron').remote.getCurrentWindow().webContents.send('notifications')
+      //   require('electron').remote.getCurrentWindow().show()
+      // }
+
+      db.findOne({_id: state.reminders[i]._id}, (err, doc) => {
+
+        if (err) {
+          console.log(err)
+        }
+
+        let msg = doc.title + '\n\r' + moment(state.reminders[i].reminderDate).format('DD.MM.YYYY') + ' at ' + state.reminders[i].reminderTime + '\n\r\n\r' + doc.content
+        let notification = new Notification('Notic', {
+          body: msg,
+          icon: 'app/icons/notic-logo.png'
+        })
+
+        doc.reminder = false
+
+        if (doc.reminderRepeat !== '0') {
+          let nextDate = remindDateObj.add(0, 'minute')
+          if (state.reminders[i].reminderRepeat === '10') {
+            nextDate = remindDateObj.add(1, 'minute')
+          } else if (state.reminders[i].reminderRepeat === '20') {
+            nextDate = remindDateObj.add(1, 'hour')
+          } else if (state.reminders[i].reminderRepeat === '30') {
+            nextDate = remindDateObj.add(1, 'day')
+          } else if (state.reminders[i].reminderRepeat === '40') {
+            nextDate = remindDateObj.add(1, 'week')
+          } else if (state.reminders[i].reminderRepeat === '50') {
+            nextDate = remindDateObj.add(1, 'month')
+          } else if (state.reminders[i].reminderRepeat === '60') {
+            nextDate = remindDateObj.add(1, 'year')
+          }
+          doc.reminder = true
+          doc.reminderDate = nextDate.valueOf()
+          doc.reminderTime = nextDate.format('HH:mm')
+        }
+
+        db.update({ _id: state.reminders[i]._id }, doc, {}, () => {
+          if (state.reminders[i]._id === state.note._id) {
+            this.commit('setNoteReminder', doc.reminder)
+            this.commit('setNoteReminderDate', doc.reminderDate)
+            this.commit('setNoteReminderTime', doc.reminderTime)
+          }
+          for (let i = 0; i < state.notes.length; i++) {
+            if (state.notes[i]._id === state.reminders[i]._id) {
+              this.commit('setNoteReminderByIndex', {index: i, data: doc.reminder})
+              this.commit('setNoteReminderDateByIndex', {index: i, data: doc.reminderDate})
+              this.commit('setNoteReminderTimeByIndex', {index: i, data: doc.reminderTime})
+            }
+          }
+          this.dispatch('loadReminders')
+        })
+      })
+    }
   },
   copyText (context) {
     let selectedText = window.getSelection().getRangeAt(0).toString()
