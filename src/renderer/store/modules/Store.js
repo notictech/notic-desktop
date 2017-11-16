@@ -539,7 +539,6 @@ const actions = {
   },
   checkReminders (context) {
     for (let i = 0; i < state.reminders.length; i++) {
-
       let currentTimestamp = moment().valueOf()
       let remindDateObj = moment(moment(state.reminders[i].reminderDate).format('YYYY-MM-DD') + ' ' + state.reminders[i].reminderTime)
       let remindTimestamp = remindDateObj.valueOf()
@@ -557,13 +556,12 @@ const actions = {
       // }
 
       db.findOne({_id: state.reminders[i]._id}, (err, doc) => {
-
         if (err) {
           console.log(err)
         }
 
-        let msg = doc.title + '\n\r' + moment(state.reminders[i].reminderDate).format('DD.MM.YYYY') + ' at ' + state.reminders[i].reminderTime + '\n\r\n\r' + doc.content
-        let notification = new Notification('Notic', {
+        let msg = moment(state.reminders[i].reminderDate).format('DD.MM.YYYY') + ' at ' + state.reminders[i].reminderTime + '\n\r' + doc.title + '\n\r\n\r' + doc.content
+        let notification = new Notification('', {
           body: msg,
           icon: 'app/icons/notic-logo.png'
         })
