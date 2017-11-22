@@ -567,11 +567,6 @@ const actions = {
           require('electron').remote.getCurrentWindow().show()
         }
 
-        // notification.onclick = () => {
-        //   require('electron').remote.getCurrentWindow().webContents.send('notifications')
-        //   require('electron').remote.getCurrentWindow().show()
-        // }
-
         console.log(notification)
 
         doc.reminder = false
