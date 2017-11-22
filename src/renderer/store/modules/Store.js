@@ -550,21 +550,29 @@ const actions = {
       const alarm = new Audio('static/sound/alarm1.wav')
       alarm.play()
 
-      // notification.onclick = () => {
-      //   require('electron').remote.getCurrentWindow().webContents.send('notifications')
-      //   require('electron').remote.getCurrentWindow().show()
-      // }
-
       db.findOne({_id: state.reminders[i]._id}, (err, doc) => {
         if (err) {
           console.log(err)
         }
 
         let msg = moment(state.reminders[i].reminderDate).format('DD.MM.YYYY') + ' at ' + state.reminders[i].reminderTime + '\n\r' + doc.title + '\n\r\n\r' + doc.content
+
         let notification = new Notification('', {
           body: msg,
           icon: 'static/icons/notic-logo.png'
         })
+
+        notification.onclick = () => {
+          require('electron').remote.getCurrentWindow().webContents.send('notifications')
+          require('electron').remote.getCurrentWindow().show()
+        }
+
+        // notification.onclick = () => {
+        //   require('electron').remote.getCurrentWindow().webContents.send('notifications')
+        //   require('electron').remote.getCurrentWindow().show()
+        // }
+
+        console.log(notification)
 
         doc.reminder = false
 
