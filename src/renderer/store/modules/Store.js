@@ -6,6 +6,7 @@ const Datastore = require('nedb')
 const moment = require('moment')
 const Mark = require('mark.js')
 const {clipboard} = require('electron')
+const qr = require('qr-image')
 
 let db
 
@@ -50,13 +51,15 @@ const state = {
   note: {},
   searchQuery: '',
   history: [],
+  notifications: [],
   historyIndex: 0,
   appJustStarted: true,
   noteIsModified: false,
   misc: {
     recentNoteId: null
   },
-  reminders: []
+  reminders: [],
+  qr: null
 }
 
 const mutations = {
@@ -174,6 +177,9 @@ const mutations = {
   setReminders: (state, data) => { state.reminders = data },
   setAppJustStarted: (state, data) => {
     state.appJustStarted = data
+  },
+  setQr: (state, data) => {
+    state.qr = data
   }
 
 }
@@ -613,6 +619,12 @@ const actions = {
   copyText (context) {
     let selectedText = window.getSelection().getRangeAt(0).toString()
     clipboard.writeText(selectedText)
+  },
+  showQR (context) {
+    let clip = clipboard.readText()
+    // let qrSvg = qr.image(clip, { type: 'svg' })
+    let svgString = qr.imageSync(clip, { type: 'svg' })
+    this.commit('setQr', svgString)
   },
   toggleNoteStar (context, obj) {
     db.update({_id: obj.id}, { $set: { star: !state.notes[obj.index].star } }, {}, (err, num) => {

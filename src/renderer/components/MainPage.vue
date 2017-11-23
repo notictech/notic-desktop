@@ -1,5 +1,8 @@
 <template>
     <b-container fluid class="screen notes" v-hotkey="keymap">
+        <b-modal size="sm" ref="modalQr" id="modal-qr" class="modal-qr" hide-footer title="QR from clipboard">
+            <div class="my-4 qr" v-html="qr"></div>
+        </b-modal>
         <div class="topbar">
             <div class="row">
                 <div class="col-4">
@@ -8,6 +11,9 @@
                     </b-button-group>
                     <b-button-group size="sm">
                         <b-btn variant="primary" @click="openRecentNote()" v-b-tooltip.hover.auto title="Open recent note (Ctrl+E)"><icon name="pencil-square-o"></icon></b-btn>
+                    </b-button-group>
+                    <b-button-group size="sm">
+                        <b-btn variant="primary" @click="showQR()" v-b-tooltip.hover.auto title="QR from clipboard (Ctrl+K)"><icon name="qrcode"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm" v-show="searchFilter === 'deleted'">
                         <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
@@ -125,6 +131,10 @@
       },
       historyBack () {
         this.$store.dispatch('historyBack')
+      },
+      showQR () {
+        this.$store.dispatch('showQR')
+        this.$refs.modalQr.show()
       }
     },
     computed: {
@@ -141,7 +151,8 @@
           'ctrl+2': this.setSearchFilterStar,
           'ctrl+3': this.setSearchFilterReminder,
           'ctrl+4': this.setSearchFilterDeleted,
-          'ctrl+c': this.copyText
+          'ctrl+c': this.copyText,
+          'ctrl+k': this.showQR
         }
       },
       notes () {
@@ -152,6 +163,9 @@
       },
       searchQuery () {
         return this.$store.getters.searchQuery
+      },
+      qr () {
+        return this.$store.state.Store.qr
       }
     }
   }
