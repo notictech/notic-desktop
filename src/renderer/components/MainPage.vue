@@ -16,7 +16,7 @@
                         <b-btn variant="primary" @click="showQR()" v-b-tooltip.hover.auto title="QR from clipboard (Ctrl+K)"><icon name="qrcode"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm">
-                        <b-btn variant="primary" @click="openNotificationsPage()" v-b-tooltip.hover.auto title="Notifications (Ctrl+N)"><icon name="bell"></icon></b-btn>
+                        <b-btn variant="primary" :variant="this.$store.state.Store.notificationsIsUnread ? 'danger' : 'primary' " @click="openNotificationsPage()" v-b-tooltip.hover.auto title="Notifications (Ctrl+N)"><icon name="bell"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm" v-show="searchFilter === 'deleted'">
                         <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
