@@ -59,7 +59,8 @@ const state = {
     recentNoteId: null
   },
   reminders: [],
-  qr: null
+  qr: null,
+  notificationsIsUnread: false
 }
 
 const mutations = {
@@ -175,12 +176,14 @@ const mutations = {
   },
   setMiscData: (state, data) => { state.misc = data },
   setReminders: (state, data) => { state.reminders = data },
+  setNotifications: (state, data) => { state.notifications = data },
   setAppJustStarted: (state, data) => {
     state.appJustStarted = data
   },
   setQr: (state, data) => {
     state.qr = data
-  }
+  },
+  setNotificationsIsUnread: (state, data) => { state.notificationsIsUnread = data }
 
 }
 
@@ -188,6 +191,7 @@ const getters = {
   notes: state => {
     return state.notes
   },
+  notifications: state => { return state.notifications },
   searchQuery: state => {
     return state.searchQuery
   },
@@ -575,6 +579,20 @@ const actions = {
 
         console.log(notification)
 
+        let notif = {
+          'doctype': 'notification',
+          'date': moment(state.reminders[i].reminderDate).format('DD.MM.YYYY') + ' at ' + state.reminders[i].reminderTime,
+          'title': doc.title,
+          'content': doc.content,
+          'createdAt': moment.valueOf(),
+          'unread': true,
+          'noteId': doc._id
+        }
+        db.insert(notif, (err, newDoc) => {
+          if (err) console.log(err)
+          this.commit('setNotificationsIsUnread', true)
+        })
+
         doc.reminder = false
 
         if (doc.reminderRepeat !== '0') {
@@ -689,7 +707,22 @@ const actions = {
     if (state.editorMode === 'edit') {
       this.commit('setNoteIsModified', data)
     }
-  }
+  },
+  loadNotifications (context) {
+    db.find({doctype: 'notification'}).sort({createdAt: -1}).exec((err, docs) => {
+      if (err) {
+        console.log(err)
+      }
+      this.commit('setNotifications', docs)
+      for (let i = 0; i < docs.length; i++) {
+        if (docs[i].unread) {
+          this.commit('setNotificationsIsUnread', true)
+          break
+        }
+      }
+    })
+  },
+  openNotificationsPage (context, id) {}
 }
 
 function copyObject (obj) {

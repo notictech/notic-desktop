@@ -16,6 +16,11 @@ export default new Router({
       component: require('@/components/EditorPage').default
     },
     {
+      path: '/notifications',
+      name: 'notifications-page',
+      component: require('@/components/NotificationsPage').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

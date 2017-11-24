@@ -15,6 +15,9 @@
                     <b-button-group size="sm">
                         <b-btn variant="primary" @click="showQR()" v-b-tooltip.hover.auto title="QR from clipboard (Ctrl+K)"><icon name="qrcode"></icon></b-btn>
                     </b-button-group>
+                    <b-button-group size="sm">
+                        <b-btn variant="primary" @click="openNotificationsPage()" v-b-tooltip.hover.auto title="Notifications (Ctrl+N)"><icon name="bell"></icon></b-btn>
+                    </b-button-group>
                     <b-button-group size="sm" v-show="searchFilter === 'deleted'">
                         <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
                         <b-btn variant="danger" @click="emptyTrash()">Empty trash</b-btn>
@@ -69,6 +72,7 @@
         if (this.$store.state.Store.appJustStarted) {
           this.searchNotes(this.$store.state.Store.searchQuery)
           this.$store.dispatch('loadReminders')
+          this.$store.dispatch('loadNotifications')
           setInterval(() => {
             this.$store.dispatch('checkReminders')
           }, 1000)
@@ -91,6 +95,10 @@
         if (!this.$store.state.Store.misc.recentNoteId) return
         this.$store.dispatch('openRecentNote')
         this.$router.replace('/editor')
+      },
+      openNotificationsPage () {
+        this.$store.dispatch('openNotificationsPage')
+        this.$router.replace('/notifications')
       },
       setSearchFilter (filter) {
         this.$store.dispatch('setSearchFilter', filter)
@@ -147,6 +155,7 @@
           'ctrl+right': this.historyForward,
           'ctrl+space': this.openAddNotePage,
           'ctrl+e': this.openRecentNote,
+          'ctrl+n': this.openNotificationsPage,
           'ctrl+1': this.setSearchFilterNotes,
           'ctrl+2': this.setSearchFilterStar,
           'ctrl+3': this.setSearchFilterReminder,
