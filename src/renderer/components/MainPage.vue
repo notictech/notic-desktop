@@ -7,16 +7,16 @@
             <div class="row">
                 <div class="col-4">
                     <b-button-group size="sm">
-                        <b-btn variant="primary" @click="openAddNotePage()" v-b-tooltip.hover.auto title="Add note (Ctrl+Space)"><icon name="plus"></icon></b-btn>
+                        <b-btn variant="primary" @click="openAddNotePage()"  title="Add note (Ctrl+Space)"><icon name="plus"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm">
-                        <b-btn variant="primary" @click="openRecentNote()" v-b-tooltip.hover.auto title="Open recent note (Ctrl+E)"><icon name="pencil-square-o"></icon></b-btn>
+                        <b-btn variant="primary" @click="openRecentNote()"  title="Open recent note (Ctrl+E)"><icon name="pencil-square-o"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm">
-                        <b-btn variant="primary" @click="showQR()" v-b-tooltip.hover.auto title="QR from clipboard (Ctrl+K)"><icon name="qrcode"></icon></b-btn>
+                        <b-btn variant="primary" @click="showQR()"  title="QR from clipboard (Ctrl+K)"><icon name="qrcode"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm">
-                        <b-btn variant="primary" :variant="this.$store.state.Store.notificationsIsUnread ? 'danger' : 'primary' " @click="openNotificationsPage()" v-b-tooltip.hover.auto title="Notifications (Ctrl+N)"><icon name="bell"></icon></b-btn>
+                        <b-btn variant="primary" :variant="this.$store.state.Store.notificationsIsUnread ? 'danger' : 'primary' " @click="openNotificationsPage()"  title="Notifications (Ctrl+N)"><icon name="bell"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm" v-show="searchFilter === 'deleted'">
                         <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
@@ -27,14 +27,14 @@
                     <b-input-group size="sm">
                         <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" ref="search" :value="searchQuery"></b-form-input>
                         <b-button-group size="sm">
-                            <b-button v-b-tooltip.hover.auto title="Notes (Ctrl+1)" :class="['search-filter', {active: searchFilter == 'notes'}]" @click="setSearchFilter('notes')"><icon name="sticky-note"></icon></b-button>
-                            <b-button v-b-tooltip.hover.auto title="Favorites (Ctrl+2)" :class="['search-filter', {active: searchFilter == 'star'}]" @click="setSearchFilter('star')"><icon name="star-o"></icon></b-button>
-                            <b-button v-b-tooltip.hover.auto title="Reminders (Ctrl+3)" :class="['search-filter', {active: searchFilter == 'reminder'}]" @click="setSearchFilter('reminder')"><icon name="bell-o"></icon></b-button>
-                            <b-button v-b-tooltip.hover.auto title="Deleted (Ctrl+4)" :class="['search-filter', {active: searchFilter == 'deleted'}]" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-button>
+                            <b-button  title="Notes (Ctrl+1)" :class="['search-filter', {active: searchFilter == 'notes'}]" @click="setSearchFilter('notes')"><icon name="sticky-note"></icon></b-button>
+                            <b-button  title="Favorites (Ctrl+2)" :class="['search-filter', {active: searchFilter == 'star'}]" @click="setSearchFilter('star')"><icon name="star-o"></icon></b-button>
+                            <b-button  title="Reminders (Ctrl+3)" :class="['search-filter', {active: searchFilter == 'reminder'}]" @click="setSearchFilter('reminder')"><icon name="bell-o"></icon></b-button>
+                            <b-button  title="Deleted (Ctrl+4)" :class="['search-filter', {active: searchFilter == 'deleted'}]" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-button>
                         </b-button-group>
                         <b-button-group size="sm" style="margin-left: 10px">
-                            <b-button v-b-tooltip.hover.auto title="History back (Ctrl+Left)" @click="historyBack()"><icon name="arrow-left"></icon></b-button>
-                            <b-button v-b-tooltip.hover.auto title="History forward (Ctrl+Right)" @click="historyForward()"><icon name="arrow-right"></icon></b-button>
+                            <b-button  title="History back (Ctrl+Left)" @click="historyBack()"><icon name="arrow-left"></icon></b-button>
+                            <b-button  title="History forward (Ctrl+Right)" @click="historyForward()"><icon name="arrow-right"></icon></b-button>
                         </b-button-group>
                     </b-input-group>
                 </div>
