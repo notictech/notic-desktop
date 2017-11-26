@@ -1,30 +1,69 @@
 <template>
-    <b-card :id="'note_index_' + index" :class="{note: true, active: activeNoteIndex == index}" @mousedown.middle="openEditNotePage(note._id)" @contextmenu="showNoteContextMenu(note._id)" @click="clickNote(note._id, index)">
-        <b-row>
-            <b-col cols="12" md="8">
-                <h4 class="title">{{ note.title }}</h4>
-            </b-col>
-            <b-col cols="6" md="4" style="text-align: right">
-                <b-button size="sm" variant="success" v-show="searchFilter === 'deleted'" @click="restoreNote(note._id)">Restore</b-button>
-                <b-button v-b-tooltip.hover.auto title="Mark as favorite" size="sm" v-show="!note.deleted" :variant="note.star ? 'outline-warning' : 'outline-secondary'" @click="toggleStar(note._id, index)"><icon name="star"></icon></b-button>
-                <b-dropdown class="m-md-2" size="sm">
-                    <b-dropdown-item @click="openEditNotePage(note._id)"><icon name="edit"></icon> Edit</b-dropdown-item>
-                    <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon> Delete</b-dropdown-item>
-                </b-dropdown>
-            </b-col>
-        </b-row>
-        <h6 class="card-subtitle mb-2 text-muted date">{{ formattedNoteDate }}
-            <span class="reminder" v-show="note.reminder">
-                <icon name="bell"></icon> <span class="details">{{ formattedReminderInfo }}</span>
-            </span>
-        </h6>
+    <!--<b-card :id="'note_index_' + index" :class="{note: true, active: activeNoteIndex == index}" @mousedown.middle="openEditNotePage(note._id)" @contextmenu="showNoteContextMenu(note._id)" @click="clickNote(note._id, index)">-->
+    <!--<b-row>-->
+    <!--<b-col cols="12" md="8">-->
+    <!--<h4 class="title">{{ note.title }}</h4>-->
+    <!--</b-col>-->
+    <!--<b-col cols="6" md="4" style="text-align: right">-->
+    <!--<b-button size="sm" variant="success" v-show="searchFilter === 'deleted'" @click="restoreNote(note._id)">Restore</b-button>-->
+    <!--<b-button v-b-tooltip.hover.auto title="Mark as favorite" size="sm" v-show="!note.deleted" :variant="note.star ? 'outline-warning' : 'outline-secondary'" @click="toggleStar(note._id, index)"><icon name="star"></icon></b-button>-->
+    <!--<b-dropdown class="m-md-2" size="sm">-->
+    <!--<b-dropdown-item @click="openEditNotePage(note._id)"><icon name="edit"></icon> Edit</b-dropdown-item>-->
+    <!--<b-dropdown-divider></b-dropdown-divider>-->
+    <!--<b-dropdown-item @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon> Delete</b-dropdown-item>-->
+    <!--</b-dropdown>-->
+    <!--</b-col>-->
+    <!--</b-row>-->
+    <!--<h6 class="card-subtitle mb-2 text-muted date">{{ formattedNoteDate }}-->
+    <!--<span class="reminder" v-show="note.reminder">-->
+    <!--<icon name="bell"></icon> <span class="details">{{ formattedReminderInfo }}</span>-->
+    <!--</span>-->
+    <!--</h6>-->
 
-        <div class="secrets" v-show="note.secrets.length">
-            <b-button size="sm" class="btn-info secret" v-for="(secret, index) in note.secrets" :key="index"><icon name="key"></icon> {{secret.title}}</b-button>
-        </div>
-        <div class="card-text content">{{ note.content }}</div>
-    </b-card>
+    <!--<div class="secrets" v-show="note.secrets.length">-->
+    <!--<b-button size="sm" class="btn-info secret" v-for="(secret, index) in note.secrets" :key="index"><icon name="key"></icon> {{secret.title}}</b-button>-->
+    <!--</div>-->
+    <!--<div class="card-text content">{{ note.content }}</div>-->
+    <!--</b-card>-->
+
+    <div :id="'note_index_' + index" :class="{note: true, active: activeNoteIndex == index}" @mousedown.middle="openEditNotePage(note._id)" @contextmenu="showNoteContextMenu(note._id)" @click="clickNote(note._id, index)">
+
+        <!--<h5>-->
+            <!--<b-button size="sm" variant="success" v-show="searchFilter === 'deleted'" @click="restoreNote(note._id)">Restore</b-button>-->
+            <!--<b-button v-b-tooltip.hover.auto title="Mark as favorite" size="sm" v-show="!note.deleted" :variant="note.star ? 'outline-warning' : 'outline-secondary'" @click="toggleStar(note._id, index)"><icon name="star"></icon></b-button>-->
+            <!--<b-button size="sm" @click="openEditNotePage(note._id)"><icon name="pencil"></icon></b-button>-->
+            <!--<b-button size="sm" @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon></b-button>-->
+        <!--</h5>-->
+
+        <h5>
+            <b-button size="sm" variant="success" v-if="searchFilter === 'deleted'" @click="restoreNote(note._id)">Restore</b-button>
+            <b-button title="Mark as favorite" size="sm" v-if="!note.deleted" :variant="note.star ? 'warning' : ''" @click="toggleStar(note._id, index)"><icon name="star"></icon></b-button>
+            <b-button title="Edit" size="sm" @click="openEditNotePage(note._id)"><icon name="pencil"></icon></b-button>
+            <b-button title="Delete" size="sm" @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon></b-button>
+        </h5>
+
+        <!--<h5>-->
+            <!--<button @click="openEditNotePage(note._id)">Edit</button>-->
+            <!--<button @click="actionDeleteNote(note._id, searchFilter === 'deleted')">Delete</button>-->
+        <!--</h5>-->
+
+        <h1>{{ note.title }}</h1>
+
+        <h2>{{ formattedNoteDate }}
+            <span v-show="note.reminder">
+                <icon name="bell"></icon> <span>{{ formattedReminderInfo }}</span>
+            </span>
+        </h2>
+
+        <h3 v-show="note.secrets.length">
+            <b-button size="sm" class="btn-info" v-for="(secret, index) in note.secrets" :key="index"><icon name="key"></icon> {{secret.title}}</b-button>
+        </h3>
+
+        <h4>{{ note.content }}</h4>
+
+
+
+    </div>
 </template>
 
 <script>
