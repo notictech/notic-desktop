@@ -60,16 +60,21 @@ const state = {
   },
   reminders: [],
   qr: null,
-  notificationsIsUnread: false
+  notificationsIsUnread: false,
+  notesStorage: []
 }
 
 const mutations = {
+  setNotesStorage: (state, data) => { state.notesStorage = data },
   setNoteIsModified: (state, data) => { state.noteIsModified = data },
   setActiveNoteIndex: (state, data) => { state.activeNoteIndex = data },
   setActiveNoteId: (state, data) => { state.activeNoteId = data },
   setRecentNoteId: (state, data) => { state.misc.recentNoteId = data },
   setEditorMode: (state, data) => { state.editorMode = data },
-  updateNotes: (state, data) => { state.notes = data },
+  updateNotes: (state, data) => {
+    state.notes = data.map(x => x._id)
+    console.log(state.notes)
+  },
   updateNote: (state, data) => {
     state.note = data
   },
@@ -191,6 +196,9 @@ const getters = {
   notes: state => {
     return state.notes
   },
+  notesStorage: state => {
+    return state.notesStorage
+  },
   notifications: state => { return state.notifications },
   searchQuery: state => {
     return state.searchQuery
@@ -272,11 +280,11 @@ const actions = {
         console.log(err)
       }
       this.commit('updateNotes', docs)
-      highlightNotes()
       if (docs.length) {
         this.commit('setActiveNoteIndex', 0)
         this.commit('setActiveNoteId', docs[0]._id)
         if (obj.cb) obj.cb()
+        // highlightNotes()
       }
     })
   },
@@ -722,6 +730,16 @@ const actions = {
       }
     })
   },
+  loadNotesStorage (context, cb) {
+    db.find({doctype: 'note'}).sort({createdAt: -1}).exec((err, docs) => {
+      if (err) {
+        console.log(err)
+      }
+      this.commit('setNotesStorage', docs)
+      cb()
+      console.log(docs)
+    })
+  },
   openNotificationsPage (context, id) {}
 }
 
@@ -768,9 +786,7 @@ RegExp.quote = (str) => {
 function highlightNotes () {
   let markInstance = new Mark(document.querySelector('.notes'))
   let options = ['separateWordSearch']
-  let keyword = state.searchQuery + ' ' +
-    remapString(state.searchQuery, 'en', state.settings.localKeymap) + ' ' +
-    remapString(state.searchQuery, state.settings.localKeymap, 'en')
+  let keyword = state.searchQuery
   markInstance.unmark({
     done: () => {
       markInstance.mark(keyword, options)

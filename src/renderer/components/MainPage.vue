@@ -42,11 +42,11 @@
         </div>
         <div class="sidebar">
             <b-button-group vertical class="notes-links" id="notes-links">
-                <note-link v-for="(note, index) in notes" :note="note" :key="note._id" :index="index"></note-link>
+                <note-link v-show="notes.indexOf(note._id) != -1" v-for="(note, index) in notesStorage" :note="note" :key="note._id" :index="index"></note-link>
             </b-button-group>
         </div>
         <div class="notes" ref="notes" id="notes">
-            <note v-for="(note, index) in notes" :note="note" :key="note._id" :index="index"></note>
+            <note v-show="notes.indexOf(note._id) != -1" v-for="(note, index) in notesStorage" :note="note" :key="note._id" :index="index"></note>
         </div>
     </b-container>
 </template>
@@ -70,13 +70,15 @@
         this.$store.dispatch('loadHistory')
         this.$store.dispatch('loadMiscData')
         if (this.$store.state.Store.appJustStarted) {
-          this.searchNotes(this.$store.state.Store.searchQuery)
-          this.$store.dispatch('loadReminders')
-          this.$store.dispatch('loadNotifications')
-          setInterval(() => {
-            this.$store.dispatch('checkReminders')
-          }, 1000)
-          this.$store.dispatch('setAppJustStarted', false)
+          this.$store.dispatch('loadNotesStorage', () => {
+            this.searchNotes(this.$store.state.Store.searchQuery)
+            this.$store.dispatch('loadReminders')
+            this.$store.dispatch('loadNotifications')
+            setInterval(() => {
+              this.$store.dispatch('checkReminders')
+            }, 1000)
+            this.$store.dispatch('setAppJustStarted', false)
+          })
         }
       })
     },
@@ -85,7 +87,7 @@
         this.$refs.search.focus()
       },
       searchNotes (event) {
-        this.$store.dispatch('searchNotes', {query: event, cb: () => {}})
+        this.$store.dispatch('searchNotes', { query: event, cb: () => {} })
       },
       openAddNotePage () {
         this.$store.dispatch('openAddNotePage')
@@ -166,6 +168,9 @@
       },
       notes () {
         return this.$store.getters.notes
+      },
+      notesStorage () {
+        return this.$store.getters.notesStorage
       },
       searchFilter () {
         return this.$store.getters.searchFilter
