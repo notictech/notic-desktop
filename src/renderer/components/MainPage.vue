@@ -46,7 +46,7 @@
             </b-button-group>
         </div>
         <div class="notes" ref="notes" id="notes">
-            <note v-for="(note, index) in notes.slice(0, 10)" :note="note" :key="note._id" :index="index"></note>
+            <note v-for="(note, index) in notes" :note="note" :key="note._id" :index="index"></note>
         </div>
     </b-container>
 </template>
