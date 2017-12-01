@@ -60,10 +60,16 @@ const state = {
   },
   reminders: [],
   qr: null,
-  notificationsIsUnread: false
+  notificationsIsUnread: false,
+  loadedNotesCount: 0,
+  loadedNotesLinksCount: 0,
+  notesId: []
 }
 
 const mutations = {
+  setNotesId: (state, date) => { state.notesId = date },
+  setLoadedNotesCount: (state, date) => { state.loadedNotesCount = date },
+  setLoadedNotesLinksCount: (state, date) => { state.loadedNotesLinksCount = date },
   setNoteIsModified: (state, data) => { state.noteIsModified = data },
   setActiveNoteIndex: (state, data) => { state.activeNoteIndex = data },
   setActiveNoteId: (state, data) => { state.activeNoteId = data },
@@ -275,6 +281,9 @@ const actions = {
       if (docs.length) {
         this.commit('setActiveNoteIndex', 0)
         this.commit('setActiveNoteId', docs[0]._id)
+        this.commit('setLoadedNotesCount', 40)
+        this.commit('setLoadedNotesLinksCount', 40)
+        console.log('@@@@')
         if (obj.cb) obj.cb()
       }
     })

@@ -40,13 +40,13 @@
                 </div>
             </div>
         </div>
-        <div class="sidebar">
+        <div class="sidebar" @scroll="scrollNotes($event)">
             <b-button-group vertical class="notes-links" id="notes-links">
-                <note-link v-for="(note, index) in notes" :note="note" :key="note._id" :index="index"></note-link>
+                <note-link v-for="(note, index) in notes.slice(0, loadedNotesLinksCount)" :note="note" :key="note._id" :index="index"></note-link>
             </b-button-group>
         </div>
-        <div class="notes" ref="notes" id="notes">
-            <note v-for="(note, index) in notes" :note="note" :key="note._id" :index="index"></note>
+        <div class="notes" ref="notes" id="notes" @scroll="scrollNotes($event)">
+            <note v-for="(note, index) in notes.slice(0, loadedNotesCount)" :note="note" :key="note._id" :index="index"></note>
         </div>
     </b-container>
 </template>
@@ -84,6 +84,15 @@
       this.$store.dispatch('highlightNotes')
     },
     methods: {
+      scrollNotes (event) {
+        if (event.target.scrollTop + event.target.clientHeight === event.target.scrollHeight) {
+          if (this.$store.state.Store.loadedNotesCount <= this.notes.length && this.$store.state.Store.loadedNotesLinksCount <= this.notes.length) {
+            this.$store.commit('setLoadedNotesCount', this.$store.state.Store.loadedNotesCount + 200)
+            this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 500)
+          }
+          console.log(this.$store.state.Store.loadedNotesLinksCount)
+        }
+      },
       focusOnSearch () {
         this.$refs.search.focus()
       },
@@ -169,6 +178,12 @@
       },
       notes () {
         return this.$store.getters.notes
+      },
+      loadedNotesLinksCount () {
+        return this.$store.state.Store.loadedNotesLinksCount
+      },
+      loadedNotesCount () {
+        return this.$store.state.Store.loadedNotesCount
       },
       searchFilter () {
         return this.$store.getters.searchFilter
