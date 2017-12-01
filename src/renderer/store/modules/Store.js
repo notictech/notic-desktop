@@ -272,11 +272,22 @@ const actions = {
         console.log(err)
       }
       this.commit('updateNotes', docs)
-      highlightNotes()
       if (docs.length) {
         this.commit('setActiveNoteIndex', 0)
         this.commit('setActiveNoteId', docs[0]._id)
         if (obj.cb) obj.cb()
+      }
+    })
+  },
+  highlightNotes (context) {
+    let markInstance = new Mark(document.querySelector('.notes .note'))
+    let options = ['separateWordSearch']
+    let keyword = state.searchQuery + ' ' +
+      remapString(state.searchQuery, 'en', state.settings.localKeymap) + ' ' +
+      remapString(state.searchQuery, state.settings.localKeymap, 'en')
+    markInstance.unmark({
+      done: () => {
+        markInstance.mark(keyword, options)
       }
     })
   },
@@ -765,18 +776,9 @@ RegExp.quote = (str) => {
   return str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1')
 }
 
-function highlightNotes () {
-  let markInstance = new Mark(document.querySelector('.notes'))
-  let options = ['separateWordSearch']
-  let keyword = state.searchQuery + ' ' +
-    remapString(state.searchQuery, 'en', state.settings.localKeymap) + ' ' +
-    remapString(state.searchQuery, state.settings.localKeymap, 'en')
-  markInstance.unmark({
-    done: () => {
-      markInstance.mark(keyword, options)
-    }
-  })
-}
+// function highlightNotes () {
+//
+// }
 
 export default {
   state,

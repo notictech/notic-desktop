@@ -80,6 +80,9 @@
         }
       })
     },
+    updated () {
+      this.$store.dispatch('highlightNotes')
+    },
     methods: {
       focusOnSearch () {
         this.$refs.search.focus()
