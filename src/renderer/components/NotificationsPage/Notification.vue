@@ -1,16 +1,12 @@
 <template>
-    <b-card :class="{notification: true, unread: notification.unread}">
-        <b-row>
-            <b-col cols="12" md="8">
-                <h4 class="title">{{ notification.title }}</h4>
-            </b-col>
-            <b-col cols="6" md="4" style="text-align: right">
-                <b-button size="sm" variant="success">Read</b-button>
-            </b-col>
-        </b-row>
-        <h6 class="card-subtitle mb-2 text-muted date">{{ notification.date }}</h6>
-        <div class="card-text content">{{ notification.content }}</div>
-    </b-card>
+    <div :id="'note_index_' + index" :class="{notification: true, unread: notification.unread}">
+        <h5>
+            <b-button size="sm" variant="success">Read</b-button>
+        </h5>
+        <h1>{{ notification.title }}</h1>
+        <h2>{{ notification.date }}</h2>
+        <h4>{{ notification.content }}</h4>
+    </div>
 </template>
 
 <script>

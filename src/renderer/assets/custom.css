@@ -129,11 +129,6 @@ button svg {
 .screen.notes .notes .note {
     border-left: #fff 4px solid;
 }
-.screen.notes .notes .note.active {
-    border-left: #51adff 4px solid;
-    background: #fafafa;
-}
-
 .screen.notifications .notifications .notification.unread {
     border-left: #dc3545 4px solid;
     background: #fafafa;
@@ -193,42 +188,59 @@ h4 {
     font-size: 20px;
 }
 /* New note styles*/
+.screen.notifications .notifications .notification,
 .screen.notes .notes .note {
     padding: 15px;
     border-radius: 3px;
 }
+.screen.notifications .notifications .notification h1,h2,h3,h4,h5,h6,
 .screen.notes .notes .note h1,h2,h3,h4,h5,h6 {
     line-height: normal;
 }
+.screen.notifications .notifications .notification h1,
 .screen.notes .notes .note h1 {
     font-size: 18px;
     font-weight: bold;
 }
+.screen.notifications .notifications .notification h2,
 .screen.notes .notes .note h2 {
     font-size: 11px;
     color: grey;
 }
+.screen.notifications .notifications .notification h2 > span,
 .screen.notes .notes .note h2 > span {
     color: #dc3545;
     font-size: 11px;
     margin-left: 10px;
 }
+.screen.notifications .notifications .notification h3,
 .screen.notes .notes .note h3 {
     padding: 10px 0 5px 0;
 }
+.screen.notifications .notifications .notification h3 > button,
 .screen.notes .notes .note h3 > button {
     margin: 5px 5px 5px 0;
 }
+.screen.notifications .notifications .notification h4,
 .screen.notes .notes .note h4 {
     margin-top: 15px;
     white-space: pre-wrap;
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: 0.9em;
 }
+.screen.notifications .notifications .notification h5,
 .screen.notes .notes .note h5 {
     position: absolute;
     right: 15px;
 }
-.screen.notes .notes .note h5 > button {
-
+.screen.notifications .notifications .notification h5 {
+    right: 35px;
+}
+.screen.notifications .notifications .notification.unread {
+    border-left: #dc3545 4px solid;
+    background: #fafafa;
+}
+.screen.notes .notes .note.active {
+    border-left: #51adff 4px solid;
+    background: #fafafa;
 }
