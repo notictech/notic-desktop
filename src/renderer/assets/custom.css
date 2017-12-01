@@ -244,3 +244,8 @@ h4 {
     border-left: #51adff 4px solid;
     background: #fafafa;
 }
+
+/* Note not in a div */
+.screen.notes .notes .note {
+
+}
