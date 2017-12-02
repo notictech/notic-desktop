@@ -87,8 +87,8 @@
       scrollNotes (event) {
         if (event.target.scrollTop + event.target.clientHeight === event.target.scrollHeight) {
           if (this.$store.state.Store.loadedNotesCount <= this.notes.length && this.$store.state.Store.loadedNotesLinksCount <= this.notes.length) {
-            this.$store.commit('setLoadedNotesCount', this.$store.state.Store.loadedNotesCount + 200)
-            this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 500)
+            this.$store.commit('setLoadedNotesCount', this.$store.state.Store.loadedNotesCount + 40)
+            this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 40)
           }
           console.log(this.$store.state.Store.loadedNotesLinksCount)
         }

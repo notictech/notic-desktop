@@ -283,7 +283,6 @@ const actions = {
         this.commit('setActiveNoteId', docs[0]._id)
         this.commit('setLoadedNotesCount', 40)
         this.commit('setLoadedNotesLinksCount', 40)
-        console.log('@@@@')
         if (obj.cb) obj.cb()
       }
     })
