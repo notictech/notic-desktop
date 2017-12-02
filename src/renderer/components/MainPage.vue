@@ -81,6 +81,12 @@
       })
     },
     updated () {
+      if (this.$store.state.Store.loadedNotesCount - 1 <= this.$store.state.Store.activeNoteIndex) {
+        this.$store.commit('setLoadedNotesCount', this.$store.state.Store.loadedNotesCount + 40)
+        this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 40)
+        return
+      }
+      this.$store.dispatch('scrollToActiveNote')
       this.$store.dispatch('highlightNotes')
     },
     methods: {
@@ -90,7 +96,6 @@
             this.$store.commit('setLoadedNotesCount', this.$store.state.Store.loadedNotesCount + 40)
             this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 40)
           }
-          console.log(this.$store.state.Store.loadedNotesLinksCount)
         }
       },
       focusOnSearch () {

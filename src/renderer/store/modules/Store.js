@@ -62,12 +62,10 @@ const state = {
   qr: null,
   notificationsIsUnread: false,
   loadedNotesCount: 0,
-  loadedNotesLinksCount: 0,
-  notesId: []
+  loadedNotesLinksCount: 0
 }
 
 const mutations = {
-  setNotesId: (state, date) => { state.notesId = date },
   setLoadedNotesCount: (state, date) => { state.loadedNotesCount = date },
   setLoadedNotesLinksCount: (state, date) => { state.loadedNotesLinksCount = date },
   setNoteIsModified: (state, data) => { state.noteIsModified = data },
