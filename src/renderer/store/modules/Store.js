@@ -601,13 +601,14 @@ const actions = {
           'date': moment(state.reminders[i].reminderDate).format('DD.MM.YYYY') + ' at ' + state.reminders[i].reminderTime,
           'title': doc.title,
           'content': doc.content,
-          'createdAt': moment.valueOf(),
+          'createdAt': moment().valueOf(),
           'unread': true,
           'noteId': doc._id
         }
         db.insert(notif, (err, newDoc) => {
           if (err) console.log(err)
           this.commit('setNotificationsIsUnread', true)
+          this.dispatch('loadNotifications')
         })
 
         doc.reminder = false
