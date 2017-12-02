@@ -682,7 +682,6 @@ const actions = {
       cb: () => {
         this.commit('setActiveNoteId', state.history[state.historyIndex].i)
         this.commit('setActiveNoteIndex', this.getters.getNoteIndexById(state.history[state.historyIndex].i))
-        this.dispatch('scrollToActiveNote')
         if (cb) cb()
       }
     })
@@ -700,7 +699,6 @@ const actions = {
       cb: () => {
         this.commit('setActiveNoteId', state.history[state.historyIndex].i)
         this.commit('setActiveNoteIndex', this.getters.getNoteIndexById(state.history[state.historyIndex].i))
-        this.dispatch('scrollToActiveNote')
         if (cb) cb()
       }
     })
