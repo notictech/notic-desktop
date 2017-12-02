@@ -8,6 +8,9 @@
                     </div>
                     <div class="col-6" style="text-align: right">
                         <b-button-group size="sm">
+                            <b-button v-if="notifications.length" size="sm" type="button" variant="danger" @click="deleteAll()"><icon name="trash-o"></icon> Delete all</b-button>
+                        </b-button-group>
+                        <b-button-group size="sm">
                             <b-btn @click="close()"><icon name="times"></icon></b-btn>
                         </b-button-group>
                     </div>
@@ -45,6 +48,11 @@
     methods: {
       close () {
         this.$router.replace('/')
+      },
+      deleteAll () {
+        if (confirm('Are you sure you want to delete all notifications?')) {
+          this.$store.dispatch('deleteAllNotifications')
+        }
       }
     }
   }

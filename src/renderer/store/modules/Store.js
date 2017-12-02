@@ -753,6 +753,11 @@ const actions = {
       this.commit('markNotificationRead', obj.index)
       this.dispatch('checkNotifications')
     })
+  },
+  deleteAllNotifications (context) {
+    db.remove({doctype: 'notification'}, {multi: true}, () => {
+      this.dispatch('loadNotifications')
+    })
   }
 }
 
