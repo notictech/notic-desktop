@@ -238,7 +238,7 @@ h4 {
 }
 .screen.notifications .notifications .notification.unread {
     border-left: #dc3545 4px solid;
-    background: #fafafa;
+    background: #fff2f7;
 }
 .screen.notes .notes .note.active {
     border-left: #51adff 4px solid;

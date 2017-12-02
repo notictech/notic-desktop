@@ -87,9 +87,11 @@ const mutations = {
   setNoteReminderByIndex: (state, obj) => { state.notes[obj.index].reminder = obj.data },
   setNoteReminderDateByIndex: (state, obj) => { state.notes[obj.index].reminderDate = obj.data },
   setNoteReminderTimeByIndex: (state, obj) => { state.notes[obj.index].reminderTime = obj.data },
-
   toggleNoteStar (state, index) {
     state.notes[index].star = !state.notes[index].star
+  },
+  markNotificationRead (state, index) {
+    state.notifications[index].unread = false
   },
   addSecretToNote: (state) => {
     let secret = genPassword()
@@ -605,6 +607,7 @@ const actions = {
           'unread': true,
           'noteId': doc._id
         }
+
         db.insert(notif, (err, newDoc) => {
           if (err) console.log(err)
           this.commit('setNotificationsIsUnread', true)
@@ -730,15 +733,27 @@ const actions = {
         console.log(err)
       }
       this.commit('setNotifications', docs)
-      for (let i = 0; i < docs.length; i++) {
-        if (docs[i].unread) {
-          this.commit('setNotificationsIsUnread', true)
-          break
-        }
-      }
+      this.dispatch('checkNotifications')
     })
   },
-  openNotificationsPage (context, id) {}
+  checkNotifications (context) {
+    this.commit('setNotificationsIsUnread', false)
+    for (let i = 0; i < state.notifications.length; i++) {
+      if (state.notifications[i].unread) {
+        this.commit('setNotificationsIsUnread', true)
+        break
+      }
+    }
+  },
+  markNotificationRead (context, obj) {
+    db.update({_id: obj.id}, { $set: { unread: false } }, {}, (err, num) => {
+      if (err) {
+        console.log(err)
+      }
+      this.commit('markNotificationRead', obj.index)
+      this.dispatch('checkNotifications')
+    })
+  }
 }
 
 function copyObject (obj) {
