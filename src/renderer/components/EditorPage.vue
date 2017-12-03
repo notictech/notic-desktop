@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="content-wrap" @input="modify()">
-                <b-tabs card small no-fade>
+                <b-tabs card small no-fade v-model="tab">
                     <b-tab title="Editor" active>
                         <b-form-group id="exampleInputGroup1" label-for="titleInput">
                             <b-form-input id="titleInput" type="text" class="title" placeholder="Title" @input="editorChangeTitle($event)" :value="noteTitle"></b-form-input>
@@ -80,6 +80,11 @@
   export default {
     name: 'editor-page',
     components: { EditorSecret },
+    data () {
+      return {
+        tab: 1
+      }
+    },
     computed: {
       editorMode () {
         return this.$store.state.Store.editorMode
@@ -114,7 +119,10 @@
           'ctrl+s': this.editorSaveAndClose,
           'ctrl+shift+s': this.editorSave,
           'ctrl+left': this.historyBack,
-          'ctrl+right': this.historyForward
+          'ctrl+right': this.historyForward,
+          'ctrl+1': this.setTab0,
+          'ctrl+2': this.setTab1,
+          'ctrl+3': this.setTab2
         }
       }
     },
@@ -126,6 +134,9 @@
       this.$store.dispatch('setNoteIsModified', false)
     },
     methods: {
+      setTab0 () { this.tab = 0 },
+      setTab1 () { this.tab = 1 },
+      setTab2 () { this.tab = 2 },
       modify () {
         this.$store.dispatch('setNoteIsModified', true)
       },
