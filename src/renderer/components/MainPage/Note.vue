@@ -5,6 +5,11 @@
             <b-button title="Mark as favorite" size="sm" v-if="!note.deleted" :variant="note.star ? 'warning' : ''" @click="toggleStar(note._id, index)"><icon name="star"></icon></b-button>
             <b-button title="Edit" size="sm" @click="openEditNotePage(note._id)"><icon name="pencil"></icon></b-button>
             <b-button title="Delete" size="sm" @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon></b-button>
+            <!--<b-dropdown class="m-md-2" size="sm">-->
+                <!--<b-dropdown-item @click="openEditNotePage(note._id)"><icon name="pencil"></icon> Edit</b-dropdown-item>-->
+                <!--<b-dropdown-divider></b-dropdown-divider>-->
+                <!--<b-dropdown-item @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon> Delete</b-dropdown-item>-->
+            <!--</b-dropdown>-->
         </h5>
         <h1>{{ note.title }}</h1>
         <h2>{{ formattedNoteDate }}
