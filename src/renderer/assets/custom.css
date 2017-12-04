@@ -245,7 +245,9 @@ h4 {
     background: #fafafa;
 }
 
-/* Note not in a div */
-.screen.notes .notes .note {
-
+.btn-primary {
+    background-color: #0048ff;
+    border-color: #0048ff;
 }
+
+
