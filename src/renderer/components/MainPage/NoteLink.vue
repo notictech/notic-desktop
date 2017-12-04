@@ -1,6 +1,6 @@
 <template>
     <div :id="'notelink_index_' + index">
-        <b-button size="sm" :class="[{active: activeNoteIndex == index}, 'note-link', 'btn', 'btn-outline-primary', 'btn-sm']" @click="goToNote(index)" @mousedown.middle="openEditNotePage(note._id)"><icon v-show="note.star && !note.deleted" name="star"></icon> {{ note.title }}</b-button>
+        <b-button size="sm" :class="[{active: activeNoteIndex == index}, 'note-link', 'btn', 'btn-outline-primary', 'btn-sm']" @click="goToNote(index)" @mousedown.middle="openEditNotePage(note._id)"><icon v-show="note.star && !note.deleted" name="star"></icon><icon v-show="note.reminder && !note.deleted" name="bell"></icon> {{ note.title }}</b-button>
     </div>
 </template>
 
