@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Tray, Menu } from 'electron'
 
 /**
  * Set `__static` path to static files in production
@@ -28,8 +28,29 @@ function createWindow () {
 
   mainWindow.loadURL(winURL)
 
+  // mainWindow.on('close', (e) => {
+  //   e.preventDefault()
+  //   mainWindow.hide()
+  // })
+
   mainWindow.on('closed', () => {
     mainWindow = null
+  })
+
+  let appIcon = new Tray(`${__static}/icons/notic-logo.png`)
+  appIcon.setToolTip('notic-desktop')
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Exit', type: 'normal', click: () => { app.exit(0) }
+    }
+  ])
+  appIcon.setContextMenu(contextMenu)
+  appIcon.on('click', () => {
+    if (mainWindow.isMinimized() || !mainWindow.isVisible()) {
+      mainWindow.show()
+    } else {
+      mainWindow.hide()
+    }
   })
 }
 
@@ -55,14 +76,12 @@ app.on('activate', () => {
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
  */
 
-/*
-import { autoUpdater } from 'electron-updater'
-
-autoUpdater.on('update-downloaded', () => {
-  autoUpdater.quitAndInstall()
-})
-
-app.on('ready', () => {
-  if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
-})
- */
+// import { autoUpdater } from 'electron-updater'
+//
+// autoUpdater.on('update-downloaded', () => {
+//   autoUpdater.quitAndInstall()
+// })
+//
+// app.on('ready', () => {
+//   if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
+// })
