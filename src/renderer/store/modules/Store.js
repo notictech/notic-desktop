@@ -6,6 +6,7 @@ const Datastore = require('nedb')
 const moment = require('moment')
 const Mark = require('mark.js')
 const {clipboard} = require('electron')
+const {ipcRenderer} = require('electron')
 const qr = require('qr-image')
 
 let db
@@ -743,6 +744,11 @@ const actions = {
         this.commit('setNotificationsIsUnread', true)
         break
       }
+    }
+    if (!state.notificationsIsUnread) {
+      ipcRenderer.send('set-tray-icon-normal')
+    } else {
+      ipcRenderer.send('set-tray-icon-notif')
     }
   },
   markNotificationRead (context, obj) {

@@ -11,6 +11,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 let mainWindow
+let appIcon = null
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -37,7 +38,7 @@ function createWindow () {
     mainWindow = null
   })
 
-  let appIcon = new Tray(`${__static}/icons/notic-logo.png`)
+  appIcon = new Tray(`${__static}/icons/notic-logo.png`)
   appIcon.setToolTip('notic-desktop')
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -66,6 +67,16 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+const {ipcMain} = require('electron')
+
+ipcMain.on('set-tray-icon-notif', (event, arg) => {
+  appIcon.setImage(`${__static}/icons/notic-notif.png`)
+})
+
+ipcMain.on('set-tray-icon-normal', (event, arg) => {
+  appIcon.setImage(`${__static}/icons/notic-logo.png`)
 })
 
 /**
