@@ -18,7 +18,7 @@
             </span>
         </h2>
         <h3 v-show="note.secrets.length">
-            <b-button size="sm" class="btn-info" v-for="(secret, index) in note.secrets" :key="index"><icon name="key"></icon> {{secret.title}}</b-button>
+            <b-button size="sm" class="btn-info" v-for="(secret, index) in note.secrets" :key="index" @click="copySecret(secret.content)" title="Click for copy"><icon name="key"></icon> {{secret.title}}</b-button>
         </h3>
         <h4>{{ note.content }}</h4>
     </div>
@@ -27,6 +27,7 @@
 <script>
   import Icon from '../../../../node_modules/vue-awesome/components/Icon.vue'
   import moment from 'moment'
+  const {clipboard} = require('electron')
   export default {
     components: {Icon},
     props: ['note', 'index'],
@@ -74,6 +75,10 @@
       }
     },
     methods: {
+      copySecret (text) {
+        clipboard.writeText(text)
+        console.log(text)
+      },
       actionDeleteNote (id, deleted = false) {
         if (confirm('Are you sure you want to delete this note?')) {
           if (deleted) {
