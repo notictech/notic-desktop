@@ -1,6 +1,5 @@
-import bus from '../../bus'
+import menus from '../../../menu'
 
-const {Menu} = require('electron').remote
 const remote = require('electron').remote
 const Datastore = require('nedb')
 const moment = require('moment')
@@ -10,16 +9,6 @@ const {ipcRenderer} = require('electron')
 const qr = require('qr-image')
 
 let db
-
-const noteContextMenu = Menu.buildFromTemplate([
-  {
-    label: 'Copy selected',
-    accelerator: 'CmdOrCtrl+C',
-    click () {
-      bus.$emit('copyText')
-    }
-  }
-])
 
 const blankNote = {
   doctype: 'note',
@@ -494,7 +483,7 @@ const actions = {
     this.dispatch('updateHistory')
   },
   showNoteContextMenu (context, id) {
-    noteContextMenu.popup(remote.getCurrentWindow())
+    menus.noteContextMenu.popup(remote.getCurrentWindow())
   },
   goToNextNote (context) {
     if (!state.notes.length) return
