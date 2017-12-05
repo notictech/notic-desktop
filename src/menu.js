@@ -3,7 +3,7 @@ const {Menu} = require('electron').remote
 
 const mainMenuTemplate = [
   {
-    label: 'App',
+    label: '&App',
     submenu: [
       {
         label: 'Add note',
