@@ -62,8 +62,10 @@
     components: { Icon, Note, NoteLink },
     mounted () {
       bus.$on('copyText', () => {
-        // event logic
         this.copyText()
+      })
+      bus.$on('addNote', () => {
+        this.openAddNotePage()
       })
       this.$refs.search.focus()
       this.$store.dispatch('initDb', () => {

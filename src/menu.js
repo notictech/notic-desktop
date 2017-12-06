@@ -1,5 +1,6 @@
 import bus from './renderer/bus'
 const {Menu} = require('electron').remote
+const {ipcRenderer} = require('electron')
 
 const mainMenuTemplate = [
   {
@@ -9,7 +10,7 @@ const mainMenuTemplate = [
         label: 'Add note',
         accelerator: 'CmdOrCtrl+Space',
         click () {
-          console.log('@@@@')
+          bus.$emit('addNote')
         }
       }
     ]
@@ -27,6 +28,10 @@ const noteContextMenu = Menu.buildFromTemplate([
     }
   }
 ])
+
+ipcRenderer.on('add-note', () => {
+  bus.$emit('addNote')
+})
 
 export default {
   noteContextMenu

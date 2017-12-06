@@ -40,7 +40,17 @@ function createWindow () {
 
   appIcon = new Tray(`${__static}/icons/notic-logo.png`)
   appIcon.setToolTip('notic-desktop')
+
+  const clickAddNote = () => {
+    mainWindow.webContents.send('add-note')
+    mainWindow.show()
+  }
+
   const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Add note', type: 'normal', click: clickAddNote
+    },
+    {type: 'separator'},
     {
       label: 'Exit', type: 'normal', click: () => { app.exit(0) }
     }
