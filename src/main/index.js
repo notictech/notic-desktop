@@ -55,6 +55,10 @@ function createWindow () {
     mainWindow.webContents.send('add-note-from-clipboard')
     mainWindow.show()
   }
+  const clickOpenRecentNote = () => {
+    mainWindow.webContents.send('open-recent-note')
+    mainWindow.show()
+  }
 
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -62,6 +66,10 @@ function createWindow () {
     },
     {
       label: 'Add note from clipboard', type: 'normal', click: clickAddNoteFromClipboard
+    },
+    {type: 'separator'},
+    {
+      label: 'Open recent note', type: 'normal', click: clickOpenRecentNote
     },
     {type: 'separator'},
     {
@@ -100,6 +108,10 @@ ipcMain.on('set-tray-icon-notif', (event, arg) => {
 
 ipcMain.on('set-tray-icon-normal', (event, arg) => {
   appIcon.setImage(`${__static}/icons/notic-logo.png`)
+})
+
+ipcMain.on('system-exit', function (event, arg) {
+  app.exit(0)
 })
 
 /**

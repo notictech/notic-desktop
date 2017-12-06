@@ -19,6 +19,22 @@ const mainMenuTemplate = [
         click () {
           bus.$emit('addNoteFromClipboard')
         }
+      },
+      {type: 'separator'},
+      {
+        label: 'Open recent note',
+        accelerator: 'CmdOrCtrl+E',
+        click () {
+          bus.$emit('openRecentNote')
+        }
+      },
+      {type: 'separator'},
+      {
+        label: 'Quit',
+        accelerator: 'CmdOrCtrl+Shift+Q',
+        click () {
+          ipcRenderer.send('system-exit')
+        }
       }
     ]
   }
@@ -46,6 +62,10 @@ ipcRenderer.on('add-note-from-clipboard', () => {
 
 ipcRenderer.on('window-must-be-hidden', () => {
   bus.$emit('windowMustBeHidden')
+})
+
+ipcRenderer.on('open-recent-note', () => {
+  bus.$emit('openRecentNote')
 })
 
 export default {

@@ -13,7 +13,7 @@
                         <b-btn variant="primary" @click="openRecentNote()" title="Open recent note (Ctrl+E)"><icon name="pencil-square-o"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm">
-                        <b-btn variant="primary" @click="showQR()" title="QR from clipboard (Ctrl+K)"><icon name="qrcode"></icon></b-btn>
+                        <b-btn variant="primary" @click="showQR()" title="QR from clipboard (Ctrl+Q)"><icon name="qrcode"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm">
                         <b-btn variant="primary" :variant="this.$store.state.Store.notificationsIsUnread ? 'danger' : 'primary' " @click="openNotificationsPage()" title="Notifications (Ctrl+N)"><icon name="bell"></icon></b-btn>
@@ -72,6 +72,9 @@
       })
       bus.$on('windowMustBeHidden', () => {
         this.$store.commit('setWindowMustBeHidden', true)
+      })
+      bus.$on('openRecentNote', () => {
+        this.openRecentNote()
       })
       this.$refs.search.focus()
       this.$store.dispatch('initDb', () => {
@@ -190,7 +193,7 @@
           'ctrl+3': this.setSearchFilterReminder,
           'ctrl+4': this.setSearchFilterDeleted,
           'ctrl+c': this.copyText,
-          'ctrl+k': this.showQR
+          'ctrl+q': this.showQR
         }
       },
       notes () {
