@@ -67,6 +67,12 @@
       bus.$on('addNote', () => {
         this.openAddNotePage()
       })
+      bus.$on('addNoteFromClipboard', () => {
+        this.openAddNoteFromClipboardPage()
+      })
+      bus.$on('windowMustBeHidden', () => {
+        this.$store.commit('setWindowMustBeHidden', true)
+      })
       this.$refs.search.focus()
       this.$store.dispatch('initDb', () => {
         this.$store.dispatch('loadHistory')
@@ -109,6 +115,10 @@
       },
       openAddNotePage () {
         this.$store.dispatch('openAddNotePage')
+        this.$router.replace('/editor')
+      },
+      openAddNoteFromClipboardPage () {
+        this.$store.dispatch('openAddNoteFromClipboardPage')
         this.$router.replace('/editor')
       },
       openRecentNote () {

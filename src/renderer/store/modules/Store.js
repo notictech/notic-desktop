@@ -45,6 +45,7 @@ const state = {
   historyIndex: 0,
   appJustStarted: true,
   noteIsModified: false,
+  windowMustBeHidden: false,
   misc: {
     recentNoteId: null
   },
@@ -56,7 +57,8 @@ const state = {
 }
 
 const mutations = {
-  setLoadedNotesCount: (state, date) => { state.loadedNotesCount = date },
+  setWindowMustBeHidden: (state, data) => { state.windowMustBeHidden = data },
+  setLoadedNotesCount: (state, data) => { state.loadedNotesCount = data },
   setLoadedNotesLinksCount: (state, date) => { state.loadedNotesLinksCount = date },
   setNoteIsModified: (state, data) => { state.noteIsModified = data },
   setActiveNoteIndex: (state, data) => { state.activeNoteIndex = data },
@@ -316,6 +318,12 @@ const actions = {
     this.commit('updateNote', note)
     this.commit('setEditorMode', 'add')
   },
+  openAddNoteFromClipboardPage (context) {
+    this.dispatch('openAddNotePage')
+    let content = clipboard.readText()
+    this.commit('updateNoteContent', content)
+    this.commit('updateNoteTitle', '#clipboard ' + content.substr(0, 30) + '...')
+  },
   openEditNotePage (context, id) {
     db.findOne({_id: id}, (err, doc) => {
       if (err) console.log(err)
@@ -374,6 +382,10 @@ const actions = {
             successCallback()
           }
         })
+        if (state.windowMustBeHidden) {
+          this.commit('setWindowMustBeHidden', false)
+          remote.BrowserWindow.getAllWindows()[0].minimize()
+        }
       })
     } else {
       this.commit('setNoteUpdatedAt', now.valueOf())

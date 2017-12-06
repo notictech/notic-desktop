@@ -42,13 +42,26 @@ function createWindow () {
   appIcon.setToolTip('notic-desktop')
 
   const clickAddNote = () => {
+    if (mainWindow.isMinimized() || !mainWindow.isVisible()) {
+      mainWindow.webContents.send('window-must-be-hidden')
+    }
     mainWindow.webContents.send('add-note')
+    mainWindow.show()
+  }
+  const clickAddNoteFromClipboard = () => {
+    if (mainWindow.isMinimized() || !mainWindow.isVisible()) {
+      mainWindow.webContents.send('window-must-be-hidden')
+    }
+    mainWindow.webContents.send('add-note-from-clipboard')
     mainWindow.show()
   }
 
   const contextMenu = Menu.buildFromTemplate([
     {
       label: 'Add note', type: 'normal', click: clickAddNote
+    },
+    {
+      label: 'Add note from clipboard', type: 'normal', click: clickAddNoteFromClipboard
     },
     {type: 'separator'},
     {

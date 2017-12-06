@@ -4,13 +4,20 @@ const {ipcRenderer} = require('electron')
 
 const mainMenuTemplate = [
   {
-    label: '&App',
+    label: '&Menu',
     submenu: [
       {
         label: 'Add note',
         accelerator: 'CmdOrCtrl+Space',
         click () {
           bus.$emit('addNote')
+        }
+      },
+      {
+        label: 'Add note from clipboard',
+        accelerator: 'CmdOrCtrl+Shift+Space',
+        click () {
+          bus.$emit('addNoteFromClipboard')
         }
       }
     ]
@@ -31,6 +38,14 @@ const noteContextMenu = Menu.buildFromTemplate([
 
 ipcRenderer.on('add-note', () => {
   bus.$emit('addNote')
+})
+
+ipcRenderer.on('add-note-from-clipboard', () => {
+  bus.$emit('addNoteFromClipboard')
+})
+
+ipcRenderer.on('window-must-be-hidden', () => {
+  bus.$emit('windowMustBeHidden')
 })
 
 export default {

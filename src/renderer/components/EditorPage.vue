@@ -141,6 +141,7 @@
         this.$store.dispatch('setNoteIsModified', true)
       },
       close () {
+        this.$store.commit('setWindowMustBeHidden', false)
         this.$router.replace('/')
       },
       editorChangeTitle (event) {
