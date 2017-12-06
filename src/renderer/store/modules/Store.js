@@ -602,7 +602,7 @@ const actions = {
         let msg = moment(state.reminders[i].reminderDate).format('DD.MM.YYYY') + ' at ' + state.reminders[i].reminderTime + '\n\r' + doc.title + '\n\r\n\r' + doc.content
 
         let notification = new Notification('', {
-          body: msg,
+          body: safeTags(msg),
           icon: 'static/icons/notic-logo.png'
         })
 
@@ -815,6 +815,10 @@ function remapString (str, from, to) {
   }
 
   return str
+}
+
+function safeTags(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
 }
 
 RegExp.quote = (str) => {
