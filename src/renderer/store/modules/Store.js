@@ -302,6 +302,19 @@ const actions = {
       this.dispatch('searchNotes', {query: state.searchQuery})
     })
   },
+  cloneNote (context, id) {
+    db.findOne({_id: id}, (err, doc) => {
+      if (err) console.log(err)
+      let clone = doc
+      clone.createdAt = moment().valueOf()
+      clone.updatedAt = clone.createdAt
+      delete clone._id
+      db.insert(clone, (err, newDoc) => {
+        if (err) console.log(err)
+        this.dispatch('searchNotes', {query: state.searchQuery})
+      })
+    })
+  },
   actionMarkNoteAsDeleted (context, id) {
     db.update({ _id: id }, { $set: { deleted: true } }, () => {
       this.commit('deleteFromHistory', id)

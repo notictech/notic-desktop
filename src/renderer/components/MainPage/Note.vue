@@ -3,13 +3,14 @@
         <h5>
             <b-button size="sm" variant="success" v-if="searchFilter === 'deleted'" @click="restoreNote(note._id)">Restore</b-button>
             <b-button title="Mark as favorite" size="sm" v-if="!note.deleted" :variant="note.star ? 'warning' : ''" @click="toggleStar(note._id, index)"><icon name="star"></icon></b-button>
-            <b-button title="Edit" size="sm" @click="openEditNotePage(note._id)"><icon name="pencil"></icon></b-button>
-            <b-button title="Delete" size="sm" @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon></b-button>
-            <!--<b-dropdown class="m-md-2" size="sm">-->
-                <!--<b-dropdown-item @click="openEditNotePage(note._id)"><icon name="pencil"></icon> Edit</b-dropdown-item>-->
-                <!--<b-dropdown-divider></b-dropdown-divider>-->
-                <!--<b-dropdown-item @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon> Delete</b-dropdown-item>-->
-            <!--</b-dropdown>-->
+            <!--<b-button title="Edit" size="sm" @click="openEditNotePage(note._id)"><icon name="pencil"></icon></b-button>-->
+            <!--<b-button title="Delete" size="sm" @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon></b-button>-->
+            <b-dropdown class="m-md-2" size="sm">
+                <b-dropdown-item @click="openEditNotePage(note._id)"><icon name="pencil"></icon> Edit</b-dropdown-item>
+                <b-dropdown-item @click="cloneNote(note._id)"><icon name="files-o"></icon> Clone</b-dropdown-item>
+                <b-dropdown-divider></b-dropdown-divider>
+                <b-dropdown-item @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon> Delete</b-dropdown-item>
+            </b-dropdown>
         </h5>
         <h1>{{ note.title }}</h1>
         <h2>{{ formattedNoteDate }}
@@ -90,6 +91,9 @@
       openEditNotePage (id) {
         this.$store.dispatch('openEditNotePage', id)
         this.$router.replace('/editor')
+      },
+      cloneNote (id) {
+        this.$store.dispatch('cloneNote', id)
       },
       restoreNote (id) {
         if (confirm('Are you sure you want to restore this note?')) {
