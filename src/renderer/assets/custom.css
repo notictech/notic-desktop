@@ -224,7 +224,8 @@ h4 {
 .screen.notifications .notifications .notification h4,
 .screen.notes .notes .note h4 {
     margin-top: 15px;
-    white-space: pre-wrap;
+    white-space: pre-line;
+    word-break: break-all;
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: 0.9em;
 }
