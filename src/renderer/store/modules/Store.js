@@ -817,8 +817,8 @@ function remapString (str, from, to) {
   return str
 }
 
-function safeTags(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+function safeTags (str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
 
 RegExp.quote = (str) => {
