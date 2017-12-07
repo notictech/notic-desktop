@@ -28,6 +28,13 @@ const mainMenuTemplate = [
           bus.$emit('openRecentNote')
         }
       },
+      {
+        label: 'Notifications',
+        accelerator: 'CmdOrCtrl+N',
+        click () {
+          bus.$emit('openNotifications')
+        }
+      },
       {type: 'separator'},
       {
         label: 'Quit',
@@ -66,6 +73,10 @@ ipcRenderer.on('window-must-be-hidden', () => {
 
 ipcRenderer.on('open-recent-note', () => {
   bus.$emit('openRecentNote')
+})
+
+ipcRenderer.on('open-notifications', () => {
+  bus.$emit('openNotifications')
 })
 
 export default {

@@ -59,6 +59,10 @@ function createWindow () {
     mainWindow.webContents.send('open-recent-note')
     mainWindow.show()
   }
+  const clickOpenNotifications = () => {
+    mainWindow.webContents.send('open-notifications')
+    mainWindow.show()
+  }
 
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -70,6 +74,9 @@ function createWindow () {
     {type: 'separator'},
     {
       label: 'Open recent note', type: 'normal', click: clickOpenRecentNote
+    },
+    {
+      label: 'Notifications', type: 'normal', click: clickOpenNotifications
     },
     {type: 'separator'},
     {

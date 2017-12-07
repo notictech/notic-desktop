@@ -76,6 +76,9 @@
       bus.$on('openRecentNote', () => {
         this.openRecentNote()
       })
+      bus.$on('openNotifications', () => {
+        this.openNotificationsPage()
+      })
       this.$refs.search.focus()
       this.$store.dispatch('initDb', () => {
         this.$store.dispatch('loadHistory')
