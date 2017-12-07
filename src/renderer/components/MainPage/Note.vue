@@ -8,7 +8,6 @@
             <b-dropdown class="m-md-2" size="sm">
                 <b-dropdown-item @click="openEditNotePage(note._id)"><icon name="pencil"></icon> Edit</b-dropdown-item>
                 <b-dropdown-item @click="cloneNote(note._id)"><icon name="files-o"></icon> Clone</b-dropdown-item>
-                <b-dropdown-divider></b-dropdown-divider>
                 <b-dropdown-item @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon> Delete</b-dropdown-item>
             </b-dropdown>
         </h5>
