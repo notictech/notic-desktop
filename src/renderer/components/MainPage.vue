@@ -5,7 +5,7 @@
         </b-modal>
         <div class="topbar">
             <div class="row">
-                <div class="col-4">
+                <div class="col-6">
                     <b-button-group size="sm">
                         <b-btn variant="primary" @click="openAddNotePage()" title="Add note (Ctrl+Space)"><icon name="plus"></icon></b-btn>
                     </b-button-group>
@@ -23,7 +23,7 @@
                         <b-btn variant="danger" @click="emptyTrash()">Empty trash</b-btn>
                     </b-button-group>
                 </div>
-                <div class="col-8">
+                <div class="col-6">
                     <b-input-group size="sm">
                         <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" ref="search" :value="searchQuery"></b-form-input>
                         <b-button-group size="sm">
