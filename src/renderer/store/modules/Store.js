@@ -7,6 +7,7 @@ const Mark = require('mark.js')
 const {clipboard} = require('electron')
 const {ipcRenderer} = require('electron')
 const qr = require('qr-image')
+const CryptoJS = require('crypto-js')
 
 let db
 
@@ -32,10 +33,11 @@ const state = {
   activeNoteIndex: null,
   activeNoteId: null,
   editorMode: 'add',
+  masterPassword: null,
   settings: {
     dbPath: 'default.ntc',
     localKeymap: 'ru',
-    historyMaxLength: 100
+    historyMaxLength: 50
   },
   notes: [],
   note: {},
@@ -210,7 +212,38 @@ const getters = {
 
 const actions = {
   initDb (context, callback) {
-    db = new Datastore({ filename: context.state.settings.dbPath, autoload: true })
+    db = new Datastore({
+      filename: context.state.settings.dbPath,
+      autoload: false,
+      beforeDeserialization (data) {
+        if (state.masterPassword === '') {
+          return data
+        }
+        try {
+          let bytes = CryptoJS.AES.decrypt(data, state.masterPassword)
+          let decrypted = bytes.toString(CryptoJS.enc.Utf8)
+          return decrypted
+        } catch (e) {
+          return data
+        }
+      },
+      afterSerialization (data) {
+        if (state.masterPassword === '') {
+          return data
+        }
+        try {
+          var encrypted = CryptoJS.AES.encrypt(data, state.masterPassword)
+          return encrypted
+        } catch (e) {
+          return data
+        }
+      }
+    })
+    db.loadDatabase((err) => {
+      if (err) {
+        console.log('Enter master password!!!')
+      }
+    })
     db.count({}, (err, count) => {
       if (err) {
         console.log(err)
