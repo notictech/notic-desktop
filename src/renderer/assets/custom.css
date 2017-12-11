@@ -167,6 +167,7 @@ button svg {
 .screen.set-master-password .input-feedback {
     margin-top: .25rem;
     color: #dc3545;
+    font-size: small;
 }
 
 .screen.editor .title {
