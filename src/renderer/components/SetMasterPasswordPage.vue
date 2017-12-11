@@ -9,11 +9,11 @@
                 </div>
             </div>
             <div class="content-wrap">
-                <div class="row justify-content-md-center">
-                    <b-alert show variant="warning">
-                        Please, come up with a strong password and remember it. Be careful! if you forgot the master
-                        password, you will never be an access to your database.
-                    </b-alert>
+                <b-alert show variant="warning strong-password">
+                    Please, come up with a strong password and remember it. Be careful! if you forgot the master
+                    password, you will never be an access to your database.
+                </b-alert>
+                <div class="row justify-content-md-center" style="width: 100%">
                     <div class="col-6">
                         <b-form>
                             <b-form-group id="InputGroup1"

@@ -135,6 +135,7 @@ button svg {
 }
 
 .screen.editor.container-fluid,
+.screen.set-master-password.container-fluid,
 .screen.notifications.container-fluid {
     padding: 0;
     margin: 0;
