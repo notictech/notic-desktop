@@ -57,10 +57,16 @@
   import Note from '../components/MainPage/Note.vue'
   import NoteLink from '../components/MainPage/NoteLink.vue'
 
+  const fs = require('fs')
+
   export default {
     name: 'main-page',
     components: { Icon, Note, NoteLink },
     mounted () {
+      if (!fs.existsSync(this.$store.state.Store.settings.dbPath) && this.$store.state.Store.masterPassword === null) {
+        this.$router.replace('/set-master-password')
+        return
+      }
       bus.$on('copyText', () => {
         this.copyText()
       })

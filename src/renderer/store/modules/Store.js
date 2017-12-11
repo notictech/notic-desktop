@@ -59,6 +59,7 @@ const state = {
 }
 
 const mutations = {
+  setMasterPassword: (state, data) => { state.masterPassword = data },
   setWindowMustBeHidden: (state, data) => { state.windowMustBeHidden = data },
   setLoadedNotesCount: (state, data) => { state.loadedNotesCount = data },
   setLoadedNotesLinksCount: (state, date) => { state.loadedNotesLinksCount = date },

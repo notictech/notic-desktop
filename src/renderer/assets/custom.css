@@ -142,9 +142,10 @@ button svg {
 .screen.notes .notes .note .secrets{
     padding: 10px 0 5px 0;
 }
-.screen.notes .notes .note .secrets .secret{
+.screen.notes .notes .note .secrets .secret {
     margin-right: 5px;
 }
+.screen.set-master-password .topbar,
 .screen.editor .topbar,
 .screen.notifications .topbar {
     width: 99%;
@@ -154,9 +155,17 @@ button svg {
     position: fixed;
     background: #fff;
 }
+.screen.set-master-password .content-wrap,
 .screen.notifications .content-wrap,
 .screen.editor .content-wrap {
     padding-top: 42px;
+}
+.screen.set-master-password .alert {
+    margin: 10px;
+}
+.screen.set-master-password .input-feedback {
+    margin-top: .25rem;
+    color: #dc3545;
 }
 
 .screen.editor .title {

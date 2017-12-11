@@ -21,6 +21,11 @@ export default new Router({
       component: require('@/components/NotificationsPage').default
     },
     {
+      path: '/set-master-password',
+      name: 'set-master-password-page',
+      component: require('@/components/SetMasterPasswordPage').default
+    },
+    {
       path: '*',
       redirect: '/'
     }
