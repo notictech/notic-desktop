@@ -67,6 +67,9 @@
         this.$router.replace('/set-master-password')
         return
       }
+      bus.$on('enterMasterPassword', () => {
+        this.$router.replace('/enter-master-password')
+      })
       bus.$on('copyText', () => {
         this.copyText()
       })

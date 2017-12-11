@@ -136,6 +136,7 @@ button svg {
 
 .screen.editor.container-fluid,
 .screen.set-master-password.container-fluid,
+.screen.enter-master-password.container-fluid,
 .screen.notifications.container-fluid {
     padding: 0;
     margin: 0;
@@ -147,6 +148,7 @@ button svg {
     margin-right: 5px;
 }
 .screen.set-master-password .topbar,
+.screen.enter-master-password .topbar,
 .screen.editor .topbar,
 .screen.notifications .topbar {
     width: 99%;
@@ -157,6 +159,7 @@ button svg {
     background: #fff;
 }
 .screen.set-master-password .content-wrap,
+.screen.enter-master-password .content-wrap,
 .screen.notifications .content-wrap,
 .screen.editor .content-wrap {
     padding-top: 42px;

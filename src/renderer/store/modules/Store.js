@@ -1,4 +1,5 @@
 import menus from '../../../menu'
+import bus from '../../../renderer/bus'
 
 const remote = require('electron').remote
 const Datastore = require('nedb')
@@ -8,6 +9,7 @@ const {clipboard} = require('electron')
 const {ipcRenderer} = require('electron')
 const qr = require('qr-image')
 const CryptoJS = require('crypto-js')
+const fs = require('fs')
 
 let db
 
@@ -242,7 +244,10 @@ const actions = {
     })
     db.loadDatabase((err) => {
       if (err) {
-        console.log('Enter master password!!!')
+        this.commit('setMasterPassword', null)
+        if (fs.existsSync(state.settings.dbPath)) {
+          bus.$emit('enterMasterPassword')
+        }
       }
     })
     db.count({}, (err, count) => {
