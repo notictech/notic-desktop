@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid class="screen notes" v-hotkey="keymap">
+    <b-container fluid class="screen notes" v-hotkey="keymap" v-show="this.$store.state.Store.isLoggedIn">
         <b-modal size="sm" ref="modalQr" id="modal-qr" class="modal-qr" hide-footer title="QR from clipboard">
             <div class="my-4 qr" v-html="qr"></div>
         </b-modal>

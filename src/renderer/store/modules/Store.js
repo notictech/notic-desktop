@@ -57,10 +57,12 @@ const state = {
   qr: null,
   notificationsIsUnread: false,
   loadedNotesCount: 0,
-  loadedNotesLinksCount: 0
+  loadedNotesLinksCount: 0,
+  isLoggedIn: false
 }
 
 const mutations = {
+  setIsLoggedIn: (state, data) => { state.isLoggedIn = data },
   setMasterPassword: (state, data) => { state.masterPassword = data },
   setWindowMustBeHidden: (state, data) => { state.windowMustBeHidden = data },
   setLoadedNotesCount: (state, data) => { state.loadedNotesCount = data },
@@ -245,9 +247,12 @@ const actions = {
     db.loadDatabase((err) => {
       if (err) {
         this.commit('setMasterPassword', null)
+        this.commit('setIsLoggedIn', false)
         if (fs.existsSync(state.settings.dbPath)) {
           bus.$emit('enterMasterPassword')
         }
+      } else {
+        this.commit('setIsLoggedIn', true)
       }
     })
     db.count({}, (err, count) => {
