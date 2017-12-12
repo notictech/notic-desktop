@@ -21,6 +21,7 @@
                                           type="password"
                                           ref="password"
                                           autofocus
+                                          @keyup.enter.native="submit()"
                                           @input="inputPassword($event)">
                             </b-form-input>
                         </b-form-group>
@@ -28,6 +29,7 @@
                             <div role="group">
                                 <b-form-input id="Repeat"
                                               type="password"
+                                              @keyup.enter.native="submit()"
                                               @input="inputRepeatedPassword($event)"
                                               :state="!this.notEqual"therefore
                                               aria-describedby="input-feeback">

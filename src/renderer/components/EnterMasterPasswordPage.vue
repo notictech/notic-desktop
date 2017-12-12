@@ -1,7 +1,6 @@
 <template>
     <b-form>
         <b-container fluid class="screen enter-master-password">
-
             <div class="content-wrap">
                 <div class="row justify-content-md-center" style="width: 100%">
                     <div class="col-6" style="margin-top: 20px">
@@ -11,7 +10,8 @@
                                           type="password"
                                           ref="password"
                                           autofocus
-                                          @input="inputPassword($event)">
+                                          @input="inputPassword($event)"
+                                          @keyup.enter.native="submit()">
                             </b-form-input>
                         </b-form-group>
                         <div class="row justify-content-md-center">
