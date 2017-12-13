@@ -170,6 +170,20 @@ button svg {
 .screen.editor .content-wrap {
     padding-top: 42px;
 }
+.screen.about .content-wrap {
+    padding-top: 52px;
+}
+.screen.about .content-wrap img {
+    transition-duration: 1s;
+    transition-property: transform;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 20px
+}
+.screen.about .content-wrap img:hover {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+}
 .screen.set-master-password .alert {
     margin: 10px;
 }

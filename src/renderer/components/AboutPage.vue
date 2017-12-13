@@ -13,8 +13,14 @@
                     </div>
                 </div>
             </div>
-            <div class="content-wrap">
-
+            <div class="content-wrap" style="text-align: center">
+                <b-img src="static/icons/notic-logo.png" fluid/>
+                <h3>Notic</h3>
+                <br>
+                <p>ver. 1.0.0 alpha</p>
+                <p>notictech@gmail.com</p>
+                <p>https://github.com/notictech/notic-desktop</p>
+                <p>© 2016 - <span>{{ this.currentYear }}</span> Sergey Tolokonnikov</p>
             </div>
         </b-container>
     </b-form>
@@ -25,6 +31,9 @@
     name: 'about-page',
     components: {},
     computed: {
+      currentYear () {
+        return require('moment')().format('YYYY')
+      },
       keymap () {
         return {
           'esc': this.close
