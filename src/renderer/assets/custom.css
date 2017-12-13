@@ -174,15 +174,17 @@ button svg {
     padding-top: 52px;
 }
 .screen.about .content-wrap img {
-    transition-duration: 1s;
-    transition-property: transform;
+    border-radius:50%;
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+    -ms-transition: -ms-transform .8s ease-in-out;
+    transition: transform .8s ease-in-out;
     width: 64px;
     height: 64px;
-    margin-bottom: 20px
 }
 .screen.about .content-wrap img:hover {
-    transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
+    transform:rotate(360deg);
+    -ms-transform:rotate(360deg);
+    -webkit-transform:rotate(360deg);
 }
 .screen.set-master-password .alert {
     margin: 10px;

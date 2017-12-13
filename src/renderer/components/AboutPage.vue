@@ -15,7 +15,7 @@
             </div>
             <div class="content-wrap" style="text-align: center">
                 <b-img src="static/icons/notic-logo.png" fluid/>
-                <h3>Notic</h3>
+                <h3 style="margin-top: 10px;">Notic</h3>
                 <br>
                 <p>ver. 1.0.0 alpha</p>
                 <p>notictech@gmail.com</p>
