@@ -63,6 +63,14 @@ function createWindow () {
     mainWindow.webContents.send('open-notifications')
     mainWindow.show()
   }
+  const clickOpenSettings = () => {
+    mainWindow.webContents.send('open-settings')
+    mainWindow.show()
+  }
+  const clickOpenAbout = () => {
+    mainWindow.webContents.send('open-about')
+    mainWindow.show()
+  }
 
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -77,6 +85,13 @@ function createWindow () {
     },
     {
       label: 'Notifications', type: 'normal', click: clickOpenNotifications
+    },
+    {type: 'separator'},
+    {
+      label: 'Settings', type: 'normal', click: clickOpenSettings
+    },
+    {
+      label: 'About', type: 'normal', click: clickOpenAbout
     },
     {type: 'separator'},
     {

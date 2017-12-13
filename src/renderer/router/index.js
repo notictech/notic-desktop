@@ -31,6 +31,16 @@ export default new Router({
       component: require('@/components/EnterMasterPasswordPage').default
     },
     {
+      path: '/settings',
+      name: 'settings-page',
+      component: require('@/components/SettingsPage').default
+    },
+    {
+      path: '/about',
+      name: 'about-page',
+      component: require('@/components/AboutPage').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

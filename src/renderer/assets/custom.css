@@ -134,6 +134,8 @@ button svg {
     background: #fafafa;
 }
 
+.screen.about.container-fluid,
+.screen.settings.container-fluid,
 .screen.editor.container-fluid,
 .screen.set-master-password.container-fluid,
 .screen.enter-master-password.container-fluid,
@@ -147,6 +149,8 @@ button svg {
 .screen.notes .notes .note .secrets .secret {
     margin-right: 5px;
 }
+.screen.about .topbar,
+.screen.settings .topbar,
 .screen.set-master-password .topbar,
 .screen.enter-master-password .topbar,
 .screen.editor .topbar,
@@ -158,6 +162,8 @@ button svg {
     position: fixed;
     background: #fff;
 }
+.screen.about .content-wrap,
+.screen.settings .content-wrap,
 .screen.set-master-password .content-wrap,
 .screen.enter-master-password .content-wrap,
 .screen.notifications .content-wrap,

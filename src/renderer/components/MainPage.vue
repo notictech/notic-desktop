@@ -88,6 +88,12 @@
       bus.$on('openNotifications', () => {
         this.openNotificationsPage()
       })
+      bus.$on('openSettings', () => {
+        this.openSettingsPage()
+      })
+      bus.$on('openAbout', () => {
+        this.openAboutPage()
+      })
       this.$refs.search.focus()
       this.$store.dispatch('initDb', () => {
         this.$store.dispatch('loadHistory')
@@ -187,6 +193,12 @@
       showQR () {
         this.$store.dispatch('showQR')
         this.$refs.modalQr.show()
+      },
+      openSettingsPage () {
+        this.$router.replace('/settings')
+      },
+      openAboutPage () {
+        this.$router.replace('/about')
       }
     },
     computed: {
@@ -205,7 +217,9 @@
           'ctrl+3': this.setSearchFilterReminder,
           'ctrl+4': this.setSearchFilterDeleted,
           'ctrl+c': this.copyText,
-          'ctrl+q': this.showQR
+          'ctrl+q': this.showQR,
+          'f2': this.openSettingsPage,
+          'f3': this.openAboutPage
         }
       },
       notes () {

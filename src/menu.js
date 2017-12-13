@@ -37,6 +37,21 @@ const mainMenuTemplate = [
       },
       {type: 'separator'},
       {
+        label: 'Settings',
+        accelerator: 'F2',
+        click () {
+          bus.$emit('openSettings')
+        }
+      },
+      {
+        label: 'About',
+        accelerator: 'F1',
+        click () {
+          bus.$emit('openAbout')
+        }
+      },
+      {type: 'separator'},
+      {
         label: 'Quit',
         accelerator: 'CmdOrCtrl+Shift+Q',
         click () {
@@ -77,6 +92,14 @@ ipcRenderer.on('open-recent-note', () => {
 
 ipcRenderer.on('open-notifications', () => {
   bus.$emit('openNotifications')
+})
+
+ipcRenderer.on('open-settings', () => {
+  bus.$emit('openSettings')
+})
+
+ipcRenderer.on('open-about', () => {
+  bus.$emit('openAbout')
 })
 
 export default {
