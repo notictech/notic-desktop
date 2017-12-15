@@ -412,10 +412,10 @@ const actions = {
     this.commit('updateNoteContent', text)
   },
   editorSaveAndClose (context, successCallback) {
-    if (!state.note.content.length) {
-      alert('Content must be not empty.')
-      return
-    }
+    // if (!state.note.content.length && state.note.secrets.length) {
+    //   alert('Content must be not empty.')
+    //   return
+    // }
     if (state.note.secretsHaveErrors === false) {
       alert('Invalid secrets data.')
       return
