@@ -252,11 +252,13 @@ const actions = {
       if (err) {
         this.commit('setMasterPassword', null)
         this.commit('setIsLoggedIn', false)
+        ipcRenderer.send('set-tray-icon-inactive')
         if (fs.existsSync(state.settings.dbPath)) {
           bus.$emit('enterMasterPassword')
         }
       } else {
         this.commit('setIsLoggedIn', true)
+        ipcRenderer.send('set-tray-icon-normal')
       }
     })
     db.count({}, (err, count) => {

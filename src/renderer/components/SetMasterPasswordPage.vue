@@ -55,11 +55,14 @@
 </template>
 
 <script>
+  const {ipcRenderer} = require('electron')
   export default {
     name: 'set-master-password-page',
     components: {},
     computed: {},
     mounted () {
+      this.$store.commit('setIsLoggedIn', false)
+      ipcRenderer.send('set-tray-icon-inactive')
       this.$refs.password.focus()
     },
     data () {

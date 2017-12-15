@@ -24,7 +24,7 @@ function createWindow () {
     width: 800,
     height: 600,
     useContentSize: true,
-    icon: `${__static}/icons/notic-logo.png`
+    icon: `${__static}/icons/notic-inactive.png`
   })
 
   mainWindow.loadURL(winURL)
@@ -38,7 +38,7 @@ function createWindow () {
     mainWindow = null
   })
 
-  appIcon = new Tray(`${__static}/icons/notic-logo.png`)
+  appIcon = new Tray(`${__static}/icons/notic-inactive.png`)
   appIcon.setToolTip('notic-desktop')
 
   const clickAddNote = () => {
@@ -126,10 +126,17 @@ const {ipcMain} = require('electron')
 
 ipcMain.on('set-tray-icon-notif', (event, arg) => {
   appIcon.setImage(`${__static}/icons/notic-notif.png`)
+  mainWindow.setIcon(`${__static}/icons/notic-notif.png`)
+})
+
+ipcMain.on('set-tray-icon-inactive', (event, arg) => {
+  appIcon.setImage(`${__static}/icons/notic-inactive.png`)
+  mainWindow.setIcon(`${__static}/icons/notic-inactive.png`)
 })
 
 ipcMain.on('set-tray-icon-normal', (event, arg) => {
   appIcon.setImage(`${__static}/icons/notic-logo.png`)
+  mainWindow.setIcon(`${__static}/icons/notic-logo.png`)
 })
 
 ipcMain.on('system-exit', function (event, arg) {
