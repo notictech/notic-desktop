@@ -62,6 +62,8 @@ const state = {
 }
 
 const mutations = {
+  setHistoryMaxLength: (state, data) => { state.settings.historyMaxLength = data },
+  setLocalKeymap: (state, data) => { state.settings.localKeymap = data },
   setSettingsData: (state, data) => { state.settings = data },
   setDbPath: (state, data) => { state.settings.dbPath = data },
   setIsLoggedIn: (state, data) => { state.isLoggedIn = data },

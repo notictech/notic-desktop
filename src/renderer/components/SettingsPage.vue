@@ -33,6 +33,25 @@
                         </b-input-group-button>
                     </b-input-group>
                 </b-form-group>
+                <b-form-group id="inputGroup2"
+                              label="Alternative keyboard layout:">
+                    <b-input-group>
+                        <b-form-select v-model="localKeymap" :options="localKeymaps" class="mb-3"></b-form-select>
+                    </b-input-group>
+                </b-form-group>
+                <b-form-group id="inputGroup3"
+                              label="History max length:">
+                    <b-input-group>
+                        <b-form-input id="input3"
+                                      type="number"
+                                      min="0"
+                                      max="100"
+                                      required
+                                      v-model="historyMaxLength"
+                                      :value="this.historyMaxLength">
+                        </b-form-input>
+                    </b-input-group>
+                </b-form-group>
             </div>
         </b-container>
     </b-form>
@@ -46,11 +65,18 @@
     created () {
       this.dbPath = this.$store.state.Store.settings.dbPath
       this.masterPassword = this.$store.state.Store.masterPassword
+      this.localKeymap = this.$store.state.Store.settings.localKeymap
+      this.historyMaxLength = this.$store.state.Store.settings.historyMaxLength
     },
     data () {
       return {
         dbPath: '',
-        masterPassword: ''
+        masterPassword: '',
+        localKeymap: '',
+        localKeymaps: [
+          { value: 'ru', text: 'Russian (RU)' }
+        ],
+        historyMaxLength: 0
       }
     },
     computed: {
@@ -69,6 +95,10 @@
           this.$store.commit('setMasterPassword', this.masterPassword)
           this.$store.commit('setAppJustStarted', true)
         }
+
+        this.$store.commit('setLocalKeymap', this.localKeymap)
+        this.$store.commit('setHistoryMaxLength', parseInt(this.historyMaxLength))
+
         this.$store.dispatch('settingsSaveAndClose', () => {
           this.$router.replace('/')
         })
