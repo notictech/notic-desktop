@@ -515,7 +515,7 @@ const actions = {
     })
   },
   restoreDeletedNote (context, id) {
-    db.update({ _id: id }, {$set: {deleted: false}}, () => {
+    db.update({ _id: id }, {$set: {deleted: false, createdAt: moment().valueOf(), updatedAt: moment().valueOf()}}, () => {
       this.dispatch('searchNotes', {query: state.searchQuery})
       this.dispatch('loadReminders')
     })
