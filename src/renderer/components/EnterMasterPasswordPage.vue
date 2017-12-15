@@ -33,9 +33,11 @@
     computed: {},
     mounted () {
       this.$refs.password.focus()
-      if (!fs.existsSync(this.$store.state.Store.settings.dbPath) && this.$store.state.Store.masterPassword === null) {
-        this.$router.replace('/set-master-password')
-      }
+      this.$store.dispatch('loadOrCreateSettingsFile', () => {
+        if (!fs.existsSync(this.$store.state.Store.settings.dbPath) && this.$store.state.Store.masterPassword === null) {
+          this.$router.replace('/set-master-password')
+        }
+      })
     },
     data () {
       return {

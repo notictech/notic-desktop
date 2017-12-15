@@ -63,52 +63,55 @@
     name: 'main-page',
     components: { Icon, Note, NoteLink },
     mounted () {
-      if (!fs.existsSync(this.$store.state.Store.settings.dbPath) && this.$store.state.Store.masterPassword === null) {
-        this.$router.replace('/set-master-password')
-        return
-      }
-      bus.$on('enterMasterPassword', () => {
-        this.$router.replace('/enter-master-password')
-      })
-      bus.$on('copyText', () => {
-        this.copyText()
-      })
-      bus.$on('addNote', () => {
-        this.openAddNotePage()
-      })
-      bus.$on('addNoteFromClipboard', () => {
-        this.openAddNoteFromClipboardPage()
-      })
-      bus.$on('windowMustBeHidden', () => {
-        this.$store.commit('setWindowMustBeHidden', true)
-      })
-      bus.$on('openRecentNote', () => {
-        this.openRecentNote()
-      })
-      bus.$on('openNotifications', () => {
-        this.openNotificationsPage()
-      })
-      bus.$on('openSettings', () => {
-        this.openSettingsPage()
-      })
-      bus.$on('openAbout', () => {
-        this.openAboutPage()
-      })
-      this.$refs.search.focus()
-      this.$store.dispatch('initDb', () => {
-        this.$store.dispatch('loadHistory')
-        this.$store.dispatch('loadMiscData')
-        if (this.$store.state.Store.appJustStarted) {
-          this.searchNotes(this.$store.state.Store.searchQuery)
-          this.$store.dispatch('loadReminders')
-          this.$store.dispatch('loadNotifications')
-          this.$store.dispatch('checkNotifications')
-          setInterval(() => {
-            this.$store.dispatch('checkReminders')
-          }, 1000)
-          this.$store.dispatch('setAppJustStarted', false)
+      let onMounted = () => {
+        if (!fs.existsSync(this.$store.state.Store.settings.dbPath) && this.$store.state.Store.masterPassword === null) {
+          this.$router.replace('/set-master-password')
+          return
         }
-      })
+        bus.$on('enterMasterPassword', () => {
+          this.$router.replace('/enter-master-password')
+        })
+        bus.$on('copyText', () => {
+          this.copyText()
+        })
+        bus.$on('addNote', () => {
+          this.openAddNotePage()
+        })
+        bus.$on('addNoteFromClipboard', () => {
+          this.openAddNoteFromClipboardPage()
+        })
+        bus.$on('windowMustBeHidden', () => {
+          this.$store.commit('setWindowMustBeHidden', true)
+        })
+        bus.$on('openRecentNote', () => {
+          this.openRecentNote()
+        })
+        bus.$on('openNotifications', () => {
+          this.openNotificationsPage()
+        })
+        bus.$on('openSettings', () => {
+          this.openSettingsPage()
+        })
+        bus.$on('openAbout', () => {
+          this.openAboutPage()
+        })
+        this.$refs.search.focus()
+        this.$store.dispatch('initDb', () => {
+          this.$store.dispatch('loadHistory')
+          this.$store.dispatch('loadMiscData')
+          if (this.$store.state.Store.appJustStarted) {
+            this.searchNotes(this.$store.state.Store.searchQuery)
+            this.$store.dispatch('loadReminders')
+            this.$store.dispatch('loadNotifications')
+            this.$store.dispatch('checkNotifications')
+            setInterval(() => {
+              this.$store.dispatch('checkReminders')
+            }, 1000)
+            this.$store.dispatch('setAppJustStarted', false)
+          }
+        })
+      }
+      this.$store.dispatch('loadOrCreateSettingsFile', onMounted)
     },
     updated () {
       if (this.$store.state.Store.loadedNotesCount - 1 <= this.$store.state.Store.activeNoteIndex) {

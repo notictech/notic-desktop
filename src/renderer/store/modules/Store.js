@@ -62,6 +62,8 @@ const state = {
 }
 
 const mutations = {
+  setSettingsData: (state, data) => { state.settings = data },
+  setDbPath: (state, data) => { state.settings.dbPath = data },
   setIsLoggedIn: (state, data) => { state.isLoggedIn = data },
   setMasterPassword: (state, data) => { state.masterPassword = data },
   setWindowMustBeHidden: (state, data) => { state.windowMustBeHidden = data },
@@ -822,6 +824,37 @@ const actions = {
     db.remove({doctype: 'notification'}, {multi: true}, () => {
       this.dispatch('loadNotifications')
     })
+  },
+  settingsSaveAndClose (context, successCallback) {
+    this.dispatch('saveSettingsFile', successCallback)
+  },
+  saveSettingsFile (context, successCallback) {
+    fs.writeFileSync('./settings', JSON.stringify(state.settings, null, 2))
+    successCallback()
+  },
+  loadSettingsFile (context, successCallback) {
+    if (fs.existsSync('./settings')) {
+      require('fs').readFile('./settings', (err, data) => {
+        if (err) {
+          console.log(err)
+        }
+        if (data) {
+          this.commit('setSettingsData', JSON.parse(data))
+          successCallback()
+        }
+      })
+    }
+  },
+  loadOrCreateSettingsFile (context, nextStep) {
+    if (!fs.existsSync('./settings')) {
+      this.dispatch('saveSettingsFile', () => {
+        nextStep()
+      })
+    } else {
+      this.dispatch('loadSettingsFile', () => {
+        nextStep()
+      })
+    }
   }
 }
 
