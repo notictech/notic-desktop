@@ -21,6 +21,7 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
+    title: 'Notic',
     width: 800,
     height: 600,
     useContentSize: true,
@@ -39,7 +40,7 @@ function createWindow () {
   })
 
   appIcon = new Tray(`${__static}/icons/notic-inactive.png`)
-  appIcon.setToolTip('notic-desktop')
+  appIcon.setToolTip('Notic Desktop')
 
   const clickAddNote = () => {
     if (mainWindow.isMinimized() || !mainWindow.isVisible()) {
