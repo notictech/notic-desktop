@@ -1,10 +1,15 @@
 <template>
     <b-form>
-        <b-container fluid class="screen set-master-password">
+        <b-container fluid class="screen change-master-password">
             <div class="topbar">
                 <div class="row" align-h="between">
                     <div class="col-6">
-                        <h4>Set master password</h4>
+                        <h4>Change master password</h4>
+                    </div>
+                    <div class="col-6" style="text-align: right">
+                        <b-button-group size="sm">
+                            <b-btn @click="close()"><icon name="times"></icon></b-btn>
+                        </b-button-group>
                     </div>
                 </div>
             </div>
@@ -16,8 +21,23 @@
                 <div class="row justify-content-md-center" style="width: 100%">
                     <div class="col-6">
                         <b-form-group id="InputGroup1"
-                                      label="Password:">
-                            <b-form-input id="Password"
+                                      label="Current password:">
+                            <b-form-input id="CurrentPassword"
+                                          type="password"
+                                          ref="currentPassword"
+                                          autofocus
+                                          :state="!this.currentPasswordNotEqual"
+                                          aria-describedby="current-password-feeback"
+                                          @keyup.enter.native="submit()"
+                                          @input="inputCurrentPassword($event)">
+                            </b-form-input>
+                            <div class="current-password-feedback" v-if="this.currentPasswordNotEqual">
+                                Not equal
+                            </div>
+                        </b-form-group>
+                        <b-form-group id="InputGroup2"
+                                      label="New password:">
+                            <b-form-input id="CurrentPassword"
                                           type="password"
                                           ref="password"
                                           autofocus
@@ -25,7 +45,7 @@
                                           @input="inputPassword($event)">
                             </b-form-input>
                         </b-form-group>
-                        <b-form-group id="InputGroup2" label="Repeat password:">
+                        <b-form-group id="InputGroup3" label="Repeat new password:">
                             <div role="group">
                                 <b-form-input id="Repeat"
                                               type="password"
@@ -45,35 +65,41 @@
                         <div class="row justify-content-md-center">
                             <b-button type="button" variant="primary" @click="submit()">Let's go</b-button>
                         </div>
-
                     </div>
                 </div>
-
             </div>
         </b-container>
     </b-form>
 </template>
 
 <script>
-  const {ipcRenderer} = require('electron')
   export default {
-    name: 'set-master-password-page',
+    name: 'change-master-password-page',
     components: {},
     computed: {},
     mounted () {
-      this.$store.commit('setIsLoggedIn', false)
-      ipcRenderer.send('set-tray-icon-inactive')
-      this.$refs.password.focus()
+      if (!this.$store.state.Store.isLoggedIn) {
+        this.$router.replace('/')
+      }
+      this.$refs.currentPassword.focus()
+      this.check()
+      this.notEqual = false
+      this.empty = false
     },
     data () {
       return {
+        currentPassword: null,
         password: '',
         repeated: '',
+        currentPasswordNotEqual: false,
         notEqual: false,
         empty: true
       }
     },
     methods: {
+      close () {
+        this.$router.replace('/')
+      },
       check () {
         if (this.password !== this.repeated) {
           this.notEqual = true
@@ -86,6 +112,16 @@
         } else {
           this.empty = false
         }
+
+        if (this.currentPassword !== this.$store.state.Store.masterPassword) {
+          this.currentPasswordNotEqual = true
+        } else {
+          this.currentPasswordNotEqual = false
+        }
+      },
+      inputCurrentPassword (event) {
+        this.currentPassword = event !== '' ? event : null
+        this.check()
       },
       inputPassword (event) {
         this.password = event
@@ -96,10 +132,10 @@
         this.check()
       },
       submit () {
-        if (this.notEqual) {
+        if (this.notEqual || this.currentPasswordNotEqual) {
           return
         }
-        this.$store.commit('setMasterPassword', this.password)
+        this.$store.dispatch('changeMasterPassword', this.password)
         this.$router.replace('/')
       }
     }

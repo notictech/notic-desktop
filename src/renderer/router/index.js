@@ -26,6 +26,11 @@ export default new Router({
       component: require('@/components/SetMasterPasswordPage').default
     },
     {
+      path: '/change-master-password',
+      name: 'change-master-password-page',
+      component: require('@/components/ChangeMasterPasswordPage').default
+    },
+    {
       path: '/enter-master-password',
       name: 'enter-master-password-page',
       component: require('@/components/EnterMasterPasswordPage').default

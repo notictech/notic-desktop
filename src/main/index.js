@@ -72,6 +72,10 @@ function createWindow () {
     mainWindow.webContents.send('open-about')
     mainWindow.show()
   }
+  const clickOpenChangeMasterPassword = () => {
+    mainWindow.webContents.send('open-change-master-password')
+    mainWindow.show()
+  }
 
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -88,6 +92,9 @@ function createWindow () {
       label: 'Notifications', type: 'normal', click: clickOpenNotifications
     },
     {type: 'separator'},
+    {
+      label: 'Change master key', type: 'normal', click: clickOpenChangeMasterPassword
+    },
     {
       label: 'Settings', type: 'normal', click: clickOpenSettings
     },

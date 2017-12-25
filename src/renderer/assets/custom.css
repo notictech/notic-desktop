@@ -138,6 +138,7 @@ button svg {
 .screen.settings.container-fluid,
 .screen.editor.container-fluid,
 .screen.set-master-password.container-fluid,
+.screen.change-master-password.container-fluid,
 .screen.enter-master-password.container-fluid,
 .screen.notifications.container-fluid {
     padding: 0;
@@ -152,6 +153,7 @@ button svg {
 .screen.about .topbar,
 .screen.settings .topbar,
 .screen.set-master-password .topbar,
+.screen.change-master-password .topbar,
 .screen.enter-master-password .topbar,
 .screen.editor .topbar,
 .screen.notifications .topbar {
@@ -165,6 +167,7 @@ button svg {
 .screen.about .content-wrap,
 .screen.settings .content-wrap,
 .screen.set-master-password .content-wrap,
+.screen.change-master-password .content-wrap,
 .screen.enter-master-password .content-wrap,
 .screen.notifications .content-wrap,
 .screen.editor .content-wrap {
@@ -186,9 +189,12 @@ button svg {
     -ms-transform:rotate(360deg);
     -webkit-transform:rotate(360deg);
 }
+.screen.change-master-password .alert,
 .screen.set-master-password .alert {
     margin: 10px;
 }
+.screen.change-master-password .current-password-feedback,
+.screen.change-master-password .input-feedback,
 .screen.set-master-password .input-feedback {
     margin-top: .25rem;
     color: #dc3545;

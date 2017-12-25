@@ -263,7 +263,7 @@ const actions = {
     })
     db.count({}, (err, count) => {
       if (err) {
-        console.log(err)
+        console.log('ERROR: ' + err)
         return
       }
       if (!count) {
@@ -317,7 +317,7 @@ const actions = {
 
     db.find(cond).sort({createdAt: -1}).exec((err, docs) => {
       if (err) {
-        console.log(err)
+        console.log('ERROR: ' + err)
       }
       this.commit('updateNotes', docs)
       if (docs.length) {
@@ -354,13 +354,13 @@ const actions = {
   },
   cloneNote (context, id) {
     db.findOne({_id: id}, (err, doc) => {
-      if (err) console.log(err)
+      if (err) console.log('ERROR: ' + err)
       let clone = doc
       clone.createdAt = moment().valueOf()
       clone.updatedAt = clone.createdAt
       delete clone._id
       db.insert(clone, (err, newDoc) => {
-        if (err) console.log(err)
+        if (err) console.log('ERROR: ' + err)
         this.dispatch('searchNotes', {query: state.searchQuery})
       })
     })
@@ -389,7 +389,7 @@ const actions = {
   },
   openEditNotePage (context, id) {
     db.findOne({_id: id}, (err, doc) => {
-      if (err) console.log(err)
+      if (err) console.log('ERROR: ' + err)
 
       for (let i = 0; i < doc.secrets.length; i++) {
         doc.secrets[i].contentRepeat = doc.secrets[i].content
@@ -433,7 +433,7 @@ const actions = {
       this.commit('setNoteCreatedAt', now.valueOf())
       this.commit('setNoteUpdatedAt', now.valueOf())
       db.insert(state.note, (err, newDoc) => {
-        if (err) console.log(err)
+        if (err) console.log('ERROR: ' + err)
         this.commit('updateNote', copyObject(blankNote))
         this.dispatch('addNoteToHistory', newDoc._id)
         this.commit('setRecentNoteId', newDoc._id)
@@ -501,7 +501,7 @@ const actions = {
   },
   emptyTrash (context) {
     db.find({doctype: 'note', deleted: true}, (err, docs) => {
-      if (err) console.log(err)
+      if (err) console.log('ERROR: ' + err)
       for (let i = 0; i < docs.length; i++) {
         this.commit('deleteFromHistory', docs[i]._id)
         if (state.misc.recentNoteId === docs[i]._id) {
@@ -597,7 +597,7 @@ const actions = {
   loadHistory (context) {
     db.findOne({doctype: 'history'}, (err, doc) => {
       if (err) {
-        console.log(err)
+        console.log('ERROR: ' + err)
       }
       this.commit('setHistory', doc.data)
       this.commit('setHistoryIndex', (state.history.length > 0) ? state.history.length - 1 : 0)
@@ -609,7 +609,7 @@ const actions = {
   loadMiscData (context) {
     db.findOne({doctype: 'misc'}, (err, doc) => {
       if (err) {
-        console.log(err)
+        console.log('ERROR: ' + err)
       }
       this.commit('setMiscData', doc.data)
     })
@@ -625,7 +625,7 @@ const actions = {
       reminderRepeat: 1
     }, (err, docs) => {
       if (err) {
-        console.log(err)
+        console.log('ERROR: ' + err)
       }
       this.commit('setReminders', docs)
       // console.log('remainders are loaded ', docs)
@@ -646,7 +646,7 @@ const actions = {
 
       db.findOne({_id: state.reminders[i]._id}, (err, doc) => {
         if (err) {
-          console.log(err)
+          console.log('ERROR: ' + err)
         }
 
         let msg = moment(state.reminders[i].reminderDate).format('DD.MM.YYYY') + ' at ' + state.reminders[i].reminderTime + '\n\r' + doc.title + '\n\r\n\r' + doc.content
@@ -674,7 +674,7 @@ const actions = {
         }
 
         db.insert(notif, (err, newDoc) => {
-          if (err) console.log(err)
+          if (err) console.log('ERROR: ' + err)
           this.commit('setNotificationsIsUnread', true)
           this.dispatch('loadNotifications')
         })
@@ -733,7 +733,7 @@ const actions = {
   toggleNoteStar (context, obj) {
     db.update({_id: obj.id}, { $set: { star: !state.notes[obj.index].star } }, {}, (err, num) => {
       if (err) {
-        console.log(err)
+        console.log('ERROR: ' + err)
       }
       this.commit('toggleNoteStar', obj.index)
     })
@@ -795,7 +795,7 @@ const actions = {
   loadNotifications (context) {
     db.find({doctype: 'notification'}).sort({createdAt: -1}).exec((err, docs) => {
       if (err) {
-        console.log(err)
+        console.log('ERROR: ' + err)
       }
       this.commit('setNotifications', docs)
       this.dispatch('checkNotifications')
@@ -818,7 +818,7 @@ const actions = {
   markNotificationRead (context, obj) {
     db.update({_id: obj.id}, { $set: { unread: false } }, {}, (err, num) => {
       if (err) {
-        console.log(err)
+        console.log('ERROR: ' + err)
       }
       this.commit('markNotificationRead', obj.index)
       this.dispatch('checkNotifications')
@@ -840,7 +840,7 @@ const actions = {
     if (fs.existsSync('./settings')) {
       require('fs').readFile('./settings', (err, data) => {
         if (err) {
-          console.log(err)
+          console.log('ERROR: ' + err)
         }
         if (data) {
           this.commit('setSettingsData', JSON.parse(data))
@@ -859,6 +859,29 @@ const actions = {
         nextStep()
       })
     }
+  },
+  changeMasterPassword (context, newPassword) {
+    let lineReader = require('readline').createInterface({
+      input: require('fs').createReadStream(state.settings.dbPath)
+    })
+    let tempFileName = state.settings.dbPath + '.temp.' + moment().valueOf()
+    lineReader.on('line', (line) => {
+      let decrypted = (state.masterPassword === '') ? line : CryptoJS.AES
+        .decrypt(line, state.masterPassword)
+        .toString(CryptoJS.enc.Utf8)
+      let encrypted = newPassword === '' ? decrypted : CryptoJS.AES.encrypt(decrypted, newPassword)
+      fs.appendFile(tempFileName, encrypted + require('os').EOL, (err) => {
+        if (err) {
+          console.log('ERROR: ' + err)
+        }
+      })
+    }).on('close', (line) => {
+      if (require('fs').existsSync(tempFileName)) {
+        fs.unlinkSync(state.settings.dbPath)
+        fs.renameSync(tempFileName, state.settings.dbPath)
+        this.commit('setMasterPassword', newPassword)
+      }
+    })
   }
 }
 

@@ -37,6 +37,13 @@ const mainMenuTemplate = [
       },
       {type: 'separator'},
       {
+        label: 'Change master password',
+        accelerator: 'F3',
+        click () {
+          bus.$emit('openChangeMasterPassword')
+        }
+      },
+      {
         label: 'Settings',
         accelerator: 'F2',
         click () {
@@ -92,6 +99,10 @@ ipcRenderer.on('open-recent-note', () => {
 
 ipcRenderer.on('open-notifications', () => {
   bus.$emit('openNotifications')
+})
+
+ipcRenderer.on('open-change-master-password', () => {
+  bus.$emit('openChangeMasterPassword')
 })
 
 ipcRenderer.on('open-settings', () => {
