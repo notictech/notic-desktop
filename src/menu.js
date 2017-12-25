@@ -59,6 +59,14 @@ const mainMenuTemplate = [
       },
       {type: 'separator'},
       {
+        label: 'Logout',
+        accelerator: 'CmdOrCtrl+R',
+        click () {
+          ipcRenderer.send('logout')
+        }
+      },
+      {type: 'separator'},
+      {
         label: 'Quit',
         accelerator: 'CmdOrCtrl+Shift+Q',
         click () {

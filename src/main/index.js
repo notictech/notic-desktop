@@ -76,6 +76,9 @@ function createWindow () {
     mainWindow.webContents.send('open-change-master-password')
     mainWindow.show()
   }
+  const appReload = () => {
+    mainWindow.reload()
+  }
 
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -100,6 +103,10 @@ function createWindow () {
     },
     {
       label: 'About', type: 'normal', click: clickOpenAbout
+    },
+    {type: 'separator'},
+    {
+      label: 'Logout', type: 'normal', click: appReload
     },
     {type: 'separator'},
     {
@@ -145,6 +152,10 @@ ipcMain.on('set-tray-icon-inactive', (event, arg) => {
 ipcMain.on('set-tray-icon-normal', (event, arg) => {
   appIcon.setImage(`${__static}/icons/notic-logo.png`)
   mainWindow.setIcon(`${__static}/icons/notic-logo.png`)
+})
+
+ipcMain.on('logout', function (event, arg) {
+  mainWindow.reload()
 })
 
 ipcMain.on('system-exit', function (event, arg) {
