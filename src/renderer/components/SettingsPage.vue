@@ -20,6 +20,7 @@
                     <b-input-group>
                         <b-form-input id="input1"
                                       type="text"
+                                      size="sm"
                                       required
                                       readonly
                                       placeholder="Path..."
@@ -27,8 +28,8 @@
                         </b-form-input>
                         <b-input-group-button slot="right">
                             <b-button-group>
-                                <b-button title="Open" @click="openDb()"><icon name="folder-open"></icon></b-button>
-                                <b-button title="Create" @click="createDb()"><icon name="plus"></icon></b-button>
+                                <b-button size="sm" title="Open" @click="openDb()"><icon name="folder-open"></icon></b-button>
+                                <b-button size="sm" title="Create" @click="createDb()"><icon name="plus"></icon></b-button>
                             </b-button-group>
                         </b-input-group-button>
                     </b-input-group>
@@ -36,7 +37,7 @@
                 <b-form-group id="inputGroup2"
                               label="Alternative keyboard layout:">
                     <b-input-group>
-                        <b-form-select v-model="localKeymap" :options="localKeymaps" class="mb-3"></b-form-select>
+                        <b-form-select size="sm" v-model="localKeymap" :options="localKeymaps" class="mb-3"></b-form-select>
                     </b-input-group>
                 </b-form-group>
                 <b-form-group id="inputGroup3"
@@ -44,12 +45,27 @@
                     <b-input-group>
                         <b-form-input id="input3"
                                       type="number"
+                                      size="sm"
                                       min="0"
                                       max="100"
                                       required
                                       v-model="historyMaxLength"
                                       :value="this.historyMaxLength">
                         </b-form-input>
+                    </b-input-group>
+                </b-form-group>
+                <b-form-group id="inputGroup4"
+                              label="Automatically logout the app after:">
+                    <b-input-group>
+                        <b-form-input id="input4"
+                                      type="number"
+                                      size="sm"
+                                      min="0"
+                                      max="1440"
+                                      style="flex: none; width: 100px;"
+                                      required
+                                      :value="this.logoutAfter">
+                        </b-form-input>&nbsp;minutes of inactivity ("0" for disabling)
                     </b-input-group>
                 </b-form-group>
             </div>
@@ -67,6 +83,7 @@
       this.masterPassword = this.$store.state.Store.masterPassword
       this.localKeymap = this.$store.state.Store.settings.localKeymap
       this.historyMaxLength = this.$store.state.Store.settings.historyMaxLength
+      this.logoutAfter = this.$store.state.Store.settings.logoutAfter
     },
     data () {
       return {
@@ -76,7 +93,8 @@
         localKeymaps: [
           { value: 'ru', text: 'Russian (RU)' }
         ],
-        historyMaxLength: 0
+        historyMaxLength: 0,
+        logoutAfter: 0
       }
     },
     computed: {
@@ -98,6 +116,7 @@
 
         this.$store.commit('setLocalKeymap', this.localKeymap)
         this.$store.commit('setHistoryMaxLength', parseInt(this.historyMaxLength))
+        this.$store.commit('setLogoutAfter', parseInt(this.logoutAfter))
 
         this.$store.dispatch('settingsSaveAndClose', () => {
           this.$router.replace('/')

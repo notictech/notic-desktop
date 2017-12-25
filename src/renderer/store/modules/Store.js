@@ -39,7 +39,8 @@ const state = {
   settings: {
     dbPath: 'default.ntc',
     localKeymap: 'ru',
-    historyMaxLength: 50
+    historyMaxLength: 50,
+    logoutAfter: 0
   },
   notes: [],
   note: {},
@@ -58,10 +59,13 @@ const state = {
   notificationsIsUnread: false,
   loadedNotesCount: 0,
   loadedNotesLinksCount: 0,
-  isLoggedIn: false
+  isLoggedIn: false,
+  lastUsingTime: null
 }
 
 const mutations = {
+  setLastUsingTime: (state, data) => { state.lastUsingTime = data },
+  setLogoutAfter: (state, data) => { state.settings.logoutAfter = data },
   setHistoryMaxLength: (state, data) => { state.settings.historyMaxLength = data },
   setLocalKeymap: (state, data) => { state.settings.localKeymap = data },
   setSettingsData: (state, data) => { state.settings = data },
@@ -880,6 +884,20 @@ const actions = {
       fs.renameSync(tempFileName, state.settings.dbPath)
       this.commit('setMasterPassword', newPassword === '' ? null : newPassword)
     })
+  },
+  trackUsing (context) {
+    this.commit('setLastUsingTime', moment().valueOf())
+  },
+  checkUsing (context) {
+    if (state.settings.logoutAfter === 0) {
+      return
+    }
+    if (state.lastUsingTime === null) {
+      this.commit('setLastUsingTime', moment().valueOf())
+    }
+    if (moment().valueOf() - state.lastUsingTime >= state.settings.logoutAfter * 60000) {
+      ipcRenderer.send('logout')
+    }
   }
 }
 

@@ -109,6 +109,7 @@
             this.$store.dispatch('checkNotifications')
             setInterval(() => {
               this.$store.dispatch('checkReminders')
+              this.$store.dispatch('checkUsing')
             }, 1000)
             this.$store.dispatch('setAppJustStarted', false)
           }
