@@ -866,7 +866,7 @@ const actions = {
     })
     let tempFileName = state.settings.dbPath + '.temp.' + moment().valueOf()
     lineReader.on('line', (line) => {
-      let decrypted = (state.masterPassword === '') ? line : CryptoJS.AES
+      let decrypted = (state.masterPassword === null) ? line : CryptoJS.AES
         .decrypt(line, state.masterPassword)
         .toString(CryptoJS.enc.Utf8)
       let encrypted = newPassword === '' ? decrypted : CryptoJS.AES.encrypt(decrypted, newPassword)
@@ -876,11 +876,9 @@ const actions = {
         }
       })
     }).on('close', (line) => {
-      if (require('fs').existsSync(tempFileName)) {
-        fs.unlinkSync(state.settings.dbPath)
-        fs.renameSync(tempFileName, state.settings.dbPath)
-        this.commit('setMasterPassword', newPassword)
-      }
+      fs.unlinkSync(state.settings.dbPath)
+      fs.renameSync(tempFileName, state.settings.dbPath)
+      this.commit('setMasterPassword', newPassword === '' ? null : newPassword)
     })
   }
 }
