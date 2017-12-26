@@ -885,7 +885,7 @@ const actions = {
       this.commit('setMasterPassword', newPassword === '' ? null : newPassword)
     })
   },
-  trackUsing (context) {
+  trackUsage (context) {
     this.commit('setLastUsingTime', moment().valueOf())
   },
   checkUsing (context) {

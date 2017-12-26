@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @keyup="trackUsing()" @click="trackUsing()">
+  <div id="app" @keyup="trackUsage()" @click="trackUsage()">
     <router-view></router-view>
   </div>
 </template>
@@ -8,8 +8,8 @@
   export default {
     name: 'notic-desktop',
     methods: {
-      trackUsing () {
-        this.$store.dispatch('trackUsing')
+      trackUsage () {
+        this.$store.dispatch('trackUsage')
       }
     }
   }

@@ -39,6 +39,14 @@ function createWindow () {
     mainWindow = null
   })
 
+  mainWindow.on('restore', () => {
+    mainWindow.webContents.send('track-usage')
+  })
+
+  mainWindow.on('show', () => {
+    mainWindow.webContents.send('track-usage')
+  })
+
   appIcon = new Tray(`${__static}/icons/notic-inactive.png`)
   appIcon.setToolTip('Notic Desktop')
 

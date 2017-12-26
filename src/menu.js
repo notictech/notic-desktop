@@ -121,6 +121,10 @@ ipcRenderer.on('open-about', () => {
   bus.$emit('openAbout')
 })
 
+ipcRenderer.on('track-usage', () => {
+  bus.$emit('trackUsage')
+})
+
 export default {
   noteContextMenu
 }

@@ -98,6 +98,9 @@
         bus.$on('openAbout', () => {
           this.openAboutPage()
         })
+        bus.$on('trackUsage', () => {
+          this.$store.dispatch('trackUsage')
+        })
         this.$refs.search.focus()
         this.$store.dispatch('initDb', () => {
           this.$store.dispatch('loadHistory')
