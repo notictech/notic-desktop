@@ -8,6 +8,9 @@
                     </div>
                     <div class="col-6" style="text-align: right">
                         <b-button-group size="sm">
+                            <b-button v-if="notifications.length" size="sm" type="button" variant="success" @click="readAll()"><icon name="check"></icon> Read all</b-button>
+                        </b-button-group>
+                        <b-button-group size="sm">
                             <b-button v-if="notifications.length" size="sm" type="button" variant="danger" @click="deleteAll()"><icon name="trash-o"></icon> Delete all</b-button>
                         </b-button-group>
                         <b-button-group size="sm">
@@ -53,6 +56,9 @@
         if (confirm('Are you sure you want to delete all notifications?')) {
           this.$store.dispatch('deleteAllNotifications')
         }
+      },
+      readAll () {
+        this.$store.dispatch('readAllNotifications')
       }
     }
   }

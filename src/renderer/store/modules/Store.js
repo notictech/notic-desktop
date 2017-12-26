@@ -838,6 +838,15 @@ const actions = {
       this.dispatch('checkNotifications')
     })
   },
+  readAllNotifications (context) {
+    db.update({doctype: 'notification'}, { $set: { unread: false } }, {multi: true}, (err, num) => {
+      if (err) {
+        console.log('ERROR: ' + err)
+      }
+      this.dispatch('loadNotifications')
+      this.dispatch('checkNotifications')
+    })
+  },
   deleteAllNotifications (context) {
     db.remove({doctype: 'notification'}, {multi: true}, () => {
       this.dispatch('loadNotifications')
