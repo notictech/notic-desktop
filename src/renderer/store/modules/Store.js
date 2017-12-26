@@ -40,7 +40,8 @@ const state = {
     dbPath: 'default.ntc',
     localKeymap: 'ru',
     historyMaxLength: 50,
-    logoutAfter: 0
+    logoutAfter: 0,
+    eraseClipboardAfter: 0
   },
   notes: [],
   note: {},
@@ -65,6 +66,7 @@ const state = {
 
 const mutations = {
   setLastUsingTime: (state, data) => { state.lastUsingTime = data },
+  setEraseClipboardAfter: (state, data) => { state.settings.eraseClipboardAfter = data },
   setLogoutAfter: (state, data) => { state.settings.logoutAfter = data },
   setHistoryMaxLength: (state, data) => { state.settings.historyMaxLength = data },
   setLocalKeymap: (state, data) => { state.settings.localKeymap = data },
@@ -727,6 +729,14 @@ const actions = {
   copyText (context) {
     let selectedText = window.getSelection().getRangeAt(0).toString()
     clipboard.writeText(selectedText)
+  },
+  startClipboardCountdown (context) {
+    if (state.settings.eraseClipboardAfter === 0) {
+      return
+    }
+    setTimeout(() => {
+      clipboard.writeText('')
+    }, state.settings.eraseClipboardAfter * 1000)
   },
   showQR (context) {
     let clip = clipboard.readText()

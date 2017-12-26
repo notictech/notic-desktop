@@ -48,6 +48,9 @@
         <div class="notes" ref="notes" id="notes" @scroll="scrollNotes($event)">
             <note v-for="(note, index) in notes.slice(0, loadedNotesCount)" :note="note" :key="note._id" :index="index"></note>
         </div>
+        <div class="found-bar">
+            Found: {{ notes.length }}
+        </div>
     </b-container>
 </template>
 
@@ -193,6 +196,7 @@
       },
       copyText () {
         this.$store.dispatch('copyText')
+        this.$store.dispatch('startClipboardCountdown')
       },
       historyForward () {
         this.$store.dispatch('historyForward')

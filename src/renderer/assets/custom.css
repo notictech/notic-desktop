@@ -293,4 +293,13 @@ h4 {
     padding-top: 52px;
 }
 
-
+.found-bar {
+    position: fixed;
+    background: #fff;
+    z-index: 10;
+    width: auto;
+    bottom: 0;
+    font-size: .7em;
+    color: grey;
+    padding: 4px;
+}

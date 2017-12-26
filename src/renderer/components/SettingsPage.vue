@@ -55,7 +55,7 @@
                     </b-input-group>
                 </b-form-group>
                 <b-form-group id="inputGroup4"
-                              label="Automatically logout the app after:">
+                              label="Automatically logout after:">
                     <b-input-group>
                         <b-form-input id="input4"
                                       type="number"
@@ -64,8 +64,24 @@
                                       max="1440"
                                       style="flex: none; width: 100px;"
                                       required
+                                      v-model="logoutAfter"
                                       :value="this.logoutAfter">
                         </b-form-input>&nbsp;minutes of inactivity ("0" for disabling)
+                    </b-input-group>
+                </b-form-group>
+                <b-form-group id="inputGroup5"
+                              label="Automatically erase clipboard after:">
+                    <b-input-group>
+                        <b-form-input id="input5"
+                                      type="number"
+                                      size="sm"
+                                      min="0"
+                                      max="60"
+                                      style="flex: none; width: 100px;"
+                                      required
+                                      v-model="eraseClipboardAfter"
+                                      :value="this.eraseClipboardAfter">
+                        </b-form-input>&nbsp;seconds after copying ("0" for disabling)
                     </b-input-group>
                 </b-form-group>
             </div>
@@ -84,6 +100,7 @@
       this.localKeymap = this.$store.state.Store.settings.localKeymap
       this.historyMaxLength = this.$store.state.Store.settings.historyMaxLength
       this.logoutAfter = this.$store.state.Store.settings.logoutAfter
+      this.eraseClipboardAfter = this.$store.state.Store.settings.eraseClipboardAfter
     },
     data () {
       return {
@@ -94,7 +111,8 @@
           { value: 'ru', text: 'Russian (RU)' }
         ],
         historyMaxLength: 0,
-        logoutAfter: 0
+        logoutAfter: 0,
+        eraseClipboardAfter: 0
       }
     },
     computed: {
@@ -117,6 +135,7 @@
         this.$store.commit('setLocalKeymap', this.localKeymap)
         this.$store.commit('setHistoryMaxLength', parseInt(this.historyMaxLength))
         this.$store.commit('setLogoutAfter', parseInt(this.logoutAfter))
+        this.$store.commit('setEraseClipboardAfter', parseInt(this.eraseClipboardAfter))
 
         this.$store.dispatch('settingsSaveAndClose', () => {
           this.$router.replace('/')
