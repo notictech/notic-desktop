@@ -109,13 +109,13 @@
             this.searchNotes(this.$store.state.Store.searchQuery)
             this.$store.dispatch('loadReminders')
             this.$store.dispatch('loadNotifications')
-            this.$store.dispatch('checkNotifications')
             setInterval(() => {
               this.$store.dispatch('checkReminders')
               this.$store.dispatch('checkUsing')
             }, 1000)
             this.$store.dispatch('setAppJustStarted', false)
           }
+          this.$store.dispatch('checkNotifications')
         })
       }
       this.$store.dispatch('loadOrCreateSettingsFile', onMounted)
