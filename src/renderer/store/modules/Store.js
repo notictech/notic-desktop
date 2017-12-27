@@ -917,6 +917,9 @@ const actions = {
     if (moment().valueOf() - state.lastUsingTime >= state.settings.logoutAfter * 60000) {
       ipcRenderer.send('logout')
     }
+  },
+  fixWindowTitle (context) {
+    ipcRenderer.send('fix-window-title')
   }
 }
 

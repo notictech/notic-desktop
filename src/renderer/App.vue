@@ -7,6 +7,9 @@
 <script>
   export default {
     name: 'notic-desktop',
+    mounted () {
+      this.$store.dispatch('fixWindowTitle')
+    },
     methods: {
       trackUsage () {
         this.$store.dispatch('trackUsage')
