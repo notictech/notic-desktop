@@ -122,7 +122,8 @@
           'ctrl+right': this.historyForward,
           'ctrl+1': this.setTab0,
           'ctrl+2': this.setTab1,
-          'ctrl+3': this.setTab2
+          'ctrl+3': this.setTab2,
+          'ctrl+c': this.copyText
         }
       }
     },
@@ -193,6 +194,10 @@
           return
         }
         this.$store.dispatch('historyBackEditor')
+      },
+      copyText () {
+        this.$store.dispatch('copyText')
+        this.$store.dispatch('startClipboardCountdown')
       }
     }
   }
