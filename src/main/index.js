@@ -170,10 +170,6 @@ ipcMain.on('system-exit', function (event, arg) {
   app.exit(0)
 })
 
-ipcMain.on('fix-window-title', function (event, arg) {
-  mainWindow.setTitle('Notic Desktop')
-})
-
 /**
  * Auto Updater
  *
