@@ -44,6 +44,19 @@
                                 <b-form-checkbox id="checkbox1" value="true" :checked="noteReminder" @change="editorToggleReminder()">Remind me </b-form-checkbox>
                             </b-button-group>
                             <span v-show="noteReminder">
+                                <b-button-toolbar>
+                            <div v-if="noteReminder" class="reminder-links">
+                                <br>
+                                <b-button size="sm" @click="btnIn10Minutes()">In 10 minutes</b-button>
+                                <b-button size="sm" @click="btnIn30Minutes()">In 30 minutes</b-button>
+                                <b-button size="sm" @click="btnIn1Hour()">In 1 hour</b-button>
+                                <b-button size="sm" @click="btnToday()">Today</b-button>
+                                <b-button size="sm" @click="btnTomorrow()">Tomorrow</b-button>
+                                <b-button size="sm" @click="btnNextWeek()">Next week</b-button>
+                                <b-button size="sm" @click="btnNextMonth()">Next month</b-button>
+                                <b-button size="sm" @click="btnNextYear()">Next year</b-button>
+                            </div>
+                        </b-button-toolbar>
                             <b-button-group size="sm" class="mx-1">
                                 <b-form-input size="sm" type="date" :value="noteReminderDate" @change="editorChangeReminderDate($event)"></b-form-input>
                             </b-button-group>
@@ -64,7 +77,6 @@
                                 </b-form-select>
                             </b-button-group>
                             </span>
-
                         </b-button-toolbar>
                     </b-tab>
                 </b-tabs>
@@ -198,6 +210,46 @@
       copyText () {
         this.$store.dispatch('copyText')
         this.$store.dispatch('startClipboardCountdown')
+      },
+      btnIn10Minutes () {
+        let newDate = moment().add(10, 'minutes')
+        this.$store.commit('setNoteReminderDate', newDate.valueOf())
+        this.$store.commit('setNoteReminderTime', newDate.format('HH:mm'))
+      },
+      btnIn30Minutes () {
+        let newDate = moment().add(30, 'minutes')
+        this.$store.commit('setNoteReminderDate', newDate.valueOf())
+        this.$store.commit('setNoteReminderTime', newDate.format('HH:mm'))
+      },
+      btnIn1Hour () {
+        let newDate = moment().add(1, 'hour')
+        this.$store.commit('setNoteReminderDate', newDate.valueOf())
+        this.$store.commit('setNoteReminderTime', newDate.format('HH:mm'))
+      },
+      btnToday () {
+        let newDate = moment()
+        this.$store.commit('setNoteReminderDate', newDate.valueOf())
+        this.$store.commit('setNoteReminderTime', newDate.format('HH:mm'))
+      },
+      btnTomorrow () {
+        let newDate = moment().add(1, 'day')
+        this.$store.commit('setNoteReminderDate', newDate.valueOf())
+        this.$store.commit('setNoteReminderTime', newDate.format('HH:mm'))
+      },
+      btnNextWeek () {
+        let newDate = moment().add(1, 'week')
+        this.$store.commit('setNoteReminderDate', newDate.valueOf())
+        this.$store.commit('setNoteReminderTime', newDate.format('HH:mm'))
+      },
+      btnNextMonth () {
+        let newDate = moment().add(1, 'month')
+        this.$store.commit('setNoteReminderDate', newDate.valueOf())
+        this.$store.commit('setNoteReminderTime', newDate.format('HH:mm'))
+      },
+      btnNextYear () {
+        let newDate = moment().add(1, 'year')
+        this.$store.commit('setNoteReminderDate', newDate.valueOf())
+        this.$store.commit('setNoteReminderTime', newDate.format('HH:mm'))
       }
     }
   }

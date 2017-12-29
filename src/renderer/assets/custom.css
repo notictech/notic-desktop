@@ -303,3 +303,7 @@ h4 {
     color: grey;
     padding: 4px;
 }
+
+.screen.editor .reminder-links button {
+    margin: 2px;
+}
