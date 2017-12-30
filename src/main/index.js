@@ -28,6 +28,8 @@ function createWindow () {
     icon: `${__static}/icons/notic-inactive.png`
   })
 
+  mainWindow.setAlwaysOnTop(true)
+
   mainWindow.loadURL(winURL)
 
   // mainWindow.on('close', (e) => {
