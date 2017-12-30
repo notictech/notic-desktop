@@ -8,7 +8,7 @@
                     </div>
                     <div class="col-6" style="text-align: right">
                         <b-button-group size="sm">
-                            <b-btn @click="close()"><icon name="times"></icon></b-btn>
+                            <b-btn @click="close()" title="Close (Esc)"><icon name="times"></icon></b-btn>
                         </b-button-group>
                     </div>
                 </div>
