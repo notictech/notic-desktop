@@ -1,6 +1,7 @@
 import bus from './renderer/bus'
 const {Menu} = require('electron').remote
 const {ipcRenderer} = require('electron')
+const {clipboard} = require('electron')
 
 const mainMenuTemplate = [
   {
@@ -62,6 +63,7 @@ const mainMenuTemplate = [
         label: 'Logout',
         accelerator: 'CmdOrCtrl+R',
         click () {
+          clipboard.writeText('')
           ipcRenderer.send('logout')
         }
       },

@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow, Tray, Menu } from 'electron'
+import { app, BrowserWindow, Tray, Menu, clipboard } from 'electron'
 
 /**
  * Set `__static` path to static files in production
@@ -28,7 +28,7 @@ function createWindow () {
     icon: `${__static}/icons/notic-inactive.png`
   })
 
-  mainWindow.setAlwaysOnTop(true)
+  mainWindow.setAlwaysOnTop(false)
 
   mainWindow.loadURL(winURL)
 
@@ -87,6 +87,7 @@ function createWindow () {
     mainWindow.show()
   }
   const appReload = () => {
+    clipboard.writeText('')
     mainWindow.reload()
   }
 

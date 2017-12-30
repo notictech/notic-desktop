@@ -915,6 +915,7 @@ const actions = {
       this.commit('setLastUsingTime', moment().valueOf())
     }
     if (moment().valueOf() - state.lastUsingTime >= state.settings.logoutAfter * 60000) {
+      clipboard.writeText('')
       ipcRenderer.send('logout')
     }
   }
