@@ -304,6 +304,9 @@ h4 {
     padding: 4px;
 }
 
+.screen.editor .reminder-links {
+    margin-bottom: 20px;
+}
 .screen.editor .reminder-links button {
     margin: 2px;
 }
