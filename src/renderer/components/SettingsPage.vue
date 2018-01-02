@@ -123,7 +123,11 @@
         }
       }
     },
-    mounted () {},
+    mounted () {
+      if (!this.$store.state.Store.isLoggedIn) {
+        this.$router.replace('/')
+      }
+    },
     methods: {
       settingsSaveAndClose () {
         if (this.dbPath !== this.$store.state.Store.settings.dbPath) {
