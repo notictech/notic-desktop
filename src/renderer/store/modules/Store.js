@@ -26,6 +26,7 @@ const blankNote = {
   reminderDate: null,
   reminderTime: null,
   reminderRepeat: '0',
+  reminderRemoveNote: false,
   star: false
 }
 
@@ -159,6 +160,9 @@ const mutations = {
   },
   toggleNoteReminder (state) {
     state.note.reminder = !state.note.reminder
+  },
+  toggleNoteReminderRemoveNote (state) {
+    state.note.reminderRemoveNote = !state.note.reminderRemoveNote
   },
   changeNoteReminderDate (state, event) {
     state.note.reminderDate = moment(event).valueOf()
@@ -531,6 +535,9 @@ const actions = {
   editorToggleReminder (context) {
     this.commit('toggleNoteReminder')
   },
+  editorToggleReminderRemoveNote (context) {
+    this.commit('toggleNoteReminderRemoveNote')
+  },
   editorChangeReminderDate (context, event) {
     this.commit('changeNoteReminderDate', event)
   },
@@ -628,7 +635,8 @@ const actions = {
       _id: 1,
       reminderDate: 1,
       reminderTime: 1,
-      reminderRepeat: 1
+      reminderRepeat: 1,
+      reminderRemoveNote: 1
     }, (err, docs) => {
       if (err) {
         console.log('ERROR: ' + err)
@@ -722,6 +730,10 @@ const actions = {
             }
           }
           this.dispatch('loadReminders')
+
+          if (doc.reminderRemoveNote) {
+            this.dispatch('actionMarkNoteAsDeleted', doc._id)
+          }
         })
       })
     }

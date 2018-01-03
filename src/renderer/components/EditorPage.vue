@@ -78,6 +78,9 @@
                             </b-button-group>
                             </span>
                         </b-button-toolbar>
+                        <b-button-group size="sm" class="mx-1">
+                            <b-form-checkbox id="checkbox2" value="true" v-show="noteReminder" :checked="noteReminderRemoveNote" @change="editorToggleReminderRemoveNote()">Remove note after reminder</b-form-checkbox>
+                        </b-button-group>
                     </b-tab>
                 </b-tabs>
             </div>
@@ -115,6 +118,9 @@
       },
       noteReminder () {
         return this.$store.state.Store.note.reminder
+      },
+      noteReminderRemoveNote () {
+        return this.$store.state.Store.note.reminderRemoveNote
       },
       noteReminderDate () {
         return moment(this.$store.state.Store.note.reminderDate).format('YYYY-MM-DD')
@@ -184,6 +190,10 @@
       },
       editorToggleReminder () {
         this.$store.dispatch('editorToggleReminder')
+        this.modify()
+      },
+      editorToggleReminderRemoveNote () {
+        this.$store.dispatch('editorToggleReminderRemoveNote')
         this.modify()
       },
       editorChangeReminderDate (event) {
