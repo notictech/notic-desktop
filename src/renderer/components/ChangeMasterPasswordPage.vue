@@ -1,6 +1,6 @@
 <template>
     <b-form>
-        <b-container fluid class="screen change-master-password">
+        <b-container fluid class="screen change-master-password" v-hotkey="keymap">
             <div class="topbar">
                 <div class="row" align-h="between">
                     <div class="col-6">
@@ -76,7 +76,13 @@
   export default {
     name: 'change-master-password-page',
     components: {},
-    computed: {},
+    computed: {
+      keymap () {
+        return {
+          'esc': this.close
+        }
+      }
+    },
     mounted () {
       if (!this.$store.state.Store.isLoggedIn) {
         this.$router.replace('/')
