@@ -181,6 +181,7 @@
       },
       editorSaveAndClose () {
         this.$store.dispatch('editorSaveAndClose', () => {
+          this.$store.dispatch('setNoteIsModified', false)
           this.$router.replace('/')
         })
       },
@@ -261,6 +262,14 @@
         this.$store.commit('setNoteReminderDate', newDate.valueOf())
         this.$store.commit('setNoteReminderTime', newDate.format('HH:mm'))
       }
+    },
+    beforeRouteLeave (to, from, next) {
+      if (this.$store.state.Store.noteIsModified) {
+        if (confirm('Do you want to save the changes?')) {
+          this.editorSave()
+        }
+      }
+      next()
     }
   }
 </script>
