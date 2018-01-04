@@ -340,7 +340,7 @@ const actions = {
     })
   },
   highlightNotes (context) {
-    let markInstance = new Mark(document.querySelector('.notes .note'))
+    let markInstance = new Mark(document.querySelector('.notes .notes'))
     let options = ['separateWordSearch']
     let keyword = state.searchQuery + ' ' +
       remapString(state.searchQuery, 'en', state.settings.localKeymap) + ' ' +
