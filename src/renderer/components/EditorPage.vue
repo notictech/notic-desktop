@@ -269,6 +269,7 @@
           this.editorSave()
         }
       }
+      this.$store.commit('setNoteIsModified', false)
       next()
     }
   }
