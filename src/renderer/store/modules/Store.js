@@ -990,7 +990,7 @@ function typeInTextarea (el, newText) {
   let end = el.selectionEnd
   let text = el.value
   let before = text.substring(0, start)
-  let after  = text.substring(end, text.length)
+  let after = text.substring(end, text.length)
   el.value = (before + newText + after)
   el.selectionStart = el.selectionEnd = start + newText.length
   el.focus()
