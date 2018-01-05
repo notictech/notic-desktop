@@ -141,7 +141,11 @@
           'ctrl+1': this.setTab0,
           'ctrl+2': this.setTab1,
           'ctrl+3': this.setTab2,
-          'ctrl+c': this.copyText
+          'ctrl+c': this.copyText,
+          'ctrl+p': this.pastePassword,
+          'ctrl+t': this.pasteDate,
+          'ctrl+-': this.pasteLine,
+          'ctrl+=': this.pasteDoubleLine
         }
       }
     },
@@ -221,6 +225,18 @@
       copyText () {
         this.$store.dispatch('copyText')
         this.$store.dispatch('startClipboardCountdown')
+      },
+      pastePassword () {
+        this.$store.dispatch('editorPastePassword')
+      },
+      pasteDate () {
+        this.$store.dispatch('editorPasteCurrentDateTime')
+      },
+      pasteLine () {
+        this.$store.dispatch('editorPasteLine')
+      },
+      pasteDoubleLine () {
+        this.$store.dispatch('editorPasteDoubleLine')
       },
       btnIn10Minutes () {
         let newDate = moment().add(10, 'minutes')

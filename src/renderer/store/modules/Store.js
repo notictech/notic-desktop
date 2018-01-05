@@ -742,6 +742,18 @@ const actions = {
     let selectedText = window.getSelection().getRangeAt(0).toString()
     clipboard.writeText(selectedText)
   },
+  editorPastePassword (context) {
+    typeInTextarea(document.activeElement, genPassword())
+  },
+  editorPasteCurrentDateTime (context) {
+    typeInTextarea(document.activeElement, moment().format('DD.MM.YYYY HH:mm'))
+  },
+  editorPasteLine (context) {
+    typeInTextarea(document.activeElement, '---------------------------------\n')
+  },
+  editorPasteDoubleLine (context) {
+    typeInTextarea(document.activeElement, '=================================\n')
+  },
   startClipboardCountdown (context) {
     if (state.settings.eraseClipboardAfter === 0) {
       return
@@ -973,13 +985,20 @@ function safeTags (str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
 
+function typeInTextarea (el, newText) {
+  let start = el.selectionStart
+  let end = el.selectionEnd
+  let text = el.value
+  let before = text.substring(0, start)
+  let after  = text.substring(end, text.length)
+  el.value = (before + newText + after)
+  el.selectionStart = el.selectionEnd = start + newText.length
+  el.focus()
+}
+
 RegExp.quote = (str) => {
   return str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1')
 }
-
-// function highlightNotes () {
-//
-// }
 
 export default {
   state,
