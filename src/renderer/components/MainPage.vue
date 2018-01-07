@@ -71,6 +71,9 @@
           this.$router.replace('/set-master-password')
           return
         }
+        if (this.$store.state.Store.masterPassword === '') {
+          this.$store.commit('setMasterPassword', null)
+        }
         bus.$on('enterMasterPassword', () => {
           this.$router.replace('/enter-master-password')
         })

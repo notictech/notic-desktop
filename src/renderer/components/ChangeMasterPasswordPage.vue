@@ -141,8 +141,7 @@
         if (this.notEqual || this.currentPasswordNotEqual) {
           return
         }
-        this.$store.dispatch('changeMasterPassword', this.password)
-        this.$router.replace('/')
+        this.$store.dispatch('changeMasterPassword', { newPassword: this.password, cb: () => { this.$router.replace('/') } })
       }
     }
   }

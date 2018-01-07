@@ -907,7 +907,7 @@ const actions = {
       })
     }
   },
-  changeMasterPassword (context, newPassword) {
+  changeMasterPassword (context, obj) {
     let lineReader = require('readline').createInterface({
       input: require('fs').createReadStream(state.settings.dbPath)
     })
@@ -916,16 +916,19 @@ const actions = {
       let decrypted = (state.masterPassword === null) ? line : CryptoJS.AES
         .decrypt(line, state.masterPassword)
         .toString(CryptoJS.enc.Utf8)
-      let encrypted = newPassword === '' ? decrypted : CryptoJS.AES.encrypt(decrypted, newPassword)
+      let encrypted = obj.newPassword === '' ? decrypted : CryptoJS.AES.encrypt(decrypted, obj.newPassword)
       fs.appendFile(tempFileName, encrypted + require('os').EOL, (err) => {
         if (err) {
           console.log('ERROR: ' + err)
         }
       })
-    }).on('close', (line) => {
+    }).on('close', () => {
       fs.unlinkSync(state.settings.dbPath)
       fs.renameSync(tempFileName, state.settings.dbPath)
-      this.commit('setMasterPassword', newPassword === '' ? null : newPassword)
+      this.commit('setMasterPassword', obj.newPassword === '' ? null : obj.newPassword)
+      if (obj.cb) {
+        obj.cb()
+      }
     })
   },
   trackUsage (context) {
