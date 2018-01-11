@@ -52,6 +52,9 @@
                                       v-model="historyMaxLength"
                                       :value="this.historyMaxLength">
                         </b-form-input>
+                        <b-button-group style="margin-left: 10px">
+                            <b-button size="sm" @click="clearHistory()"><icon name="trash"></icon> Clear history</b-button>
+                        </b-button-group>
                     </b-input-group>
                 </b-form-group>
                 <b-form-group id="inputGroup4"
@@ -90,10 +93,12 @@
 </template>
 
 <script>
+  import Icon from '../../../node_modules/vue-awesome/components/Icon.vue'
+
   const {dialog} = require('electron').remote
   export default {
     name: 'settings-page',
-    components: {},
+    components: {Icon},
     created () {
       this.dbPath = this.$store.state.Store.settings.dbPath
       this.masterPassword = this.$store.state.Store.masterPassword
@@ -167,6 +172,11 @@
           this.dbPath = fileName
           this.masterPassword = null
         })
+      },
+      clearHistory () {
+        if (confirm('Are you sure you want to clear history?')) {
+          this.$store.dispatch('clearHistory')
+        }
       }
     }
   }

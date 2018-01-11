@@ -619,6 +619,13 @@ const actions = {
   updateHistory (context) {
     db.update({doctype: 'history'}, { $set: { data: state.history } })
   },
+  clearHistory (context) {
+    this.commit('setHistory', [])
+    this.commit('setHistoryIndex', 0)
+    this.commit('setRecentNoteId', null)
+    this.dispatch('updateMiscData')
+    this.dispatch('updateHistory')
+  },
   loadMiscData (context) {
     db.findOne({doctype: 'misc'}, (err, doc) => {
       if (err) {
