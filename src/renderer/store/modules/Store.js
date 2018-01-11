@@ -945,6 +945,10 @@ const actions = {
       clipboard.writeText('')
       ipcRenderer.send('logout')
     }
+  },
+  logout (context) {
+    clipboard.writeText('')
+    ipcRenderer.send('logout')
   }
 }
 

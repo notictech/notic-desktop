@@ -1,7 +1,9 @@
 <template>
-  <div id="app" @keyup="trackUsage()" @click="trackUsage()">
-    <router-view></router-view>
-  </div>
+    <div id="app" @keyup="trackUsage()"
+         @click="trackUsage()"
+         @scroll="trackUsage()">
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
