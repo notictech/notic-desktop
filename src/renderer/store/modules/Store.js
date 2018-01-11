@@ -418,10 +418,10 @@ const actions = {
     this.dispatch('openEditNotePage', state.misc.recentNoteId)
   },
   editorChangeTitle (context, text) {
-    this.commit('updateNoteTitle', text)
+    this.commit('updateNoteTitle', text.trim())
   },
   editorChangeContent (context, text) {
-    this.commit('updateNoteContent', text)
+    this.commit('updateNoteContent', text.trim())
   },
   editorSaveAndClose (context, successCallback) {
     // if (!state.note.content.length && state.note.secrets.length) {
