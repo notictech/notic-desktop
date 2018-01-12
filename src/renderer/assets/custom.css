@@ -61,7 +61,7 @@ button svg {
     border: none;
     color: #212529;
     font-weight: bold;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 .screen.notes .sidebar .note-link:focus {
     box-shadow: none;
