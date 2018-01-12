@@ -26,11 +26,11 @@
                 <div class="col-6">
                     <b-input-group size="sm">
                         <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" ref="search" :value="searchQuery"></b-form-input>
-                        <b-button-group size="sm">
-                            <b-button title="Notes (Ctrl+1)" :class="['search-filter', {active: searchFilter == 'notes'}]" @click="setSearchFilter('notes')"><icon name="sticky-note"></icon></b-button>
-                            <b-button title="Favorites (Ctrl+2)" :class="['search-filter', {active: searchFilter == 'star'}]" @click="setSearchFilter('star')"><icon name="star-o"></icon></b-button>
-                            <b-button title="Reminders (Ctrl+3)" :class="['search-filter', {active: searchFilter == 'reminder'}]" @click="setSearchFilter('reminder')"><icon name="bell-o"></icon></b-button>
-                            <b-button title="Deleted (Ctrl+4)" :class="['search-filter', {active: searchFilter == 'deleted'}]" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-button>
+                        <b-button-group size="sm" class="search-filters">
+                            <b-button :variant="(searchFilter == 'notes') ? 'warning' : 'secondary'" title="Notes (Ctrl+1)" @click="setSearchFilter('notes')"><icon name="file-text"></icon></b-button>
+                            <b-button :variant="(searchFilter == 'star') ? 'warning' : 'secondary'" title="Favorites (Ctrl+2)" @click="setSearchFilter('star')"><icon name="star"></icon></b-button>
+                            <b-button :variant="(searchFilter == 'reminder') ? 'warning' : 'secondary'" title="Reminders (Ctrl+3)" @click="setSearchFilter('reminder')"><icon name="bell"></icon></b-button>
+                            <b-button :variant="(searchFilter == 'deleted') ? 'warning' : 'secondary'" title="Deleted (Ctrl+4)" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-button>
                         </b-button-group>
                         <b-button-group size="sm" style="margin-left: 10px">
                             <b-button title="History back (Ctrl+Left)" @click="historyBack()"><icon name="arrow-left"></icon></b-button>

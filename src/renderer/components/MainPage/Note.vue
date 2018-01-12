@@ -18,7 +18,7 @@
             </span>
         </h2>
         <h3 v-show="note.secrets.length">
-            <b-button size="sm" class="btn-info" v-for="(secret, index) in note.secrets" :key="index" @click="copySecret(secret.content)" title="Click for copy"><icon name="key"></icon> {{secret.title}}</b-button>
+            <b-button size="sm" variant="info" v-for="(secret, index) in note.secrets" :key="index" @click="copySecret(secret.content)" title="Click for copy"><icon name="key"></icon> {{secret.title}}</b-button>
         </h3>
         <h4>{{ note.content }}</h4>
     </div>

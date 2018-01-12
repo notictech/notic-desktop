@@ -9,7 +9,7 @@
                     <div class="col-6" style="text-align: right">
                         <b-button size="sm" type="button" variant="success" @click="settingsSaveAndClose()"><icon name="save"></icon> Save & close</b-button>
                         <b-button-group size="sm">
-                            <b-btn @click="close()" title="Close (Esc)"><icon name="times"></icon></b-btn>
+                            <b-btn variant="primary" @click="close()" title="Close (Esc)"><icon name="times"></icon></b-btn>
                         </b-button-group>
                     </div>
                 </div>
