@@ -319,3 +319,16 @@ h4 {
 .btn-warning:hover {
     color: #4a5054;
 }
+
+.note-link .is-secret {
+    color: #17a2b8;
+    margin: 1px;
+}
+.note-link .is-star {
+    color: #ffc107;
+    margin: 1px;
+}
+.note-link .is-reminder {
+    color: #dc3545;
+    margin: 1px;
+}
