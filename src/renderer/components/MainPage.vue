@@ -5,7 +5,7 @@
         </b-modal>
         <div class="topbar">
             <div class="row">
-                <div class="col-6">
+                <div class="col-5">
                     <b-button-group size="sm">
                         <b-btn variant="primary" @click="openAddNotePage()" title="Add note (Ctrl+Space)"><icon name="plus"></icon></b-btn>
                     </b-button-group>
@@ -23,14 +23,15 @@
                         <b-btn variant="danger" @click="emptyTrash()">Empty trash</b-btn>
                     </b-button-group>
                 </div>
-                <div class="col-6">
+                <div class="col-7">
                     <b-input-group size="sm">
                         <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" ref="search" :value="searchQuery"></b-form-input>
                         <b-button-group size="sm" class="search-filters">
-                            <b-button :variant="(searchFilter == 'notes') ? 'warning' : 'secondary'" title="Notes (Ctrl+1)" @click="setSearchFilter('notes')"><icon name="file-text"></icon></b-button>
-                            <b-button :variant="(searchFilter == 'star') ? 'warning' : 'secondary'" title="Favorites (Ctrl+2)" @click="setSearchFilter('star')"><icon name="star"></icon></b-button>
-                            <b-button :variant="(searchFilter == 'reminder') ? 'warning' : 'secondary'" title="Reminders (Ctrl+3)" @click="setSearchFilter('reminder')"><icon name="bell"></icon></b-button>
-                            <b-button :variant="(searchFilter == 'deleted') ? 'warning' : 'secondary'" title="Deleted (Ctrl+4)" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-button>
+                            <b-button :variant="(searchFilter == 'notes') ? 'warning' : 'secondary'" title="Notes (Ctrl+1)" @click="setSearchFilter('notes')"><icon name="asterisk"></icon></b-button>
+                            <b-button :variant="(searchFilter == 'secrets') ? 'warning' : 'secondary'" title="Secrets (Ctrl+2)" @click="setSearchFilter('secrets')"><icon name="key"></icon></b-button>
+                            <b-button :variant="(searchFilter == 'star') ? 'warning' : 'secondary'" title="Favorites (Ctrl+3)" @click="setSearchFilter('star')"><icon name="star"></icon></b-button>
+                            <b-button :variant="(searchFilter == 'reminder') ? 'warning' : 'secondary'" title="Reminders (Ctrl+4)" @click="setSearchFilter('reminder')"><icon name="bell"></icon></b-button>
+                            <b-button :variant="(searchFilter == 'deleted') ? 'warning' : 'secondary'" title="Deleted (Ctrl+5)" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-button>
                         </b-button-group>
                         <b-button-group size="sm" style="margin-left: 10px">
                             <b-button title="History back (Ctrl+Left)" @click="historyBack()"><icon name="arrow-left"></icon></b-button>
@@ -172,6 +173,9 @@
       setSearchFilterNotes () {
         this.$store.dispatch('setSearchFilter', 'notes')
       },
+      setSearchFilterSecrets () {
+        this.$store.dispatch('setSearchFilter', 'secrets')
+      },
       setSearchFilterReminder () {
         this.$store.dispatch('setSearchFilter', 'reminder')
       },
@@ -230,9 +234,10 @@
           'ctrl+e': this.openRecentNote,
           'ctrl+n': this.openNotificationsPage,
           'ctrl+1': this.setSearchFilterNotes,
-          'ctrl+2': this.setSearchFilterStar,
-          'ctrl+3': this.setSearchFilterReminder,
-          'ctrl+4': this.setSearchFilterDeleted,
+          'ctrl+2': this.setSearchFilterSecrets,
+          'ctrl+3': this.setSearchFilterStar,
+          'ctrl+4': this.setSearchFilterReminder,
+          'ctrl+5': this.setSearchFilterDeleted,
           'ctrl+c': this.copyText,
           'ctrl+q': this.showQR,
           'f2': this.openSettingsPage,

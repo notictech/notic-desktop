@@ -319,6 +319,8 @@ const actions = {
       and.push({reminder: true, deleted: false})
     } else if (state.searchFilter === 'star') {
       and.push({star: true, deleted: false})
+    } else if (state.searchFilter === 'secrets') {
+      and.push({$not: {secrets: { $size: 0 }}, deleted: false})
     }
 
     and.push({doctype: 'note'})
