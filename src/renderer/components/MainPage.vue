@@ -220,6 +220,9 @@
       },
       openAboutPage () {
         this.$router.replace('/about')
+      },
+      resetSearch () {
+        this.$store.dispatch('searchNotes', {query: '', cb: () => {}})
       }
     },
     computed: {
@@ -241,7 +244,8 @@
           'ctrl+c': this.copyText,
           'ctrl+q': this.showQR,
           'f2': this.openSettingsPage,
-          'f3': this.openAboutPage
+          'f3': this.openAboutPage,
+          'esc': this.resetSearch
         }
       },
       notes () {
