@@ -36,6 +36,7 @@ const state = {
   activeNoteIndex: null,
   activeNoteId: null,
   editorMode: 'add',
+  editorInitTab: 0,
   masterPassword: null,
   settings: {
     dbPath: 'default.ntc',
@@ -66,6 +67,7 @@ const state = {
 }
 
 const mutations = {
+  setEditorInitTab: (state, data) => { state.editorInitTab = data },
   setLastUsingTime: (state, data) => { state.lastUsingTime = data },
   setEraseClipboardAfter: (state, data) => { state.settings.eraseClipboardAfter = data },
   setLogoutAfter: (state, data) => { state.settings.logoutAfter = data },

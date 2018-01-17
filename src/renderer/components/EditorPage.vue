@@ -41,7 +41,7 @@
                         <b-alert show variant="warning">Remember that you're won't getting reminders when you're not logged in.</b-alert>
                         <b-button-toolbar aria-label="Toolbar with button groups and input groups">
                             <b-button-group size="sm" class="mx-1">
-                                <b-form-checkbox id="checkbox1" value="true" :checked="noteReminder" @change="editorToggleReminder()">Remind me </b-form-checkbox>
+                                <b-form-checkbox id="checkbox1" value="true" :checked="noteReminder" @change="editorToggleReminder()">Enabled </b-form-checkbox>
                             </b-button-group>
                             <span v-show="noteReminder">
                                 <b-button-toolbar>
@@ -97,7 +97,7 @@
     components: { EditorSecret },
     data () {
       return {
-        tab: 1
+        tab: 0
       }
     },
     computed: {
@@ -155,6 +155,7 @@
       }
       this.$refs.content.focus()
       this.$store.dispatch('setNoteIsModified', false)
+      this.tab = this.$store.state.Store.editorInitTab
     },
     methods: {
       setTab0 () { this.tab = 0 },
@@ -286,6 +287,7 @@
         }
       }
       this.$store.commit('setNoteIsModified', false)
+      this.$store.commit('setEditorInitTab', 0)
       next()
     }
   }

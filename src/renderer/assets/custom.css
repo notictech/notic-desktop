@@ -255,7 +255,6 @@ h4 {
 .screen.notes .notes .note h2 > span {
     color: #dc3545;
     font-size: 11px;
-    margin-left: 10px;
 }
 .screen.notifications .notifications .notification h3,
 .screen.notes .notes .note h3 {
@@ -331,4 +330,7 @@ h4 {
 .note-link .is-reminder {
     color: #dc3545;
     margin: 1px;
+}
+.note-reminder-btn {
+    border: none;
 }

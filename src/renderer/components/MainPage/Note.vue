@@ -13,9 +13,7 @@
         </h5>
         <h1>{{ note.title }}</h1>
         <h2>{{ formattedNoteDate }}
-            <span v-show="note.reminder">
-                <icon name="bell"></icon> <span>{{ formattedReminderInfo }}</span>
-            </span>
+            <b-button class="note-reminder-btn" size="sm" :variant="(note.reminder) ? 'outline-danger' : 'outline-secondary'" @click="setEditorInitTab(note._id)"><icon name="bell"></icon></b-button><span v-show="note.reminder">{{ formattedReminderInfo }}</span>
         </h2>
         <h3 v-show="note.secrets.length">
             <b-button size="sm" variant="info" v-for="(secret, index) in note.secrets" :key="index" @click="copySecret(secret.content)" title="Click for copy"><icon name="key"></icon> {{secret.title}}</b-button>
@@ -111,6 +109,10 @@
       },
       toggleStar (id, index) {
         this.$store.dispatch('toggleNoteStar', {id: id, index: index})
+      },
+      setEditorInitTab (id) {
+        this.$store.commit('setEditorInitTab', 2)
+        this.openEditNotePage(id)
       }
     }
   }
