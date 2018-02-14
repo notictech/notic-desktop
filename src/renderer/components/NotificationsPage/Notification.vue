@@ -1,7 +1,8 @@
 <template>
-    <div :id="'note_index_' + index" :class="{notification: true, unread: notification.unread}">
+    <div :id="'note_index_' + index" :class="{notification: true, unread: notification.unread}" @mousedown.middle="notification.noteId ? editReminder(notification.noteId) : ''">
         <h5>
-            <b-button size="sm" variant="success" @click="markNotificationRead(notification._id, index)" v-if="notification.unread">Read</b-button>
+            <b-button size="sm" @click="editReminder(notification.noteId)" v-if="notification.noteId !== undefined"><icon name="pencil"></icon></b-button>
+            <b-button size="sm" variant="success" @click="markNotificationRead(notification._id, index)" v-if="notification.unread" title="Mark as read"><icon name="check"></icon></b-button>
         </h5>
         <h1>{{ notification.title }}</h1>
         <h2>{{ notification.date }}</h2>
@@ -18,6 +19,11 @@
     methods: {
       markNotificationRead (id, index) {
         this.$store.dispatch('markNotificationRead', {id: id, index: index})
+      },
+      editReminder (id) {
+        this.$store.commit('setEditorInitTab', 2)
+        this.$store.dispatch('openEditNotePage', id)
+        this.$router.replace('/editor')
       }
     }
   }
