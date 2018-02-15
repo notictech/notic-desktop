@@ -345,3 +345,7 @@ h4 {
     border-radius: 4px;
     border: 1px solid #dc3545;
 }
+
+.lx-toast-bottom {
+    bottom: 20px;
+}

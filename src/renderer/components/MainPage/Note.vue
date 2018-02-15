@@ -76,6 +76,7 @@
       copySecret (text) {
         clipboard.writeText(text)
         this.$store.dispatch('startClipboardCountdown')
+        this.$toast('✓ copied')
       },
       actionDeleteNote (id, deleted = false) {
         if (confirm('Are you sure you want to delete this note?')) {

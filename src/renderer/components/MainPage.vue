@@ -204,6 +204,7 @@
       copyText () {
         this.$store.dispatch('copyText')
         this.$store.dispatch('startClipboardCountdown')
+        this.$toast('✓ copied')
       },
       historyForward () {
         this.$store.dispatch('historyForward')
