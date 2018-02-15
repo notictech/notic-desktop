@@ -282,7 +282,7 @@
     },
     beforeRouteLeave (to, from, next) {
       if (this.$store.state.Store.noteIsModified) {
-        if (confirm('Do you want to save the changes?')) {
+        if (confirm('Save changes?')) {
           this.editorSave()
         }
       }

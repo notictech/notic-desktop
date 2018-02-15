@@ -40,11 +40,6 @@
         }
       }
     },
-    mounted () {
-      if (!this.$store.state.Store.isLoggedIn) {
-        this.$router.replace('/')
-      }
-    },
     methods: {
       close () {
         this.$store.commit('setWindowMustBeHidden', false)
