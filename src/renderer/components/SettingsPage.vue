@@ -34,13 +34,13 @@
                         </b-input-group-button>
                     </b-input-group>
                 </b-form-group>
-                <b-form-group id="inputGroup2"
+                <b-form-group id="inputGroup2" v-if="this.$store.state.Store.isLoggedIn"
                               label="Alternative keyboard layout:">
                     <b-input-group>
                         <b-form-select size="sm" v-model="localKeymap" :options="localKeymaps" class="mb-3"></b-form-select>
                     </b-input-group>
                 </b-form-group>
-                <b-form-group id="inputGroup3"
+                <b-form-group id="inputGroup3" v-if="this.$store.state.Store.isLoggedIn"
                               label="History max length:">
                     <b-input-group>
                         <b-form-input id="input3"
@@ -57,7 +57,7 @@
                         </b-button-group>
                     </b-input-group>
                 </b-form-group>
-                <b-form-group id="inputGroup4"
+                <b-form-group id="inputGroup4" v-if="this.$store.state.Store.isLoggedIn"
                               label="Automatically logout after:">
                     <b-input-group>
                         <b-form-input id="input4"
@@ -72,7 +72,7 @@
                         </b-form-input>&nbsp;minutes of inactivity ("0" for disabling)
                     </b-input-group>
                 </b-form-group>
-                <b-form-group id="inputGroup5"
+                <b-form-group id="inputGroup5" v-if="this.$store.state.Store.isLoggedIn"
                               label="Automatically erase clipboard after:">
                     <b-input-group>
                         <b-form-input id="input5"
@@ -126,11 +126,6 @@
           'esc': this.close,
           'ctrl+s': this.settingsSaveAndClose
         }
-      }
-    },
-    mounted () {
-      if (!this.$store.state.Store.isLoggedIn) {
-        this.$router.replace('/')
       }
     },
     methods: {
