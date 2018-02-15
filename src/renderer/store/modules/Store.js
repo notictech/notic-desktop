@@ -754,16 +754,36 @@ const actions = {
     clipboard.writeText(selectedText)
   },
   editorPastePassword (context) {
+    if (document.activeElement.id !== 'contentTextArea') {
+      return
+    }
     typeInTextarea(document.activeElement, genPassword())
+    this.dispatch('editorChangeContent', document.activeElement.value)
+    this.commit('setNoteIsModified', true)
   },
   editorPasteCurrentDateTime (context) {
+    if (document.activeElement.id !== 'contentTextArea') {
+      return
+    }
     typeInTextarea(document.activeElement, moment().format('DD.MM.YYYY HH:mm'))
+    this.dispatch('editorChangeContent', document.activeElement.value)
+    this.commit('setNoteIsModified', true)
   },
   editorPasteLine (context) {
+    if (document.activeElement.id !== 'contentTextArea') {
+      return
+    }
     typeInTextarea(document.activeElement, '---------------------------------\n')
+    this.dispatch('editorChangeContent', document.activeElement.value)
+    this.commit('setNoteIsModified', true)
   },
   editorPasteDoubleLine (context) {
+    if (document.activeElement.id !== 'contentTextArea') {
+      return
+    }
     typeInTextarea(document.activeElement, '=================================\n')
+    this.dispatch('editorChangeContent', document.activeElement.value)
+    this.commit('setNoteIsModified', true)
   },
   startClipboardCountdown (context) {
     if (state.settings.eraseClipboardAfter === 0) {
