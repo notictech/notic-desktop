@@ -5,7 +5,7 @@
                 <div class="row" align-h="between">
                     <div class="col-6">
                         <h4 v-if="editorMode === 'add'">Add note</h4>
-                        <h4 v-else>Edit note</h4>
+                        <h4 v-else>Edit note <span class="deleted-badge" pill v-if="note.deleted">deleted</span></h4>
                     </div>
                     <div class="col-6" style="text-align: right">
                         <b-button size="sm" type="button" variant="warning" v-show="this.$store.state.Store.noteIsModified" @click="editorSave()"><icon name="save"></icon></b-button>
@@ -91,10 +91,13 @@
 <script>
   import EditorSecret from '../components/MainPage/EditorSecret.vue'
   import moment from 'moment'
+  import Icon from '../../../node_modules/vue-awesome/components/Icon.vue'
 
   export default {
     name: 'editor-page',
-    components: { EditorSecret },
+    components: {
+      Icon,
+      EditorSecret },
     data () {
       return {
         tab: 0
@@ -103,6 +106,9 @@
     computed: {
       editorMode () {
         return this.$store.state.Store.editorMode
+      },
+      note () {
+        return this.$store.state.Store.note
       },
       noteIsModified () {
         return this.$store.state.Store.noteIsModified
