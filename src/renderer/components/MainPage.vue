@@ -203,7 +203,7 @@
       },
       copyText () {
         this.$store.dispatch('copyText')
-        this.$store.dispatch('startClipboardCountdown')
+        // this.$store.dispatch('startClipboardCountdown')
         this.$toast('✓ copied')
       },
       historyForward () {

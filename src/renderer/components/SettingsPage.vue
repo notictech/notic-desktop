@@ -84,7 +84,7 @@
                                       required
                                       v-model="eraseClipboardAfter"
                                       :value="this.eraseClipboardAfter">
-                        </b-form-input>&nbsp;seconds after copying ("0" for disabling)
+                        </b-form-input>&nbsp;seconds after secret copying ("0" for disabling)
                     </b-input-group>
                 </b-form-group>
             </div>
