@@ -401,6 +401,17 @@ const actions = {
     this.commit('updateNoteContent', content)
     this.commit('updateNoteTitle', '#clipboard ' + content.substr(0, 30) + '...')
   },
+  editReminderFromNotifications (context, id) {
+    db.count({_id: id}, (err, count) => {
+      if (err) console.log('ERROR: ' + err)
+      if (count === 0) {
+        alert('Oops.. this note was deleted.')
+        return false
+      }
+      this.dispatch('openEditNotePage', id)
+      bus.$emit('openEditor')
+    })
+  },
   openEditNotePage (context, id) {
     db.findOne({_id: id}, (err, doc) => {
       if (err) console.log('ERROR: ' + err)

@@ -22,8 +22,7 @@
       },
       editReminder (id) {
         this.$store.commit('setEditorInitTab', 2)
-        this.$store.dispatch('openEditNotePage', id)
-        this.$router.replace('/editor')
+        this.$store.dispatch('editReminderFromNotifications', id)
       }
     }
   }

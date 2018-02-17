@@ -98,6 +98,9 @@
         bus.$on('openRecentNote', () => {
           this.openRecentNote()
         })
+        bus.$on('openEditor', () => {
+          this.$router.replace('/editor')
+        })
         bus.$on('openNotifications', () => {
           this.openNotificationsPage()
         })
