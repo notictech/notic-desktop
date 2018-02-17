@@ -1,5 +1,5 @@
 <template>
-    <b-form>
+    <b-form @submit="submit()">
         <b-container fluid class="screen enter-master-password">
             <div class="content-wrap">
                 <div class="row justify-content-md-center" style="width: 100%">
@@ -10,12 +10,11 @@
                                           type="password"
                                           ref="password"
                                           autofocus
-                                          @input="inputPassword($event)"
-                                          @keyup.enter.native="submit()">
+                                          @input="inputPassword($event)">
                             </b-form-input>
                         </b-form-group>
                         <div class="row justify-content-md-center">
-                            <b-button type="button" variant="primary" @click="submit()">Let's go</b-button>
+                            <b-button type="button" variant="primary">Sign In</b-button>
                         </div>
                     </div>
                 </div>
