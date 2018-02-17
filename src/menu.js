@@ -60,15 +60,6 @@ const mainMenuTemplate = [
       },
       {type: 'separator'},
       {
-        label: 'Logout',
-        accelerator: 'CmdOrCtrl+R',
-        click () {
-          clipboard.writeText('')
-          ipcRenderer.send('logout')
-        }
-      },
-      {type: 'separator'},
-      {
         label: 'Quit',
         accelerator: 'CmdOrCtrl+Shift+Q',
         click () {
@@ -76,6 +67,14 @@ const mainMenuTemplate = [
         }
       }
     ]
+  },
+  {
+    label: 'Logout (Ctrl+R)',
+    accelerator: 'CmdOrCtrl+R',
+    click () {
+      clipboard.writeText('')
+      ipcRenderer.send('logout')
+    }
   }
 ]
 const mainMenu = Menu.buildFromTemplate(mainMenuTemplate)
