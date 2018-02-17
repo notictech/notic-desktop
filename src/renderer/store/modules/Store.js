@@ -43,7 +43,8 @@ const state = {
     localKeymap: 'ru',
     historyMaxLength: 50,
     logoutAfter: 0,
-    eraseClipboardAfter: 0
+    eraseClipboardAfter: 0,
+    windowOnTop: 0
   },
   notes: [],
   note: {},
@@ -75,6 +76,7 @@ const mutations = {
   setLocalKeymap: (state, data) => { state.settings.localKeymap = data },
   setSettingsData: (state, data) => { state.settings = data },
   setDbPath: (state, data) => { state.settings.dbPath = data },
+  setWindowOnTop: (state, data) => { state.settings.windowOnTop = data },
   setIsLoggedIn: (state, data) => { state.isLoggedIn = data },
   setMasterPassword: (state, data) => { state.masterPassword = data },
   setWindowMustBeHidden: (state, data) => { state.windowMustBeHidden = data },
@@ -991,6 +993,11 @@ const actions = {
   logout (context) {
     clipboard.writeText('')
     ipcRenderer.send('logout')
+  },
+  toggleWindowOnTop (content, data) {
+    this.commit('setWindowOnTop', data)
+    require('electron').remote.getCurrentWindow().setAlwaysOnTop(!!data)
+    this.dispatch('saveSettingsFile', () => {})
   }
 }
 

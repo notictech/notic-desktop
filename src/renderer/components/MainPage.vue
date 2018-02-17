@@ -51,8 +51,18 @@
         <div class="notes" ref="notes" id="notes" @scroll="scrollNotes($event)">
             <note v-for="(note, index) in notes.slice(0, loadedNotesCount)" :note="note" :key="note._id" :index="index"></note>
         </div>
-        <div class="found-bar">
+        <div class="left-status-bar">
             Found: {{ notes.length }}
+        </div>
+        <div class="right-status-bar">
+            <b-form-checkbox id="checkbox1"
+                             :checked="this.$store.state.Store.settings.windowOnTop"
+                             title="Window on top"
+                             value="1"
+                             unchecked-value="0"
+                             @input="toggleWindowOnTop($event)">
+                top
+            </b-form-checkbox>
         </div>
     </b-container>
 </template>
@@ -229,6 +239,9 @@
       },
       resetSearch () {
         this.$store.dispatch('searchNotes', {query: '', cb: () => {}})
+      },
+      toggleWindowOnTop (event) {
+        this.$store.dispatch('toggleWindowOnTop', parseInt(event))
       }
     },
     computed: {

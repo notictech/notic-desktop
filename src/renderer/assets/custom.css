@@ -294,7 +294,7 @@ h4 {
     padding-top: 52px;
 }
 
-.found-bar {
+.left-status-bar {
     position: fixed;
     background: #fff;
     z-index: 10;
@@ -303,6 +303,23 @@ h4 {
     font-size: .7em;
     color: grey;
     padding: 4px;
+}
+
+.right-status-bar {
+    position: fixed;
+    background: #fff;
+    z-index: 10;
+    width: auto;
+    bottom: 0;
+    font-size: .7em;
+    color: grey;
+    padding: 4px;
+    right: 12px;
+}
+
+.right-status-bar label {
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .screen.editor .reminder-links {
