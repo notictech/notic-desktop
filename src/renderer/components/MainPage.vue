@@ -27,11 +27,13 @@
                     <b-input-group size="sm">
                         <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" ref="search" :value="searchQuery"></b-form-input>
                         <b-button-group size="sm" class="search-filters">
-                            <b-button :variant="(searchFilter == 'notes') ? 'warning' : 'secondary'" title="Notes (Ctrl+1)" @click="setSearchFilter('notes')"><icon name="leaf"></icon></b-button>
+                            <b-button :variant="(searchFilter == 'notes') ? 'warning' : 'secondary'" title="All (Ctrl+1)" @click="setSearchFilter('notes')"><icon name="asterisk"></icon></b-button>
                             <b-button :variant="(searchFilter == 'secrets') ? 'warning' : 'secondary'" title="Secrets (Ctrl+2)" @click="setSearchFilter('secrets')"><icon name="key"></icon></b-button>
                             <b-button :variant="(searchFilter == 'star') ? 'warning' : 'secondary'" title="Favorites (Ctrl+3)" @click="setSearchFilter('star')"><icon name="star"></icon></b-button>
                             <b-button :variant="(searchFilter == 'reminder') ? 'warning' : 'secondary'" title="Reminders (Ctrl+4)" @click="setSearchFilter('reminder')"><icon name="bell"></icon></b-button>
-                            <b-button :variant="(searchFilter == 'deleted') ? 'warning' : 'secondary'" title="Deleted (Ctrl+5)" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-button>
+                        </b-button-group>
+                        <b-button-group size="sm">
+                            <b-btn style="margin-left: 10px;" :variant="(searchFilter == 'deleted') ? 'warning' : 'secondary'" title="Deleted (Ctrl+5)" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-btn>
                         </b-button-group>
                         <b-button-group size="sm" style="margin-left: 10px">
                             <b-button title="History back (Ctrl+Left)" @click="historyBack()"><icon name="arrow-left"></icon></b-button>
