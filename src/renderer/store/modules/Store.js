@@ -1064,10 +1064,12 @@ function typeInTextarea (el, newText) {
 }
 
 function getCurrentLineInTextarea (el) {
-  let caretPos = el.selectionEnd + 1, start, end
-  for (start = caretPos; start >= 0 && el.value[start] != "\n"; --start);
-  for (end = caretPos; end < el.value.length && el.value[end] != "\n"; ++end);
-  let line = el.value.substring(start + 1, end - 1);
+  let caretPos = el.selectionEnd + 1
+  let start
+  let end
+  for (start = caretPos; start >= 0 && el.value[start] !== '\n'; --start);
+  for (end = caretPos; end < el.value.length && el.value[end] !== '\n'; ++end);
+  let line = el.value.substring(start + 1, end - 1)
   return line
 }
 
