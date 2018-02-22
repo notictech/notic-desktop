@@ -801,6 +801,14 @@ const actions = {
     this.dispatch('editorChangeContent', document.activeElement.value)
     this.commit('setNoteIsModified', true)
   },
+  editorRepeatLine (context) {
+    if (document.activeElement.id !== 'contentTextArea') {
+      return
+    }
+    typeInTextarea(document.activeElement, '\n' + getCurrentLineInTextarea(document.activeElement))
+    this.dispatch('editorChangeContent', document.activeElement.value)
+    this.commit('setNoteIsModified', true)
+  },
   startClipboardCountdown (context) {
     if (state.settings.eraseClipboardAfter === 0) {
       return
@@ -1053,6 +1061,14 @@ function typeInTextarea (el, newText) {
   el.value = (before + newText + after)
   el.selectionStart = el.selectionEnd = start + newText.length
   el.focus()
+}
+
+function getCurrentLineInTextarea (el) {
+  let caretPos = el.selectionEnd + 1, start, end
+  for (start = caretPos; start >= 0 && el.value[start] != "\n"; --start);
+  for (end = caretPos; end < el.value.length && el.value[end] != "\n"; ++end);
+  let line = el.value.substring(start + 1, end - 1);
+  return line
 }
 
 RegExp.quote = (str) => {

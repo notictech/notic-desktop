@@ -151,7 +151,8 @@
           'ctrl+p': this.pastePassword,
           'ctrl+t': this.pasteDate,
           'ctrl+-': this.pasteLine,
-          'ctrl+=': this.pasteDoubleLine
+          'ctrl+=': this.pasteDoubleLine,
+          'ctrl+d': this.repeatLine
         }
       }
     },
@@ -244,6 +245,9 @@
       },
       pasteDoubleLine () {
         this.$store.dispatch('editorPasteDoubleLine')
+      },
+      repeatLine () {
+        this.$store.dispatch('editorRepeatLine')
       },
       btnIn10Minutes () {
         let newDate = moment().add(10, 'minutes')
