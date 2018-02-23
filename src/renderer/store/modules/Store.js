@@ -1064,21 +1064,22 @@ function typeInTextarea (el, newText) {
 }
 
 function getCurrentLineInTextarea (el) {
-  let caretPos = el.selectionEnd + 1
+  let caretPos = el.selectionEnd
   let start
   let end
 
-  start = caretPos
+  start = caretPos - 1
   while (el.value[start] !== '\n' && start >= 0) {
     start--
   }
 
-  end = caretPos
-  while (el.value[end] !== '\n' && end < el.value.length) {
+  end = caretPos - 1
+  while (el.value[end] !== '\n' && end <= el.value.length) {
     end++
   }
 
-  let line = el.value.substring(start + 1, end - 1)
+  let line = el.value.substring(start + 1, end)
+  console.log(line)
   return line
 }
 
