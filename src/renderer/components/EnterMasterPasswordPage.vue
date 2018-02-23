@@ -14,7 +14,7 @@
                             </b-form-input>
                         </b-form-group>
                         <div class="row justify-content-md-center">
-                            <b-button type="button" variant="primary">Sign In</b-button>
+                            <b-button type="button" variant="primary" @click="submit()">Sign In</b-button>
                         </div>
                     </div>
                 </div>
