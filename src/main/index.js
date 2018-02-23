@@ -50,7 +50,7 @@ function createWindow () {
   })
 
   appIcon = new Tray(`${__static}/icons/notic-inactive.png`)
-  appIcon.setToolTip('Notic Desktop')
+  appIcon.setToolTip('Notic')
 
   const clickAddNote = () => {
     if (mainWindow.isMinimized() || !mainWindow.isVisible()) {
