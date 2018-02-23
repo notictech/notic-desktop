@@ -312,6 +312,26 @@ const actions = {
       or.push({content: new RegExp(RegExp.quote(queryWords[i]), 'i')})
       or.push({content: new RegExp(remapString(RegExp.quote(queryWords[i]), 'en', state.settings.localKeymap), 'i')})
       or.push({content: new RegExp(remapString(RegExp.quote(queryWords[i]), state.settings.localKeymap, 'en'), 'i')})
+      or.push({$where: function () {
+        if (!this.secrets) {
+          return false
+        }
+        if (!this.secrets.length) {
+          return false
+        }
+        for (let j = 0; j < this.secrets.length; j++) {
+          if (this.secrets[j].title.match(new RegExp(RegExp.quote(queryWords[i]), 'i'))) {
+            return true
+          }
+          if (this.secrets[j].title.match(new RegExp(remapString(RegExp.quote(queryWords[i]), 'en', state.settings.localKeymap), 'i'))) {
+            return true
+          }
+          if (this.secrets[j].title.match(new RegExp(remapString(RegExp.quote(queryWords[i]), state.settings.localKeymap, 'en'), 'i'))) {
+            return true
+          }
+        }
+        return false
+      }})
       and.push({$or: or})
     }
 
