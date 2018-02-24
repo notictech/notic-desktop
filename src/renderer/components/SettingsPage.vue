@@ -26,12 +26,10 @@
                                       placeholder="Path..."
                                       :value="this.dbPath">
                         </b-form-input>
-                        <b-input-group-button slot="right">
-                            <b-button-group>
-                                <b-button size="sm" title="Open" @click="openDb()"><icon name="folder-open"></icon></b-button>
-                                <b-button size="sm" title="Create" @click="createDb()"><icon name="plus"></icon></b-button>
-                            </b-button-group>
-                        </b-input-group-button>
+                        <b-input-group-append>
+                            <b-button size="sm" title="Open" @click="openDb()"><icon name="folder-open"></icon></b-button>
+                            <b-button size="sm" title="Create" @click="createDb()"><icon name="plus"></icon></b-button>
+                        </b-input-group-append>
                     </b-input-group>
                 </b-form-group>
                 <b-form-group id="inputGroup2" v-if="this.$store.state.Store.isLoggedIn"

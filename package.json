@@ -1,9 +1,9 @@
 {
   "name": "notic-desktop",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "author": "Sergey Tolokonnikov <notictech@gmail.com>",
-  "description": "Notes manager",
-  "license": null,
+  "description": "Personal notes manager",
+  "license": "GPL-3.0",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
@@ -55,11 +55,11 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
-    "bootstrap-show-password": "^1.0.3",
-    "bootstrap-vue": "^1.0.0-beta.9",
+    "bootstrap-vue": "^2.0.0-rc.1",
     "crypto-js": "^3.1.9-1",
-    "mark.js": "^8.11.0",
-    "moment": "^2.19.1",
+    "jquery": "^3.3.1",
+    "mark.js": "^8.11.1",
+    "moment": "^2.20.1",
     "nedb": "^1.8.0",
     "qr-image": "^3.2.0",
     "v-hotkey": "^0.2.0",
