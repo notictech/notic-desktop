@@ -1,27 +1,26 @@
 <template>
-    <b-form @submit="submit()">
-        <b-container fluid class="screen enter-master-password">
-            <div class="content-wrap">
-                <div class="row justify-content-md-center" style="width: 100%">
-                    <div class="col-6" style="margin-top: 20px">
-                        <b-form-group id="InputGroup1"
-                                      label="Enter master password:">
-                            <b-form-input id="Password"
-                                          type="password"
-                                          ref="password"
-                                          autofocus
-                                          @input="inputPassword($event)">
-                            </b-form-input>
-                        </b-form-group>
-                        <div class="row justify-content-md-center">
-                            <b-button type="button" variant="primary" @click="submit()">Sign In</b-button>
-                        </div>
+    <b-container fluid class="screen enter-master-password">
+        <div class="content-wrap">
+            <div class="row justify-content-md-center" style="width: 100%">
+                <div class="col-6" style="margin-top: 20px">
+                    <b-form-group id="InputGroup1"
+                                  label="Enter master password:">
+                        <b-form-input id="Password"
+                                      type="password"
+                                      ref="password"
+                                      autofocus
+                                      @keyup.enter.native="submit()"
+                                      @input="inputPassword($event)">
+                        </b-form-input>
+                    </b-form-group>
+                    <div class="row justify-content-md-center">
+                        <b-button type="button" variant="primary" @click="submit()">Sign In</b-button>
                     </div>
                 </div>
-
             </div>
-        </b-container>
-    </b-form>
+
+        </div>
+    </b-container>
 </template>
 
 <script>
