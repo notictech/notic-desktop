@@ -1,5 +1,5 @@
 <template>
-    <div :id="'note_index_' + index" :class="{note: true, active: activeNoteIndex == index}" @mousedown.middle="openEditNotePage(note._id)" @contextmenu="showNoteContextMenu(note._id)" @click="clickNote(note._id, index)">
+    <div :id="'note_index_' + index" :class="{note: true, active: activeNoteIndex == index}" @mouseup.middle="openEditNotePage(note._id)" @contextmenu="showNoteContextMenu(note._id)" @click="clickNote(note._id, index)">
         <h5>
             <b-button size="sm" variant="success" v-if="searchFilter === 'deleted'" @click="restoreNote(note._id)">Restore</b-button>
             <b-button title="Mark as favorite" size="sm" v-if="!note.deleted" :variant="note.star ? 'warning' : ''" @click="toggleStar(note._id, index)"><icon name="star"></icon></b-button>
