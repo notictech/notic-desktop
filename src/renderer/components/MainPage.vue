@@ -23,7 +23,7 @@
                         <b-btn variant="danger" @click="emptyTrash()" title="Empty trash"><icon name="trash-o"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm">
-                        <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+.)"><icon name="list"></icon></b-btn>
+                        <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+.)"><icon name="check-square-o"></icon></b-btn>
                     </b-button-group>
                     <b-dropdown v-if="this.$store.state.Store.massSelect" id="mass-select-dropdown" text="Action" title="Action with selected" size="sm" variant="warning">
                         <b-dropdown-item @click="toggleMassCheck">Select / Un-select all</b-dropdown-item>
