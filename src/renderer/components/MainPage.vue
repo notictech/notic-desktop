@@ -24,12 +24,12 @@
                     </b-button-group>
                     <b-button-group size="sm">
                         <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+.)"><icon name="check-square-o"></icon></b-btn>
+                        <b-dropdown v-if="this.$store.state.Store.massSelect" id="mass-select-dropdown" text="Action" title="Action with selected" size="sm" variant="warning">
+                            <b-dropdown-item @click="toggleMassCheck">Select / Un-select all</b-dropdown-item>
+                            <b-dropdown-divider></b-dropdown-divider>
+                            <b-dropdown-item>Delete</b-dropdown-item>
+                        </b-dropdown>
                     </b-button-group>
-                    <b-dropdown v-if="this.$store.state.Store.massSelect" id="mass-select-dropdown" text="Action" title="Action with selected" size="sm" variant="warning">
-                        <b-dropdown-item @click="toggleMassCheck">Select / Un-select all</b-dropdown-item>
-                        <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item>Delete</b-dropdown-item>
-                    </b-dropdown>
                 </div>
                 <div class="col-7">
                     <b-input-group size="sm">
