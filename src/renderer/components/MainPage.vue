@@ -277,9 +277,9 @@
               this.$store.dispatch('actionMarkNoteAsDeleted', this.$store.state.Store.selectedNotes[i])
             }
           }
+          this.toggleMassSelect()
+          this.$toast('✓ deleted')
         }
-        this.toggleMassSelect()
-        this.$toast('✓ deleted')
       }
     },
     computed: {
