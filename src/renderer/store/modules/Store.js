@@ -66,11 +66,13 @@ const state = {
   isLoggedIn: false,
   lastUsingTime: null,
   contextNoteId: null,
-  contextNoteIsDeleted: null
+  contextNoteIsDeleted: null,
+  massSelect: false
 }
 
 const mutations = {
   setContextNoteIsDeleted: (state, data) => { state.contextNoteIsDeleted = data },
+  toggleMassSelect: (state) => { state.massSelect = !state.massSelect },
   setContextNoteId: (state, data) => { state.contextNoteId = data },
   setEditorInitTab: (state, data) => { state.editorInitTab = data },
   setLastUsingTime: (state, data) => { state.lastUsingTime = data },

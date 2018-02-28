@@ -21,7 +21,7 @@
     background: #d0d0d0;
 }
 
-button {
+button, input[type=checkbox] {
     cursor: pointer;
 }
 button svg {
@@ -77,6 +77,12 @@ button svg {
 .screen.notes .sidebar .note-link.active {
     background: #a0d3ff;
 }
+
+.screen.notes .sidebar .note-link-checkbox  {
+    left: 5px;
+    right: 0;
+}
+
 .screen.notes .notes {
     padding-bottom: 100px;
 }

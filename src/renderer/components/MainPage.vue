@@ -22,6 +22,14 @@
                         <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
                         <b-btn variant="danger" @click="emptyTrash()" title="Empty trash"><icon name="trash-o"></icon></b-btn>
                     </b-button-group>
+                    <b-button-group size="sm">
+                        <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+.)"><icon name="list"></icon></b-btn>
+                    </b-button-group>
+                    <b-dropdown v-if="this.$store.state.Store.massSelect" id="mass-select-dropdown" text="Action" title="Action with selected" size="sm" variant="warning">
+                        <b-dropdown-item @click="toggleMassCheck">Select / Un-select all</b-dropdown-item>
+                        <b-dropdown-divider></b-dropdown-divider>
+                        <b-dropdown-item>Delete</b-dropdown-item>
+                    </b-dropdown>
                 </div>
                 <div class="col-7">
                     <b-input-group size="sm">
@@ -242,11 +250,18 @@
       },
       toggleWindowOnTop (event) {
         this.$store.dispatch('toggleWindowOnTop', parseInt(event))
+      },
+      toggleMassSelect () {
+        this.$store.commit('toggleMassSelect')
+      },
+      toggleMassCheck () {
+        console.log('@@@@')
       }
     },
     computed: {
       keymap () {
         return {
+          'ctrl+.': this.toggleMassSelect,
           'ctrl+f': this.focusOnSearch,
           'ctrl+down': this.goToNextNote,
           'ctrl+up': this.goToPreviousNote,

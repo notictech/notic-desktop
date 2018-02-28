@@ -11,7 +11,10 @@
                 <b-dropdown-item @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon> Delete</b-dropdown-item>
             </b-dropdown>
         </h5>
-        <h1>{{ note.title }}</h1>
+        <h1><b-form-checkbox v-if="this.$store.state.Store.massSelect" plain class="note-link-checkbox" :id="'notelink_checkbox_' + index"
+                             value="1"
+                             unchecked-value="0">
+            </b-form-checkbox>{{ note.title }}</h1>
         <h2>{{ formattedNoteDate }}
             <b-button class="note-reminder-btn" size="sm" :variant="(note.reminder) ? 'outline-danger' : 'outline-secondary'" @click="setEditorInitTab(note._id)"><icon name="bell"></icon></b-button><span v-show="note.reminder">{{ formattedReminderInfo }}</span>
         </h2>
