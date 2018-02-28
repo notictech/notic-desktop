@@ -64,10 +64,14 @@ const state = {
   loadedNotesCount: 0,
   loadedNotesLinksCount: 0,
   isLoggedIn: false,
-  lastUsingTime: null
+  lastUsingTime: null,
+  contextNoteId: null,
+  contextNoteIsDeleted: null
 }
 
 const mutations = {
+  setContextNoteIsDeleted: (state, data) => { state.contextNoteIsDeleted = data },
+  setContextNoteId: (state, data) => { state.contextNoteId = data },
   setEditorInitTab: (state, data) => { state.editorInitTab = data },
   setLastUsingTime: (state, data) => { state.lastUsingTime = data },
   setEraseClipboardAfter: (state, data) => { state.settings.eraseClipboardAfter = data },
@@ -611,6 +615,11 @@ const actions = {
     this.dispatch('updateHistory')
   },
   showNoteContextMenu (context, id) {
+    this.commit('setContextNoteId', id)
+    db.findOne({_id: id}, (err, doc) => {
+      if (err) console.log('ERROR: ' + err)
+      this.commit('setContextNoteIsDeleted', doc.deleted)
+    })
     menus.noteContextMenu.popup(remote.getCurrentWindow())
   },
   goToNextNote (context) {

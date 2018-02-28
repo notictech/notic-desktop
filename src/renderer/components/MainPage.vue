@@ -20,7 +20,7 @@
                     </b-button-group>
                     <b-button-group size="sm" v-show="searchFilter === 'deleted'">
                         <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
-                        <b-btn variant="danger" @click="emptyTrash()">Empty trash</b-btn>
+                        <b-btn variant="danger" @click="emptyTrash()" title="Empty trash"><icon name="trash-o"></icon></b-btn>
                     </b-button-group>
                 </div>
                 <div class="col-7">

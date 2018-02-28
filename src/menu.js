@@ -1,4 +1,6 @@
 import bus from './renderer/bus'
+import store from './renderer/store'
+import router from './renderer/router'
 const {Menu} = require('electron').remote
 const {ipcRenderer} = require('electron')
 const {clipboard} = require('electron')
@@ -86,6 +88,32 @@ const noteContextMenu = Menu.buildFromTemplate([
     accelerator: 'CmdOrCtrl+C',
     click () {
       bus.$emit('copyText')
+    }
+  },
+  {type: 'separator'},
+  {
+    label: 'Edit',
+    click () {
+      store.dispatch('openEditNotePage', store.state.Store.contextNoteId)
+      router.replace('/editor')
+    }
+  },
+  {
+    label: 'Clone',
+    click () {
+      store.dispatch('cloneNote', store.state.Store.contextNoteId)
+    }
+  },
+  {
+    label: 'Delete',
+    click () {
+      if (confirm('Are you sure you want to delete this note?')) {
+        if (store.state.Store.contextNoteIsDeleted) {
+          store.dispatch('actionDeleteNote', store.state.Store.contextNoteId)
+        } else {
+          store.dispatch('actionMarkNoteAsDeleted', store.state.Store.contextNoteId)
+        }
+      }
     }
   }
 ])
