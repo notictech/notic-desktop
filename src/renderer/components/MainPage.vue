@@ -27,7 +27,7 @@
                         <b-dropdown v-if="this.$store.state.Store.massSelect" id="mass-select-dropdown" text="Action" title="Action with selected" size="sm" variant="warning">
                             <b-dropdown-item @click="toggleMassCheck">Select / Un-select all</b-dropdown-item>
                             <b-dropdown-divider></b-dropdown-divider>
-                            <b-dropdown-item>Delete</b-dropdown-item>
+                            <b-dropdown-item @click="actionDeleteSelectedNotes()">Delete</b-dropdown-item>
                         </b-dropdown>
                     </b-button-group>
                 </div>
@@ -253,10 +253,33 @@
         this.$store.dispatch('toggleWindowOnTop', parseInt(event))
       },
       toggleMassSelect () {
+        this.$store.commit('emptySelectedNotes')
         this.$store.commit('toggleMassSelect')
       },
       toggleMassCheck () {
-        console.log('@@@@')
+        if (this.$store.state.Store.selectedNotes.length < this.$store.state.Store.notes.length) {
+          for (let i = 0; i < this.$store.state.Store.notes.length; i++) {
+            this.$store.commit('addNoteToSelected', this.$store.state.Store.notes[i]._id)
+          }
+        } else {
+          this.$store.commit('emptySelectedNotes')
+        }
+      },
+      actionDeleteSelectedNotes () {
+        if (!this.$store.state.Store.selectedNotes.length) {
+          return false
+        }
+        if (confirm('Are you sure you want to delete ' + this.$store.state.Store.selectedNotes.length + ' notes?')) {
+          for (let i = 0; i < this.$store.state.Store.selectedNotes.length; i++) {
+            if (this.$store.state.Store.searchFilter === 'deleted') {
+              this.$store.dispatch('actionDeleteNote', this.$store.state.Store.selectedNotes[i])
+            } else {
+              this.$store.dispatch('actionMarkNoteAsDeleted', this.$store.state.Store.selectedNotes[i])
+            }
+          }
+        }
+        this.toggleMassSelect()
+        this.$toast('✓ deleted')
       }
     },
     computed: {

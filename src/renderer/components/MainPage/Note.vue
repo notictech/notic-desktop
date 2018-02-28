@@ -12,9 +12,7 @@
             <!--</b-dropdown>-->
             <b-button size="sm" @click="showNoteContextMenu(note._id)"><icon name="bars"></icon></b-button>
         </h5>
-        <h1><b-form-checkbox v-if="this.$store.state.Store.massSelect" plain class="note-link-checkbox" :id="'notelink_checkbox_' + index"
-                             value="1"
-                             unchecked-value="0">
+        <h1><b-form-checkbox v-if="this.$store.state.Store.massSelect" plain class="note-link-checkbox" :id="'notelink_checkbox_' + index" :checked="this.$store.state.Store.selectedNotes.includes(note._id)" @change="selectNote(note._id, $event)">
             </b-form-checkbox>{{ note.title }}</h1>
         <h2>{{ formattedNoteDate }}
             <b-button class="note-reminder-btn" size="sm" :variant="(note.reminder) ? 'outline-danger' : 'outline-secondary'" @click="setEditorInitTab(note._id)"><icon name="bell"></icon></b-button><span v-show="note.reminder">{{ formattedReminderInfo }}</span>
@@ -118,6 +116,9 @@
       setEditorInitTab (id) {
         this.$store.commit('setEditorInitTab', 2)
         this.openEditNotePage(id)
+      },
+      selectNote (id, event) {
+        this.$store.dispatch('selectNote', {'id': id, 'value': event})
       }
     }
   }

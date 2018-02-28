@@ -67,10 +67,22 @@ const state = {
   lastUsingTime: null,
   contextNoteId: null,
   contextNoteIsDeleted: null,
-  massSelect: false
+  massSelect: false,
+  selectedNotes: []
 }
 
 const mutations = {
+  addNoteToSelected: (state, id) => {
+    if (!state.selectedNotes.includes(id)) {
+      state.selectedNotes.push(id)
+    }
+  },
+  removeNoteFromSelected: (state, id) => {
+    state.selectedNotes = state.selectedNotes.filter(e => e !== id)
+  },
+  emptySelectedNotes: (state) => {
+    state.selectedNotes = []
+  },
   setContextNoteIsDeleted: (state, data) => { state.contextNoteIsDeleted = data },
   toggleMassSelect: (state) => { state.massSelect = !state.massSelect },
   setContextNoteId: (state, data) => { state.contextNoteId = data },
@@ -546,6 +558,7 @@ const actions = {
     this.commit('genSecret', index)
   },
   setSearchFilter (context, filter) {
+    this.commit('emptySelectedNotes')
     this.commit('setSearchFilter', filter)
     this.dispatch('searchNotes', {query: state.searchQuery})
   },
@@ -1036,10 +1049,17 @@ const actions = {
     clipboard.writeText('')
     ipcRenderer.send('logout')
   },
-  toggleWindowOnTop (content, data) {
+  toggleWindowOnTop (context, data) {
     this.commit('setWindowOnTop', data)
     require('electron').remote.getCurrentWindow().setAlwaysOnTop(!!data)
     this.dispatch('saveSettingsFile', () => {})
+  },
+  selectNote (context, obj) {
+    if (obj.value) {
+      this.commit('addNoteToSelected', obj.id)
+    } else {
+      this.commit('removeNoteFromSelected', obj.id)
+    }
   }
 }
 
