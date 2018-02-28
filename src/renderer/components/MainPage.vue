@@ -246,6 +246,7 @@
         this.$router.replace('/about')
       },
       resetSearch () {
+        this.$refs.search.focus()
         this.$store.dispatch('searchNotes', {query: '', cb: () => {}})
       },
       toggleWindowOnTop (event) {
