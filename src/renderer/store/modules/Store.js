@@ -374,6 +374,18 @@ const actions = {
         }
         return false
       }})
+      or.push({$where: function () {
+        if (moment(this.reminderDate).format('DD.MM.YYYY').match(new RegExp(RegExp.quote(queryWords[i]), 'i'))) {
+          return true
+        }
+        if (moment(this.reminderDate).format('DD.MM.YYYY').match(new RegExp(remapString(RegExp.quote(queryWords[i]), 'en', state.settings.localKeymap), 'i'))) {
+          return true
+        }
+        if (moment(this.reminderDate).format('DD.MM.YYYY').match(new RegExp(remapString(RegExp.quote(queryWords[i]), state.settings.localKeymap, 'en'), 'i'))) {
+          return true
+        }
+        return false
+      }})
       and.push({$or: or})
     }
 
