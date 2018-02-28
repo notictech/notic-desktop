@@ -32,14 +32,14 @@ function createWindow () {
 
   mainWindow.loadURL(winURL)
 
-  // mainWindow.on('close', (e) => {
-  //   e.preventDefault()
-  //   mainWindow.hide()
-  // })
-
-  mainWindow.on('closed', () => {
-    mainWindow = null
+  mainWindow.on('close', (e) => {
+    e.preventDefault()
+    mainWindow.hide()
   })
+
+  // mainWindow.on('closed', () => {
+  //   mainWindow = null
+  // })
 
   mainWindow.on('restore', () => {
     mainWindow.webContents.send('track-usage')
