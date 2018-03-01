@@ -84,14 +84,6 @@ Menu.setApplicationMenu(mainMenu)
 
 const noteContextMenu = Menu.buildFromTemplate([
   {
-    label: 'Copy selected',
-    accelerator: 'CmdOrCtrl+C',
-    click () {
-      bus.$emit('copyText')
-    }
-  },
-  {type: 'separator'},
-  {
     label: 'Edit',
     click () {
       store.dispatch('openEditNotePage', store.state.Store.contextNoteId)
@@ -114,6 +106,14 @@ const noteContextMenu = Menu.buildFromTemplate([
           store.dispatch('actionMarkNoteAsDeleted', store.state.Store.contextNoteId)
         }
       }
+    }
+  },
+  {type: 'separator'},
+  {
+    label: 'Copy selected',
+    accelerator: 'CmdOrCtrl+C',
+    click () {
+      bus.$emit('copyText')
     }
   }
 ])
