@@ -921,7 +921,7 @@ const actions = {
   },
   historyForward (context, cb) {
     if (!state.history.length) return
-    if (state.historyIndex === state.history.length - 1) {
+    if (state.historyIndex === state.history.length - 1 || state.historyIndex === state.history.length) {
       this.commit('setHistoryIndex', 0)
     } else {
       this.commit('setHistoryIndex', state.historyIndex + 1)
@@ -938,7 +938,7 @@ const actions = {
   },
   historyBack (context, cb) {
     if (!state.history.length) return
-    if (state.historyIndex === 0) {
+    if (state.historyIndex === 0 || state.historyIndex >= state.history.length) {
       this.commit('setHistoryIndex', state.history.length - 1)
     } else {
       this.commit('setHistoryIndex', state.historyIndex - 1)
