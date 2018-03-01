@@ -220,9 +220,11 @@
       },
       goToNextNote () {
         this.$store.dispatch('goToNextNote')
+        // document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).focus()
       },
       goToPreviousNote () {
         this.$store.dispatch('goToPreviousNote')
+        // document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).focus()
       },
       copyText () {
         this.$store.dispatch('copyText')

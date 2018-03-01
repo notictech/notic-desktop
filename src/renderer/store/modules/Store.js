@@ -706,7 +706,6 @@ const actions = {
     const el = href ? document.querySelector(href) : null
     if (el) {
       document.querySelector('#notes').scrollTop = el.offsetTop
-      document.getElementById('note_actions_button_' + state.activeNoteIndex).focus()
     }
   },
   scrollToActiveNoteLink (context) {
@@ -951,6 +950,7 @@ const actions = {
         this.commit('setActiveNoteId', state.history[state.historyIndex].i)
         this.commit('setActiveNoteIndex', this.getters.getNoteIndexById(state.history[state.historyIndex].i))
         if (cb) cb()
+        // document.getElementById('note_actions_button_' + state.activeNoteIndex).focus()
       }
     })
   },
