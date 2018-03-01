@@ -950,7 +950,6 @@ const actions = {
         this.commit('setActiveNoteId', state.history[state.historyIndex].i)
         this.commit('setActiveNoteIndex', this.getters.getNoteIndexById(state.history[state.historyIndex].i))
         if (cb) cb()
-        // document.getElementById('note_actions_button_' + state.activeNoteIndex).focus()
       }
     })
   },

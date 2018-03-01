@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid class="screen notes" v-hotkey="keymap" v-show="this.$store.state.Store.isLoggedIn">
+    <b-container fluid class="screen notes" v-hotkey="keymap" v-show="this.$store.state.Store.isLoggedIn" @contextmenu="triggerContextMenu()">
         <b-modal size="sm" ref="modalQr" id="modal-qr" class="modal-qr" hide-footer title="QR from clipboard">
             <div class="my-4 qr" v-html="qr"></div>
         </b-modal>
@@ -220,11 +220,9 @@
       },
       goToNextNote () {
         this.$store.dispatch('goToNextNote')
-        // document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).focus()
       },
       goToPreviousNote () {
         this.$store.dispatch('goToPreviousNote')
-        // document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).focus()
       },
       copyText () {
         this.$store.dispatch('copyText')
@@ -282,6 +280,9 @@
           this.toggleMassSelect()
           this.$toast('✓ deleted')
         }
+      },
+      triggerContextMenu () {
+        document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).click()
       }
     },
     computed: {
