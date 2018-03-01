@@ -706,6 +706,7 @@ const actions = {
     const el = href ? document.querySelector(href) : null
     if (el) {
       document.querySelector('#notes').scrollTop = el.offsetTop
+      document.getElementById('note_actions_button_' + state.activeNoteIndex).focus()
     }
   },
   scrollToActiveNoteLink (context) {
