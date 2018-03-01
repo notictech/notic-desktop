@@ -17,7 +17,7 @@
                 <b-img src="static/icons/notic-logo.png" fluid/>
                 <h3 style="margin-top: 10px;">Notic</h3>
                 <br>
-                <p>ver. 1.0 alpha</p>
+                <p>ver. 1.0.0 alpha</p>
                 <p>notictech@gmail.com</p>
                 <p>https://github.com/notictech/notic-desktop</p>
                 <p>© 2016 - <span>{{ this.currentYear }}</span> Sergey Tolokonnikov</p>
