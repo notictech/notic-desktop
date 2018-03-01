@@ -214,6 +214,13 @@ const mutations = {
         i--
       }
     }
+    // remove duplicates
+    for (let i = 0; i < state.history.length; i++) {
+      if (i > 0 && state.history[i].i === state.history[i - 1].i) {
+        state.history.splice(i, 1)
+        i = 0
+      }
+    }
   },
   setMiscData: (state, data) => { state.misc = data },
   setReminders: (state, data) => { state.reminders = data },
