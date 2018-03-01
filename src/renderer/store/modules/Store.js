@@ -416,6 +416,7 @@ const actions = {
         this.commit('setLoadedNotesCount', 40)
         this.commit('setLoadedNotesLinksCount', 40)
         if (obj.cb) obj.cb()
+        this.commit('emptySelectedNotes')
       }
     })
   },
