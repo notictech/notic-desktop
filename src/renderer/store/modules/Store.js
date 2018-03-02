@@ -127,8 +127,17 @@ const mutations = {
   },
   addSecretToNote: (state) => {
     let secret = genPassword()
+    let title = 'password'
+    let titles = state.note.secrets.map((item) => {
+      return item.title
+    })
+    let num = state.note.secrets.length
+    while (titles.includes(title)) {
+      title = 'password ' + num
+      num++
+    }
     state.note.secrets.push({
-      title: 'password',
+      title: title,
       content: secret,
       contentRepeat: secret,
       visibility: false,
