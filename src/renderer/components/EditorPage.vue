@@ -27,9 +27,12 @@
                                              ref="content"
                                              class="content"
                                              placeholder="Content"
-                                             :rows="18" autofocus @input="editorChangeContent($event)"  :value="noteContent"
+                                             :rows="17" autofocus @input="editorChangeContent($event)"  :value="noteContent"
                             ></b-form-textarea>
                         </b-form-group>
+                        <b-button-group size="sm" class="mx-1">
+                            <b-form-checkbox value="true" :checked="noteHidden" @change="editorToggleHideContent()">Hide the content (Ctrl+H)</b-form-checkbox>
+                        </b-button-group>
                     </b-tab>
                     <b-tab title="Secrets">
                         <div class="secrets">
@@ -125,6 +128,9 @@
       noteReminder () {
         return this.$store.state.Store.note.reminder
       },
+      noteHidden () {
+        return this.$store.state.Store.note.hidden
+      },
       noteReminderRemoveNote () {
         return this.$store.state.Store.note.reminderRemoveNote
       },
@@ -152,7 +158,8 @@
           'ctrl+t': this.pasteDate,
           'ctrl+-': this.pasteLine,
           'ctrl+=': this.pasteDoubleLine,
-          'ctrl+d': this.repeatLine
+          'ctrl+d': this.repeatLine,
+          'ctrl+h': this.editorToggleHideContent
         }
       }
     },
@@ -203,6 +210,10 @@
       },
       editorToggleReminder () {
         this.$store.dispatch('editorToggleReminder')
+        this.modify()
+      },
+      editorToggleHideContent () {
+        this.$store.dispatch('editorToggleHideContent')
         this.modify()
       },
       editorToggleReminderRemoveNote () {

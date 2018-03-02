@@ -27,7 +27,8 @@ const blankNote = {
   reminderTime: null,
   reminderRepeat: '0',
   reminderRemoveNote: false,
-  star: false
+  star: false,
+  hidden: false
 }
 
 const state = {
@@ -191,6 +192,9 @@ const mutations = {
   },
   toggleNoteReminder (state) {
     state.note.reminder = !state.note.reminder
+  },
+  toggleHideContent (state) {
+    state.note.hidden = !state.note.hidden
   },
   toggleNoteReminderRemoveNote (state) {
     state.note.reminderRemoveNote = !state.note.reminderRemoveNote
@@ -646,6 +650,9 @@ const actions = {
   },
   editorToggleReminder (context) {
     this.commit('toggleNoteReminder')
+  },
+  editorToggleHideContent (context) {
+    this.commit('toggleHideContent')
   },
   editorToggleReminderRemoveNote (context) {
     this.commit('toggleNoteReminderRemoveNote')

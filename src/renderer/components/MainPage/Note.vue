@@ -20,7 +20,8 @@
         <h3 v-show="note.secrets.length">
             <b-button size="sm" variant="info" v-for="(secret, index) in note.secrets" :key="index" @click="copySecret(secret.content)" title="Click for copy"><icon name="key"></icon> {{secret.title}}</b-button>
         </h3>
-        <h4>{{ note.content }}</h4>
+        <h4 v-if="!contentIsHidden">{{ note.content }}</h4>
+        <b-button variant="outline-primary" size="sm" class="content-is-hidden" v-if="contentIsHidden" @click="contentIsHidden = !contentIsHidden"><icon name="eye"></icon> Show the content</b-button>
     </div>
 </template>
 
@@ -31,6 +32,11 @@
   export default {
     components: {Icon},
     props: ['note', 'index'],
+    data () {
+      return {
+        contentIsHidden: this.note.hidden
+      }
+    },
     computed: {
       activeNoteIndex () {
         return this.$store.state.Store.activeNoteIndex
