@@ -281,7 +281,7 @@
           this.$toast('✓ deleted')
         }
       },
-      triggerContextMenu () {
+      openNoteMenu () {
         document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).click()
       }
     },
@@ -296,6 +296,7 @@
           'ctrl+right': this.historyForward,
           'ctrl+space': this.openAddNotePage,
           'ctrl+e': this.openRecentNote,
+          'ctrl+enter': this.openNoteMenu,
           'ctrl+n': this.openNotificationsPage,
           'ctrl+1': this.setSearchFilterNotes,
           'ctrl+2': this.setSearchFilterSecrets,
