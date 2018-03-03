@@ -16,6 +16,38 @@
                 </b-button-group>
             </div>
         </b-modal>
+        <b-modal size="sm" ref="modalExportedNotesPassword" hide-footer title="Password for exporting">
+            <div class="row justify-content-md-center" style="width: 100%">
+                <div class="col-12">
+                    <b-form-group label="Password:">
+                        <b-form-input type="password"
+                                      ref="inputExportedNotesPassword"
+                                      @keyup.enter.native="submitExportedNotesPassword()"
+                                      @input="inputExportedNotesPassword($event)">
+                        </b-form-input>
+                    </b-form-group>
+                    <b-form-group label="Repeat password:">
+                        <div role="group">
+                            <b-form-input type="password"
+                                          @keyup.enter.native="submitExportedNotesPassword()"
+                                          @input="inputExportedNotesRepeatedPassword($event)"
+                                          :state="!this.exportedNotesPasswordNotEqual"
+                                          aria-describedby="input-exported-notes-password-feeback">
+                            </b-form-input>
+                            <div class="input-exported-notes-password-feeback" v-if="this.exportedNotesPasswordNotEqual">
+                                Not equal
+                            </div>
+                        </div>
+                    </b-form-group>
+                    <b-alert show variant="info" v-show="this.exportedNotesPasswordEmpty">
+                        The password is empty so database won't be encrypted.
+                    </b-alert>
+                    <div class="row justify-content-md-center">
+                        <b-button type="button" variant="primary" @click="submitExportedNotesPassword()">Let's go</b-button>
+                    </div>
+                </div>
+            </div>
+        </b-modal>
         <div class="topbar">
             <div class="row">
                 <div class="col-5">
@@ -40,7 +72,7 @@
                         <b-dropdown v-if="this.$store.state.Store.massSelect" id="mass-select-dropdown" text="Action" title="Action with selected" size="sm" variant="warning">
                             <b-dropdown-item @click="toggleMassCheck">Select / Un-select all</b-dropdown-item>
                             <b-dropdown-divider></b-dropdown-divider>
-                            <b-dropdown-item @click="actionExportSelectedNotes()">Export</b-dropdown-item>
+                            <b-dropdown-item @click="actionExportEnterPassword()">Export</b-dropdown-item>
                             <b-dropdown-item @click="actionDeleteSelectedNotes()">Delete</b-dropdown-item>
                         </b-dropdown>
                     </b-button-group>
@@ -100,6 +132,14 @@
   export default {
     name: 'main-page',
     components: { Icon, Note, NoteLink },
+    data () {
+      return {
+        exportedNotesPassword: '',
+        exportedNotesRepeatedPassword: '',
+        exportedNotesPasswordNotEqual: false,
+        exportedNotesPasswordEmpty: true
+      }
+    },
     mounted () {
       let onMounted = () => {
         if (!fs.existsSync(this.$store.state.Store.settings.dbPath) && this.$store.state.Store.masterPassword === null) {
@@ -296,7 +336,7 @@
           this.$toast('✓ deleted')
         }
       },
-      actionExportSelectedNotes () {
+      actionExportEnterPassword () {
         if (!this.$store.state.Store.selectedNotes.length) {
           return false
         }
@@ -311,8 +351,8 @@
           }
         }
         this.$store.commit('setExportedNotes', JSON.stringify(resultData))
-        this.$refs.modalExported.show()
-        this.$refs.modalExported.show()
+        this.$refs.modalExportedNotesPassword.show()
+        this.$refs.inputExportedNotesPassword.focus()
         this.$store.commit('emptySelectedNotes')
         this.toggleMassSelect()
       },
@@ -323,6 +363,36 @@
         this.$store.dispatch('copyExportedNotes')
         // this.$store.dispatch('startClipboardCountdown')
         this.$toast('✓ copied')
+      },
+      exportedNotesPasswordCheck () {
+        if (this.exportedNotesPassword !== this.exportedNotesRepeatedPassword) {
+          this.exportedNotesPasswordNotEqual = true
+        } else {
+          this.exportedNotesPasswordNotEqual = false
+        }
+
+        if (!this.exportedNotesPassword.length) {
+          this.exportedNotesPasswordEmpty = true
+        } else {
+          this.exportedNotesPasswordEmpty = false
+        }
+      },
+      inputExportedNotesPassword (event) {
+        this.exportedNotesPassword = event
+        this.exportedNotesPasswordCheck()
+      },
+      inputExportedNotesRepeatedPassword (event) {
+        this.exportedNotesRepeatedPassword = event
+        this.exportedNotesPasswordCheck()
+      },
+      submitExportedNotesPassword () {
+        if (this.exportedNotesPasswordNotEqual) {
+          return
+        }
+        this.$store.commit('setExportedNotesPassword', this.exportedNotesPassword)
+        this.$store.dispatch('encryptExportedNotesPassword', () => {
+          this.$refs.modalExported.show()
+        })
       }
     },
     computed: {

@@ -39,6 +39,7 @@ const state = {
   editorMode: 'add',
   editorInitTab: 0,
   masterPassword: null,
+  exportedNotesPassword: null,
   settings: {
     dbPath: 'default.ntc',
     localKeymap: 'ru',
@@ -99,6 +100,7 @@ const mutations = {
   setWindowOnTop: (state, data) => { state.settings.windowOnTop = data },
   setIsLoggedIn: (state, data) => { state.isLoggedIn = data },
   setMasterPassword: (state, data) => { state.masterPassword = data },
+  setExportedNotesPassword: (state, data) => { state.exportedNotesPassword = data },
   setWindowMustBeHidden: (state, data) => { state.windowMustBeHidden = data },
   setLoadedNotesCount: (state, data) => { state.loadedNotesCount = data },
   setLoadedNotesLinksCount: (state, date) => { state.loadedNotesLinksCount = date },
@@ -1127,6 +1129,12 @@ const actions = {
     } else {
       this.commit('removeNoteFromSelected', obj.id)
     }
+  },
+  encryptExportedNotesPassword (context, cb) {
+    // let encrypted = CryptoJS.AES.encrypt(state.exportedNotes, state.exportedNotesPassword)
+    let encrypted = state.exportedNotesPassword === '' ? state.exportedNotes : CryptoJS.AES.encrypt(state.exportedNotes, state.exportedNotesPassword).toString()
+    this.commit('setExportedNotes', encrypted)
+    cb()
   }
 }
 
