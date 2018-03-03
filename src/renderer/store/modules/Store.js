@@ -61,6 +61,7 @@ const state = {
   },
   reminders: [],
   qr: null,
+  exportedNotes: null,
   notificationsIsUnread: false,
   loadedNotesCount: 0,
   loadedNotesLinksCount: 0,
@@ -243,6 +244,9 @@ const mutations = {
   },
   setQr: (state, data) => {
     state.qr = data
+  },
+  setExportedNotes: (state, data) => {
+    state.exportedNotes = data
   },
   setNotificationsIsUnread: (state, data) => { state.notificationsIsUnread = data }
 
@@ -872,6 +876,9 @@ const actions = {
   copyText (context) {
     let selectedText = window.getSelection().getRangeAt(0).toString()
     clipboard.writeText(selectedText)
+  },
+  copyExportedNotes (context) {
+    clipboard.writeText(state.exportedNotes)
   },
   editorPastePassword (context) {
     if (document.activeElement.id !== 'contentTextArea') {

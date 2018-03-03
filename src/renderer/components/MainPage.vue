@@ -3,6 +3,19 @@
         <b-modal size="sm" ref="modalQr" id="modal-qr" class="modal-qr" hide-footer title="QR from clipboard">
             <div class="my-4 qr" v-html="qr"></div>
         </b-modal>
+        <b-modal size="sm" ref="modalExported" id="modal-exported" class="modal-exported" hide-footer title="Exported notes">
+            <b-form-textarea :value="exportedNotes"
+                             readonly
+                             @focus="$event.target.select()"
+                             :rows="6"
+                             :max-rows="6">
+            </b-form-textarea>
+            <div style="text-align: center; margin-top: 10px">
+                <b-button-group size="sm">
+                    <b-button size="sm" @click="copyExportedNotes()"><icon name="copy"></icon> Copy</b-button>
+                </b-button-group>
+            </div>
+        </b-modal>
         <div class="topbar">
             <div class="row">
                 <div class="col-5">
@@ -23,10 +36,11 @@
                         <b-btn variant="danger" @click="emptyTrash()" title="Empty trash"><icon name="trash-o"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm">
-                        <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+.)"><icon name="check-square-o"></icon></b-btn>
+                        <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+`)"><icon name="check-square-o"></icon></b-btn>
                         <b-dropdown v-if="this.$store.state.Store.massSelect" id="mass-select-dropdown" text="Action" title="Action with selected" size="sm" variant="warning">
                             <b-dropdown-item @click="toggleMassCheck">Select / Un-select all</b-dropdown-item>
                             <b-dropdown-divider></b-dropdown-divider>
+                            <b-dropdown-item @click="actionExportSelectedNotes()">Export</b-dropdown-item>
                             <b-dropdown-item @click="actionDeleteSelectedNotes()">Delete</b-dropdown-item>
                         </b-dropdown>
                     </b-button-group>
@@ -277,18 +291,44 @@
               this.$store.dispatch('actionMarkNoteAsDeleted', this.$store.state.Store.selectedNotes[i])
             }
           }
+          this.$store.commit('emptySelectedNotes')
           this.toggleMassSelect()
           this.$toast('✓ deleted')
         }
       },
+      actionExportSelectedNotes () {
+        if (!this.$store.state.Store.selectedNotes.length) {
+          return false
+        }
+        let resultData = []
+        for (let i = 0; i < this.$store.state.Store.notes.length; i++) {
+          if (this.$store.state.Store.selectedNotes.includes(this.$store.state.Store.notes[i]._id)) {
+            let note = this.$store.state.Store.notes[i]
+            delete note._id
+            note.deleted = false
+            note.star = false
+            resultData.unshift(note)
+          }
+        }
+        this.$store.commit('setExportedNotes', JSON.stringify(resultData))
+        this.$refs.modalExported.show()
+        this.$refs.modalExported.show()
+        this.$store.commit('emptySelectedNotes')
+        this.toggleMassSelect()
+      },
       openNoteMenu () {
         document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).click()
+      },
+      copyExportedNotes () {
+        this.$store.dispatch('copyExportedNotes')
+        // this.$store.dispatch('startClipboardCountdown')
+        this.$toast('✓ copied')
       }
     },
     computed: {
       keymap () {
         return {
-          'ctrl+.': this.toggleMassSelect,
+          'ctrl+`': this.toggleMassSelect,
           'ctrl+f': this.focusOnSearch,
           'ctrl+down': this.goToNextNote,
           'ctrl+up': this.goToPreviousNote,
@@ -327,6 +367,9 @@
       },
       qr () {
         return this.$store.state.Store.qr
+      },
+      exportedNotes () {
+        return this.$store.state.Store.exportedNotes
       }
     }
   }
