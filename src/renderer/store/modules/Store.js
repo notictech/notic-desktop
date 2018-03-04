@@ -1144,6 +1144,10 @@ const actions = {
       importedNotes = JSON.parse(decrypted)
     } catch (e) {
       alert('Invalid import data.')
+      return
+    }
+    if (importedNotes === null) {
+      alert('Invalid import data.!')
     }
     for (let i = 0; i < importedNotes.length; i++) {
       let note = importedNotes[i]

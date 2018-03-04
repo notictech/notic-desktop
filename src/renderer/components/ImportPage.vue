@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="content-wrap">
-                <div class="row justify-content-md-center" style="width: 100%; margin-top: 20px">
+                <div class="row justify-content-md-center" style="width: 100%;">
                     <div class="col-6">
                         <b-form-group id="InputGroup1"
                                       label="Import data:">
@@ -104,7 +104,6 @@
         this.$router.replace('/')
       },
       check () {
-        console.log(this.importData)
         if (this.password !== this.repeated) {
           this.notEqual = true
         } else {

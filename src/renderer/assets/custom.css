@@ -144,6 +144,7 @@ button svg {
     background: #fafafa;
 }
 
+.screen.import-notes.container-fluid,
 .screen.about.container-fluid,
 .screen.settings.container-fluid,
 .screen.editor.container-fluid,
@@ -160,6 +161,7 @@ button svg {
 .screen.notes .notes .note .secrets .secret {
     margin-right: 5px;
 }
+.screen.import-notes .topbar,
 .screen.about .topbar,
 .screen.settings .topbar,
 .screen.set-master-password .topbar,
@@ -174,6 +176,7 @@ button svg {
     position: fixed;
     background: #fff;
 }
+.screen.import-notes .content-wrap,
 .screen.about .content-wrap,
 .screen.settings .content-wrap,
 .screen.set-master-password .content-wrap,
@@ -184,6 +187,9 @@ button svg {
     padding-top: 42px;
 }
 .screen.about .content-wrap {
+    padding-top: 52px;
+}
+.screen.import-notes .content-wrap {
     padding-top: 52px;
 }
 .screen.about .content-wrap img {
