@@ -1123,6 +1123,9 @@ const actions = {
     require('electron').remote.getCurrentWindow().setAlwaysOnTop(!!data)
     this.dispatch('saveSettingsFile', () => {})
   },
+  fixWindowOnTop (context) {
+    require('electron').remote.getCurrentWindow().setAlwaysOnTop(!!state.settings.windowOnTop)
+  },
   selectNote (context, obj) {
     if (obj.value) {
       this.commit('addNoteToSelected', obj.id)

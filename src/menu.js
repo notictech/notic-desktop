@@ -165,6 +165,10 @@ ipcRenderer.on('track-usage', () => {
   bus.$emit('trackUsage')
 })
 
+ipcRenderer.on('fix-window-on-top', () => {
+  store.dispatch('fixWindowOnTop')
+})
+
 export default {
   noteContextMenu
 }

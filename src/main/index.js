@@ -43,10 +43,12 @@ function createWindow () {
 
   mainWindow.on('restore', () => {
     mainWindow.webContents.send('track-usage')
+    mainWindow.webContents.send('fix-window-on-top')
   })
 
   mainWindow.on('show', () => {
     mainWindow.webContents.send('track-usage')
+    mainWindow.webContents.send('fix-window-on-top')
   })
 
   appIcon = new Tray(`${__static}/icons/notic-inactive.png`)
