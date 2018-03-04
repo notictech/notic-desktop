@@ -111,6 +111,7 @@
             <b-form-checkbox id="checkbox1"
                              :checked="this.$store.state.Store.settings.windowOnTop"
                              title="Window on top"
+                             plain
                              value="1"
                              unchecked-value="0"
                              @input="toggleWindowOnTop($event)">
