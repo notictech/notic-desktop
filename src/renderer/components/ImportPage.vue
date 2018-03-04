@@ -56,9 +56,6 @@
                                 </div>
                             </div>
                         </b-form-group>
-                        <b-alert show variant="info" v-show="this.empty">
-                            The password is empty so database won't be encrypted.
-                        </b-alert>
                         <div class="row justify-content-md-center">
                             <b-button type="button" variant="primary" @click="submit()">Let's go</b-button>
                         </div>
@@ -95,8 +92,7 @@
         password: '',
         repeated: '',
         importDataEmpty: false,
-        notEqual: false,
-        empty: true
+        notEqual: false
       }
     },
     methods: {
@@ -108,12 +104,6 @@
           this.notEqual = true
         } else {
           this.notEqual = false
-        }
-
-        if (!this.password.length) {
-          this.empty = true
-        } else {
-          this.empty = false
         }
 
         if (!this.importData.length) {

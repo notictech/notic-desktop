@@ -211,7 +211,9 @@ button svg {
 }
 .screen.change-master-password .current-password-feedback,
 .screen.change-master-password .input-feedback,
-.screen.set-master-password .input-feedback, .screen.import-notes .import-data-feedback {
+.screen.set-master-password .input-feedback,
+.screen.import-notes .input-feedback,
+.screen.import-notes .import-data-feedback {
     margin-top: .25rem;
     color: #dc3545;
     font-size: small;
