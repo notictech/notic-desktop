@@ -1139,9 +1139,13 @@ const actions = {
   importNotes (context, obj) {
     let importedNotes = null
     try {
-      let bytes = CryptoJS.AES.decrypt(obj.importData, obj.password)
-      let decrypted = bytes.toString(CryptoJS.enc.Utf8)
-      importedNotes = JSON.parse(decrypted)
+      if (!obj.password.length) {
+        importedNotes = JSON.parse(obj.importData)
+      } else {
+        let bytes = CryptoJS.AES.decrypt(obj.importData, obj.password)
+        let decrypted = bytes.toString(CryptoJS.enc.Utf8)
+        importedNotes = JSON.parse(decrypted)
+      }
     } catch (e) {
       alert('Invalid import data.')
       return
