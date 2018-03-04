@@ -11,7 +11,7 @@
             </b-form-textarea>
             <div style="text-align: center; margin-top: 10px">
                 <b-button-group size="sm">
-                    <b-button size="sm" ref="exportedNotesCopyButton" @click="copyExportedNotesAndClose()"><icon name="copy"></icon> Copy and close</b-button>
+                    <b-button size="sm" variant="primary" ref="exportedNotesCopyButton" @click="copyExportedNotesAndClose()"><icon name="copy"></icon> Copy and close</b-button>
                 </b-button-group>
             </div>
         </b-modal>
