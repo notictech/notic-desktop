@@ -295,8 +295,12 @@
         this.$store.dispatch('historyBack')
       },
       showQR () {
-        this.$store.dispatch('showQR')
-        this.$refs.modalQr.show()
+        try {
+          this.$store.dispatch('showQR')
+          this.$refs.modalQr.show()
+        } catch (e) {
+          alert('Too much data.')
+        }
       },
       openSettingsPage () {
         this.$router.replace('/settings')
