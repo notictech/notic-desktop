@@ -3,20 +3,19 @@
         <b-modal size="sm" ref="modalQr" id="modal-qr" class="modal-qr" hide-footer title="QR from clipboard">
             <div class="my-4 qr" v-html="qr"></div>
         </b-modal>
-        <b-modal size="sm" ref="modalExported" id="modal-exported" class="modal-exported" hide-footer title="Exported notes">
+        <b-modal size="sm" @shown="modalExportedNotesAutofocus" ref="modalExported" id="modal-exported" class="modal-exported" hide-footer title="Exported notes">
             <b-form-textarea :value="exportedNotes"
                              readonly
-                             @focus="$event.target.select()"
                              :rows="6"
                              :max-rows="6">
             </b-form-textarea>
             <div style="text-align: center; margin-top: 10px">
                 <b-button-group size="sm">
-                    <b-button size="sm" @click="copyExportedNotes()"><icon name="copy"></icon> Copy</b-button>
+                    <b-button size="sm" ref="exportedNotesCopyButton" @click="copyExportedNotesAndClose()"><icon name="copy"></icon> Copy and close</b-button>
                 </b-button-group>
             </div>
         </b-modal>
-        <b-modal size="sm" ref="modalExportedNotesPassword" hide-footer title="Password for exporting">
+        <b-modal size="sm" @shown="modalExportedNotesPasswordAutofocus" ref="modalExportedNotesPassword" hide-footer title="Password for exporting">
             <div class="row justify-content-md-center" style="width: 100%">
                 <div class="col-12">
                     <b-form-group label="Password:">
@@ -359,15 +358,15 @@
         }
         this.$store.commit('setExportedNotes', JSON.stringify(resultData))
         this.$refs.modalExportedNotesPassword.show()
-        this.$refs.inputExportedNotesPassword.focus()
         this.$store.commit('emptySelectedNotes')
         this.toggleMassSelect()
       },
       openNoteMenu () {
         document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).click()
       },
-      copyExportedNotes () {
+      copyExportedNotesAndClose () {
         this.$store.dispatch('copyExportedNotes')
+        this.$refs.modalExported.hide()
         // this.$store.dispatch('startClipboardCountdown')
         this.$toast('✓ copied')
       },
@@ -400,6 +399,12 @@
         this.$store.dispatch('encryptExportedNotesPassword', () => {
           this.$refs.modalExported.show()
         })
+      },
+      modalExportedNotesPasswordAutofocus () {
+        this.$refs.inputExportedNotesPassword.focus()
+      },
+      modalExportedNotesAutofocus () {
+        this.$refs.exportedNotesCopyButton.focus()
       }
     },
     computed: {
