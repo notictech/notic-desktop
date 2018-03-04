@@ -74,6 +74,10 @@ function createWindow () {
     mainWindow.webContents.send('open-notifications')
     mainWindow.show()
   }
+  const clickOpenImport = () => {
+    mainWindow.webContents.send('open-import')
+    mainWindow.show()
+  }
   const clickOpenSettings = () => {
     mainWindow.webContents.send('open-settings')
     mainWindow.show()
@@ -104,6 +108,10 @@ function createWindow () {
     },
     {
       label: 'Notifications', type: 'normal', click: clickOpenNotifications
+    },
+    {type: 'separator'},
+    {
+      label: 'Import notes', type: 'normal', click: clickOpenImport
     },
     {type: 'separator'},
     {

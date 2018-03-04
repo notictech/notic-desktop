@@ -176,6 +176,9 @@
         bus.$on('openNotifications', () => {
           this.openNotificationsPage()
         })
+        bus.$on('openImport', () => {
+          this.openImport()
+        })
         bus.$on('openSettings', () => {
           this.openSettingsPage()
         })
@@ -243,6 +246,9 @@
       },
       openNotificationsPage () {
         this.$router.replace('/notifications')
+      },
+      openImport () {
+        this.$router.replace('/import')
       },
       setSearchFilter (filter) {
         this.$store.dispatch('setSearchFilter', filter)
@@ -347,6 +353,7 @@
             delete note._id
             note.deleted = false
             note.star = false
+            note.reminder = false
             resultData.unshift(note)
           }
         }

@@ -40,6 +40,14 @@ const mainMenuTemplate = [
       },
       {type: 'separator'},
       {
+        label: 'Import notes',
+        accelerator: 'CmdOrCtrl+I',
+        click () {
+          bus.$emit('openImport')
+        }
+      },
+      {type: 'separator'},
+      {
         label: 'Change master password',
         accelerator: 'F3',
         click () {
@@ -136,6 +144,10 @@ ipcRenderer.on('open-recent-note', () => {
 
 ipcRenderer.on('open-notifications', () => {
   bus.$emit('openNotifications')
+})
+
+ipcRenderer.on('open-import', () => {
+  bus.$emit('openImport')
 })
 
 ipcRenderer.on('open-change-master-password', () => {

@@ -46,6 +46,11 @@ export default new Router({
       component: require('@/components/AboutPage').default
     },
     {
+      path: '/import',
+      name: 'import-page',
+      component: require('@/components/ImportPage').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

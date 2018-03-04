@@ -1135,6 +1135,26 @@ const actions = {
     let encrypted = state.exportedNotesPassword === '' ? state.exportedNotes : CryptoJS.AES.encrypt(state.exportedNotes, state.exportedNotesPassword).toString()
     this.commit('setExportedNotes', encrypted)
     cb()
+  },
+  importNotes (context, obj) {
+    let importedNotes = null
+    try {
+      let bytes = CryptoJS.AES.decrypt(obj.importData, obj.password)
+      let decrypted = bytes.toString(CryptoJS.enc.Utf8)
+      importedNotes = JSON.parse(decrypted)
+    } catch (e) {
+      alert('Invalid import data.')
+    }
+    for (let i = 0; i < importedNotes.length; i++) {
+      let note = importedNotes[i]
+      note.createdAt = moment().valueOf()
+      note.updatedAt = note.createdAt
+      db.insert(note, (err, newDoc) => {
+        if (err) console.log('ERROR: ' + err)
+        this.dispatch('searchNotes', {query: state.searchQuery})
+      })
+    }
+    obj.cb()
   }
 }
 
