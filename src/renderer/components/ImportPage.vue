@@ -123,7 +123,7 @@
         }
       },
       inputImportData (event) {
-        this.importData = event
+        this.importData = event.trim()
         this.check()
       },
       inputPassword (event) {

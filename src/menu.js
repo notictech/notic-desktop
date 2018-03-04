@@ -41,12 +41,11 @@ const mainMenuTemplate = [
       {type: 'separator'},
       {
         label: 'Import notes',
-        accelerator: 'CmdOrCtrl+I',
+        accelerator: 'F4',
         click () {
           bus.$emit('openImport')
         }
       },
-      {type: 'separator'},
       {
         label: 'Change master password',
         accelerator: 'F3',
