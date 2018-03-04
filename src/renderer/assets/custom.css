@@ -330,13 +330,17 @@ h4 {
     bottom: 0;
     font-size: .7em;
     color: grey;
-    padding: 4px;
+    padding: 1px;
     right: 12px;
 }
 
 .right-status-bar label {
     margin-bottom: 0;
     padding-bottom: 0;
+}
+
+.right-status-bar .custom-control-inline {
+     margin: 0;
 }
 
 .screen.editor .reminder-links {
