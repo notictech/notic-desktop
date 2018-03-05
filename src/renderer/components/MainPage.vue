@@ -351,6 +351,7 @@
         this.$refs.modalExportedNotesPassword.show()
         this.$store.commit('emptySelectedNotes')
         this.toggleMassSelect()
+        this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
       },
       openNoteMenu () {
         document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).click()
