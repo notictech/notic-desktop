@@ -96,13 +96,13 @@
                 </div>
             </div>
         </div>
-        <div class="sidebar" v-if="notes.length" @scroll="scrollNotes($event)">
+        <div class="sidebar"@scroll="scrollNotes($event)">
             <b-button-group vertical class="notes-links" id="notes-links">
                 <note-link v-for="(note, index) in notes.slice(0, loadedNotesLinksCount)" :note="note" :key="note._id" :index="index"></note-link>
             </b-button-group>
         </div>
-        <div class="banner-empty" v-if="!notes.length">Nothing.</div>
-        <div class="notes" v-if="notes.length" ref="notes" id="notes" @scroll="scrollNotes($event)">
+        <!--<div class="banner-empty" v-if="!notes.length">Nothing.</div>-->
+        <div class="notes" ref="notes" id="notes" @scroll="scrollNotes($event)">
             <note v-for="(note, index) in notes.slice(0, loadedNotesCount)" :note="note" :key="note._id" :index="index"></note>
         </div>
         <div class="left-status-bar">

@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="content-wrap">
-                <div class="banner-empty" v-if="!notifications.length">Nothing.</div>
+                <!--<div class="banner-empty" v-if="!notifications.length">Nothing.</div>-->
                 <div class="notifications" ref="notifications" id="notifications">
                     <notification v-for="(notification, index) in notifications" :notification="notification" :key="notification._id" :index="index"></notification>
                 </div>
