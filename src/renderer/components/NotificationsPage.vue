@@ -20,6 +20,7 @@
                 </div>
             </div>
             <div class="content-wrap">
+                <div class="banner-empty" v-if="!notifications.length">Nothing.</div>
                 <div class="notifications" ref="notifications" id="notifications">
                     <notification v-for="(notification, index) in notifications" :notification="notification" :key="notification._id" :index="index"></notification>
                 </div>
@@ -55,6 +56,7 @@
       deleteAll () {
         if (confirm('Are you sure you want to delete all notifications?')) {
           this.$store.dispatch('deleteAllNotifications')
+          this.$router.replace('/')
         }
       },
       readAll () {
