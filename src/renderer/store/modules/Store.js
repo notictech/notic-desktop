@@ -836,10 +836,10 @@ const actions = {
           icon: 'static/icons/notic-logo.png'
         })
 
-        // notification.onclick = () => {
-        //   require('electron').remote.getCurrentWindow().webContents.send('notifications')
-        //   require('electron').remote.getCurrentWindow().show()
-        // }
+        notification.onclick = () => {
+          require('electron').remote.getCurrentWindow().webContents.send('open-notifications')
+          require('electron').remote.getCurrentWindow().show()
+        }
 
         console.log(notification)
 
