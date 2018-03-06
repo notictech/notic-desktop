@@ -6,7 +6,7 @@
         <router-view></router-view>
         <div class="right-status-bar">
             <b-form-checkbox :checked="this.$store.state.Store.settings.windowOnTop"
-                             title="Window on top (Ctrl+Shift+T)"
+                             title="Window on top (Ctrl+W)"
                              ref="windowOnTopCheckbox"
                              value="1"
                              unchecked-value="0"
@@ -24,7 +24,7 @@
     computed: {
       keymap () {
         return {
-          'ctrl+shift+t': this.changeWindowOnTop
+          'ctrl+w': this.changeWindowOnTop
         }
       }
     },
