@@ -784,23 +784,52 @@ const actions = {
   },
   checkReminders (context) {
     for (let i = 0; i < state.reminders.length; i++) {
+      let reminder = copyObject(state.reminders[i])
       let currentTimestamp = moment().valueOf()
-      let remindDateObj = moment(moment(state.reminders[i].reminderDate).format('YYYY-MM-DD') + ' ' + state.reminders[i].reminderTime)
+      let remindDateObj = moment(moment(reminder.reminderDate).format('YYYY-MM-DD') + ' ' + reminder.reminderTime)
       let remindTimestamp = remindDateObj.valueOf()
 
       if (currentTimestamp < remindTimestamp) {
         continue
       }
 
+      if (reminder.reminderRepeat !== '0') {
+        while (true) {
+          remindDateObj = moment(moment(reminder.reminderDate).format('YYYY-MM-DD') + ' ' + reminder.reminderTime)
+          remindTimestamp = remindDateObj.valueOf()
+          let nextDate = remindDateObj.add(0, 'minute')
+          if (reminder.reminderRepeat === '10') {
+            nextDate = remindDateObj.add(1, 'minute')
+          } else if (reminder.reminderRepeat === '20') {
+            nextDate = remindDateObj.add(1, 'hour')
+          } else if (reminder.reminderRepeat === '30') {
+            nextDate = remindDateObj.add(1, 'day')
+          } else if (reminder.reminderRepeat === '40') {
+            nextDate = remindDateObj.add(1, 'week')
+          } else if (reminder.reminderRepeat === '50') {
+            nextDate = remindDateObj.add(1, 'month')
+          } else if (reminder.reminderRepeat === '60') {
+            nextDate = remindDateObj.add(1, 'year')
+          }
+          // console.log(moment().format('DD.MM.YYYY HH:mm'), nextDate.format('DD.MM.YYYY HH:mm'))
+          if (currentTimestamp > nextDate) {
+            reminder.reminderDate = nextDate.valueOf()
+            reminder.reminderTime = nextDate.format('HH:mm')
+          } else {
+            break
+          }
+        }
+      }
+
       const alarm = new Audio('static/sound/alarm1.wav')
       alarm.play()
 
-      db.findOne({_id: state.reminders[i]._id}, (err, doc) => {
+      db.findOne({_id: reminder._id}, (err, doc) => {
         if (err) {
           console.log('ERROR: ' + err)
         }
 
-        let msg = moment(state.reminders[i].reminderDate).format('DD.MM.YYYY') + ' at ' + state.reminders[i].reminderTime + '\n\r' + doc.title + '\n\r\n\r' + doc.content
+        let msg = moment(reminder.reminderDate).format('DD.MM.YYYY') + ' at ' + reminder.reminderTime + '\n\r' + doc.title + '\n\r\n\r' + doc.content
 
         let notification = new Notification('', {
           body: safeTags(msg),
@@ -816,7 +845,7 @@ const actions = {
 
         let notif = {
           'doctype': 'notification',
-          'date': moment(state.reminders[i].reminderDate).format('DD.MM.YYYY') + ' at ' + state.reminders[i].reminderTime,
+          'date': moment(reminder.reminderDate).format('DD.MM.YYYY') + ' at ' + reminder.reminderTime,
           'title': doc.title,
           'content': doc.content,
           'createdAt': moment().valueOf(),
@@ -834,26 +863,13 @@ const actions = {
 
         if (doc.reminderRepeat !== '0') {
           let nextDate = remindDateObj.add(0, 'minute')
-          if (state.reminders[i].reminderRepeat === '10') {
-            nextDate = remindDateObj.add(1, 'minute')
-          } else if (state.reminders[i].reminderRepeat === '20') {
-            nextDate = remindDateObj.add(1, 'hour')
-          } else if (state.reminders[i].reminderRepeat === '30') {
-            nextDate = remindDateObj.add(1, 'day')
-          } else if (state.reminders[i].reminderRepeat === '40') {
-            nextDate = remindDateObj.add(1, 'week')
-          } else if (state.reminders[i].reminderRepeat === '50') {
-            nextDate = remindDateObj.add(1, 'month')
-          } else if (state.reminders[i].reminderRepeat === '60') {
-            nextDate = remindDateObj.add(1, 'year')
-          }
           doc.reminder = true
           doc.reminderDate = nextDate.valueOf()
           doc.reminderTime = nextDate.format('HH:mm')
         }
 
-        db.update({ _id: state.reminders[i]._id }, doc, {}, () => {
-          if (state.reminders[i]._id === state.note._id) {
+        db.update({ _id: reminder._id }, doc, {}, () => {
+          if (reminder._id === state.note._id) {
             this.commit('setNoteReminder', doc.reminder)
             this.commit('setNoteReminderDate', doc.reminderDate)
             this.commit('setNoteReminderTime', doc.reminderTime)
