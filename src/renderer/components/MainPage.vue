@@ -355,7 +355,7 @@
         this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
       },
       openNoteMenu () {
-        document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).click()
+        document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).focus()
       },
       copyExportedNotesAndClose () {
         this.$store.dispatch('copyExportedNotes')
