@@ -703,7 +703,7 @@ const actions = {
     })
     menus.noteContextMenu.popup(remote.getCurrentWindow())
   },
-  goToNextNote (context) {
+  goToNextNote (context, cb) {
     if (!state.notes.length) return
     if (state.activeNoteIndex === state.notes.length - 1) {
       this.commit('setActiveNoteIndex', 0)
@@ -712,8 +712,9 @@ const actions = {
     }
     this.commit('setActiveNoteId', state.notes[state.activeNoteIndex]._id)
     this.dispatch('scrollToActiveNote')
+    cb()
   },
-  goToPreviousNote (context) {
+  goToPreviousNote (context, cb) {
     if (!state.notes.length) return
     if (state.activeNoteIndex === 0) {
       this.commit('setActiveNoteIndex', state.notes.length - 1)
@@ -722,6 +723,7 @@ const actions = {
     }
     this.commit('setActiveNoteId', state.notes[state.activeNoteIndex]._id)
     this.dispatch('scrollToActiveNote')
+    cb()
   },
   scrollToActiveNote (context) {
     const href = '#note_index_' + state.activeNoteIndex
@@ -1007,6 +1009,18 @@ const actions = {
     this.dispatch('historyForward', () => {
       this.commit('updateNote', copyObject(blankNote))
       this.dispatch('openEditNotePage', state.history[state.historyIndex].i)
+    })
+  },
+  prevNoteEditor (context) {
+    this.dispatch('goToPreviousNote', () => {
+      this.commit('updateNote', copyObject(blankNote))
+      this.dispatch('openEditNotePage', state.notes[state.activeNoteIndex]._id)
+    })
+  },
+  nextNoteEditor (context) {
+    this.dispatch('goToNextNote', () => {
+      this.commit('updateNote', copyObject(blankNote))
+      this.dispatch('openEditNotePage', state.notes[state.activeNoteIndex]._id)
     })
   },
   setNoteIsModified (context, data) {

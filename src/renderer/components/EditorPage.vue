@@ -150,6 +150,8 @@
           'ctrl+shift+s': this.editorSave,
           'ctrl+left': this.historyBack,
           'ctrl+right': this.historyForward,
+          'ctrl+up': this.prevNoteEditor,
+          'ctrl+down': this.nextNoteEditor,
           'ctrl+1': this.setTab0,
           'ctrl+2': this.setTab1,
           'ctrl+3': this.setTab2,
@@ -240,6 +242,18 @@
           return
         }
         this.$store.dispatch('historyBackEditor')
+      },
+      nextNoteEditor () {
+        if (this.$store.state.Store.noteIsModified) {
+          return
+        }
+        this.$store.dispatch('nextNoteEditor')
+      },
+      prevNoteEditor () {
+        if (this.$store.state.Store.noteIsModified) {
+          return
+        }
+        this.$store.dispatch('prevNoteEditor')
       },
       copyText () {
         this.$store.dispatch('copyText')

@@ -269,10 +269,10 @@
         }
       },
       goToNextNote () {
-        this.$store.dispatch('goToNextNote')
+        this.$store.dispatch('goToNextNote', () => {})
       },
       goToPreviousNote () {
-        this.$store.dispatch('goToPreviousNote')
+        this.$store.dispatch('goToPreviousNote', () => {})
       },
       copyText () {
         this.$store.dispatch('copyText')
