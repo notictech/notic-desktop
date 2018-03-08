@@ -442,18 +442,23 @@
       },
       toggleDateFilter () {
         this.$store.dispatch('toggleDateFilter')
+        this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
       },
       inputDateFilterTarget (event) {
-        return this.$store.commit('setDateFilterTarget', event)
+        this.$store.commit('setDateFilterTarget', event)
+        this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
       },
       inputDateFilterPrep (event) {
-        return this.$store.commit('setDateFilterPrep', event)
+        this.$store.commit('setDateFilterPrep', event)
+        this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
       },
       inputDateFilterDate1 (event) {
-        return this.$store.commit('setDateFilterDate1', event)
+        this.$store.commit('setDateFilterDate1', event)
+        this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
       },
       inputDateFilterDate2 (event) {
-        return this.$store.commit('setDateFilterDate2', event)
+        this.$store.commit('setDateFilterDate2', event)
+        this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
       }
     },
     computed: {
