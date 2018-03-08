@@ -94,6 +94,8 @@ const mutations = {
   setContextNoteIsDeleted: (state, data) => { state.contextNoteIsDeleted = data },
   toggleDateFilter: (state) => { state.dateFilterActive = !state.dateFilterActive },
   toggleMassSelect: (state) => { state.massSelect = !state.massSelect },
+  setContextNoteId: (state, data) => { state.contextNoteId = data },
+  setDateFilterActive: (state, data) => { state.dateFilterActive = data },
   setDateFilterTarget: (state, data) => { state.dateFilterTarget = data },
   setDateFilterPrep: (state, data) => { state.dateFilterPrep = data },
   setDateFilterDate1: (state, data) => { state.dateFilterDate1 = data },
@@ -226,11 +228,19 @@ const mutations = {
     if (state.history.length === state.settings.historyMaxLength - 1) {
       state.history.shift()
     }
-    state.history.push({
+    let data = {
       q: state.searchQuery,
       f: state.searchFilter,
       i: id
-    })
+    }
+    if (state.dateFilterActive) {
+      data.df = state.dateFilterActive
+      data.dft = state.dateFilterTarget
+      data.dfp = state.dateFilterPrep
+      data.dfd1 = state.dateFilterDate1
+      data.dfd2 = state.dateFilterDate2
+    }
+    state.history.push(data)
   },
   deleteFromHistory: (state, id) => {
     for (let i = 0; i < state.history.length; i++) {
@@ -1039,6 +1049,15 @@ const actions = {
       this.commit('setHistoryIndex', state.historyIndex + 1)
     }
     this.commit('setSearchFilter', state.history[state.historyIndex].f)
+    if ('df' in state.history[state.historyIndex]) {
+      this.commit('setDateFilterActive', state.history[state.historyIndex].df)
+    } else {
+      this.commit('setDateFilterActive', false)
+    }
+    this.commit('setDateFilterTarget', state.history[state.historyIndex].dft)
+    this.commit('setDateFilterPrep', state.history[state.historyIndex].dfp)
+    this.commit('setDateFilterDate1', state.history[state.historyIndex].dfd1)
+    this.commit('setDateFilterDate2', state.history[state.historyIndex].dfd2)
     this.dispatch('searchNotes', {
       query: state.history[state.historyIndex].q,
       cb: () => {
@@ -1056,6 +1075,15 @@ const actions = {
       this.commit('setHistoryIndex', state.historyIndex - 1)
     }
     this.commit('setSearchFilter', state.history[state.historyIndex].f)
+    if ('df' in state.history[state.historyIndex]) {
+      this.commit('setDateFilterActive', state.history[state.historyIndex].df)
+    } else {
+      this.commit('setDateFilterActive', false)
+    }
+    this.commit('setDateFilterTarget', state.history[state.historyIndex].dft)
+    this.commit('setDateFilterPrep', state.history[state.historyIndex].dfp)
+    this.commit('setDateFilterDate1', state.history[state.historyIndex].dfd1)
+    this.commit('setDateFilterDate2', state.history[state.historyIndex].dfd2)
     this.dispatch('searchNotes', {
       query: state.history[state.historyIndex].q,
       cb: () => {
