@@ -72,7 +72,7 @@ const state = {
   contextNoteIsDeleted: null,
   massSelect: false,
   selectedNotes: [],
-  dateFilterActive: false
+  dateFilterActive: true
 }
 
 const mutations = {
