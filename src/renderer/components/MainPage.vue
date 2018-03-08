@@ -110,11 +110,18 @@
                                        class="mb-3"
                                        size="sm" />
                     </b-col>
-                    <b-col cols="8">
+                    <b-col>
                         <b-form-input
                                 size="sm"
                                 type="date">
                         </b-form-input>
+                    </b-col>
+                    <b-col>
+                        <span><b-form-input
+                                size="sm"
+                                type="date">
+                        </b-form-input>
+                        </span>
                     </b-col>
                 </b-row>
             </div>
