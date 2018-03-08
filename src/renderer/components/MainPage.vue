@@ -102,6 +102,7 @@
                 <b-row>
                     <b-col>
                         <b-form-select
+                                @input="inputDateFilterTarget($event)"
                                 :value="this.$store.state.Store.dateFilterTarget"
                                 :options="[{text: 'created', value: 'created'}, {text: 'updated', value: 'updated'}, {text: 'reminder', value: 'reminder'}]"
                                 class="mb-3"
@@ -109,6 +110,7 @@
                     </b-col>
                     <b-col>
                         <b-form-select
+                                @input="inputDateFilterPrep($event)"
                                 :value="this.$store.state.Store.dateFilterPrep"
                                 :options="[{text: 'before', value: 'before'}, {text: 'after', value: 'after'}, {text: 'between', value: 'between'}, {text: 'at', value: 'at'}]"
                                 class="mb-3"
@@ -116,6 +118,7 @@
                     </b-col>
                     <b-col v-if="this.$store.state.Store.dateFilterPrep === 'between'">
                         <b-form-input
+                                @input="inputDateFilterDate2($event)"
                                 :value="this.$store.state.Store.dateFilterDate2"
                                 size="sm"
                                 type="date">
@@ -123,6 +126,7 @@
                     </b-col>
                     <b-col>
                         <b-form-input
+                                @input="inputDateFilterDate1($event)"
                                 :value="this.$store.state.Store.dateFilterDate1"
                                 size="sm"
                                 type="date">
@@ -437,6 +441,18 @@
       },
       toggleDateFilter () {
         return this.$store.dispatch('toggleDateFilter')
+      },
+      inputDateFilterTarget (event) {
+        console.log(event)
+      },
+      inputDateFilterPrep (event) {
+        console.log(event)
+      },
+      inputDateFilterDate1 (event) {
+        console.log(event)
+      },
+      inputDateFilterDate2 (event) {
+        console.log(event)
       }
     },
     computed: {
