@@ -72,7 +72,11 @@ const state = {
   contextNoteIsDeleted: null,
   massSelect: false,
   selectedNotes: [],
-  dateFilterActive: true
+  dateFilterActive: true,
+  dateFilterTarget: 'updated',
+  dateFilterPrep: 'at',
+  dateFilterDate1: moment().format('YYYY-MM-DD'),
+  dateFilterDate2: moment('2016-01-01').format('YYYY-MM-DD')
 }
 
 const mutations = {

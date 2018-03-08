@@ -101,28 +101,34 @@
             <div class="date-filter-bar" v-if="this.$store.state.Store.dateFilterActive">
                 <b-row>
                     <b-col>
-                        <b-form-select :options="[{text: 'created', value: 'created'}, {text: 'updated', value: 'updated'}, {text: 'reminder', value: 'reminder'}]"
-                                       class="mb-3"
-                                       size="sm" />
+                        <b-form-select
+                                :value="this.$store.state.Store.dateFilterTarget"
+                                :options="[{text: 'created', value: 'created'}, {text: 'updated', value: 'updated'}, {text: 'reminder', value: 'reminder'}]"
+                                class="mb-3"
+                                size="sm" />
                     </b-col>
                     <b-col>
-                        <b-form-select :options="[{text: 'before', value: 'before'}, {text: 'after', value: 'after'}, {text: 'between', value: 'between'}, {text: 'at', value: 'at'}]"
-                                       class="mb-3"
-                                       size="sm" />
+                        <b-form-select
+                                :value="this.$store.state.Store.dateFilterPrep"
+                                :options="[{text: 'before', value: 'before'}, {text: 'after', value: 'after'}, {text: 'between', value: 'between'}, {text: 'at', value: 'at'}]"
+                                class="mb-3"
+                                size="sm" />
+                    </b-col>
+                    <b-col v-if="this.$store.state.Store.dateFilterPrep === 'between'">
+                        <b-form-input
+                                :value="this.$store.state.Store.dateFilterDate2"
+                                size="sm"
+                                type="date">
+                        </b-form-input>
                     </b-col>
                     <b-col>
                         <b-form-input
+                                :value="this.$store.state.Store.dateFilterDate1"
                                 size="sm"
                                 type="date">
                         </b-form-input>
                     </b-col>
-                    <b-col>
-                        <span><b-form-input
-                                size="sm"
-                                type="date">
-                        </b-form-input>
-                        </span>
-                    </b-col>
+                    <b-col v-if="this.$store.state.Store.dateFilterPrep !== 'between'"></b-col>
                 </b-row>
             </div>
         </div>
