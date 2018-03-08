@@ -62,10 +62,6 @@
                     <b-button-group size="sm">
                         <b-btn variant="primary" :variant="this.$store.state.Store.notificationsIsUnread ? 'danger' : 'primary' " @click="openNotificationsPage()" title="Notifications (Ctrl+N)"><icon name="bell"></icon></b-btn>
                     </b-button-group>
-                    <b-button-group size="sm" v-show="searchFilter === 'deleted'">
-                        <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
-                        <b-btn variant="danger" @click="emptyTrash()" title="Empty trash"><icon name="trash-o"></icon></b-btn>
-                    </b-button-group>
                     <b-button-group size="sm">
                         <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+`)"><icon name="check-square-o"></icon></b-btn>
                         <b-dropdown v-if="this.$store.state.Store.massSelect" id="mass-select-dropdown" text="Action" title="Action with selected" size="sm" variant="warning">
@@ -74,6 +70,13 @@
                             <b-dropdown-item @click="actionExportEnterPassword()">Export</b-dropdown-item>
                             <b-dropdown-item @click="actionDeleteSelectedNotes()">Delete</b-dropdown-item>
                         </b-dropdown>
+                    </b-button-group>
+                    <b-button-group size="sm">
+                        <b-btn :variant="this.$store.state.Store.dateFilterActive ? 'warning' : 'primary' " @click="toggleDateFilter()" title="Date filter (Ctrl+D)"><icon name="calendar"></icon></b-btn>
+                    </b-button-group>
+                    <b-button-group size="sm" v-show="searchFilter === 'deleted'">
+                        <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
+                        <b-btn variant="danger" @click="emptyTrash()" title="Empty trash"><icon name="trash-o"></icon></b-btn>
                     </b-button-group>
                 </div>
                 <div class="col-7">
@@ -94,6 +97,26 @@
                         </b-button-group>
                     </b-input-group>
                 </div>
+            </div>
+            <div class="date-filter-bar" v-if="this.$store.state.Store.dateFilterActive">
+                <b-row>
+                    <b-col>
+                        <b-form-select :options="[{text: 'created', value: 'created'}, {text: 'updated', value: 'updated'}, {text: 'reminder', value: 'reminder'}]"
+                                       class="mb-3"
+                                       size="sm" />
+                    </b-col>
+                    <b-col>
+                        <b-form-select :options="[{text: 'before', value: 'before'}, {text: 'after', value: 'after'}, {text: 'between', value: 'between'}, {text: 'at', value: 'at'}]"
+                                       class="mb-3"
+                                       size="sm" />
+                    </b-col>
+                    <b-col cols="8">
+                        <b-form-input
+                                size="sm"
+                                type="date">
+                        </b-form-input>
+                    </b-col>
+                </b-row>
             </div>
         </div>
         <div class="sidebar" v-if="notes.length" @scroll="scrollNotes($event)">
@@ -398,12 +421,16 @@
       },
       modalExportedNotesAutofocus () {
         this.$refs.exportedNotesCopyButton.focus()
+      },
+      toggleDateFilter () {
+        return this.$store.dispatch('toggleDateFilter')
       }
     },
     computed: {
       keymap () {
         return {
           'ctrl+`': this.toggleMassSelect,
+          'ctrl+d': this.toggleDateFilter,
           'ctrl+f': this.focusOnSearch,
           'ctrl+down': this.goToNextNote,
           'ctrl+up': this.goToPreviousNote,

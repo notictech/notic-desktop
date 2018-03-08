@@ -71,7 +71,8 @@ const state = {
   contextNoteId: null,
   contextNoteIsDeleted: null,
   massSelect: false,
-  selectedNotes: []
+  selectedNotes: [],
+  dateFilterActive: false
 }
 
 const mutations = {
@@ -87,6 +88,7 @@ const mutations = {
     state.selectedNotes = []
   },
   setContextNoteIsDeleted: (state, data) => { state.contextNoteIsDeleted = data },
+  toggleDateFilter: (state) => { state.dateFilterActive = !state.dateFilterActive },
   toggleMassSelect: (state) => { state.massSelect = !state.massSelect },
   setContextNoteId: (state, data) => { state.contextNoteId = data },
   setEditorInitTab: (state, data) => { state.editorInitTab = data },
@@ -1196,6 +1198,9 @@ const actions = {
       })
     }
     obj.cb()
+  },
+  toggleDateFilter (context) {
+    this.commit('toggleDateFilter')
   }
 }
 

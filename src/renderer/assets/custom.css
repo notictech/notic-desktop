@@ -400,3 +400,11 @@ h4 {
     margin-right: -50%;
     transform: translate(-50%, -50%)
 }
+.date-filter-bar {
+    padding: 10px 0 0 0;
+    margin: 0;
+}
+
+.date-filter-bar select {
+    margin: 0 !important;
+}
