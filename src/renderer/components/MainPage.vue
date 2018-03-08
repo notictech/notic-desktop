@@ -118,6 +118,7 @@
                     </b-col>
                     <b-col v-if="this.$store.state.Store.dateFilterPrep === 'between'">
                         <b-form-input
+                                ref="dateFilterDate2"
                                 @input="inputDateFilterDate2($event)"
                                 :value="this.$store.state.Store.dateFilterDate2"
                                 size="sm"
@@ -440,7 +441,7 @@
         this.$refs.exportedNotesCopyButton.focus()
       },
       toggleDateFilter () {
-        return this.$store.dispatch('toggleDateFilter')
+        this.$store.dispatch('toggleDateFilter')
       },
       inputDateFilterTarget (event) {
         return this.$store.commit('setDateFilterTarget', event)
