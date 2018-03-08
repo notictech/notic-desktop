@@ -342,7 +342,9 @@
       },
       resetSearch () {
         this.$refs.search.focus()
-        this.$store.dispatch('searchNotes', {query: '', cb: () => {}})
+        this.$store.commit('setSearchQuery', '')
+        this.$store.commit('setDateFilterActive', false)
+        this.$store.dispatch('setSearchFilter', 'notes')
       },
       toggleMassSelect () {
         this.$store.commit('emptySelectedNotes')
