@@ -72,7 +72,7 @@ const state = {
   contextNoteIsDeleted: null,
   massSelect: false,
   selectedNotes: [],
-  dateFilterActive: true,
+  dateFilterActive: false,
   dateFilterTarget: 'updated',
   dateFilterPrep: 'at',
   dateFilterDate1: moment().format('YYYY-MM-DD'),
