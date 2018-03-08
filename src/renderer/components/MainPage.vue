@@ -112,7 +112,7 @@
                         <b-form-select
                                 @input="inputDateFilterPrep($event)"
                                 :value="this.$store.state.Store.dateFilterPrep"
-                                :options="[{text: 'before', value: 'before'}, {text: 'after', value: 'after'}, {text: 'between', value: 'between'}, {text: 'at', value: 'at'}]"
+                                :options="[{text: 'at', value: 'at'}, {text: 'between', value: 'between'}]"
                                 class="mb-3"
                                 size="sm" />
                     </b-col>

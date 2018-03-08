@@ -438,6 +438,66 @@ const actions = {
 
     and.push({doctype: 'note'})
 
+    if (state.dateFilterActive) {
+      if (state.dateFilterTarget === 'created') {
+        if (state.dateFilterPrep === 'at') {
+          and.push({$where: function () {
+            if (moment(this.createdAt).format('YYYY-MM-DD') === state.dateFilterDate1) {
+              return true
+            }
+            return false
+          }})
+        } else if (state.dateFilterPrep === 'between') {
+          and.push({$where: function () {
+            let date1 = moment(state.dateFilterDate1).add(23, 'hours').add(59, 'minutes').valueOf()
+            let date2 = moment(state.dateFilterDate2)
+            if (this.createdAt <= date1 && this.createdAt >= date2) {
+              return true
+            }
+            return false
+          }})
+        }
+      }
+      if (state.dateFilterTarget === 'updated') {
+        if (state.dateFilterPrep === 'at') {
+          and.push({$where: function () {
+            if (moment(this.updatedAt).format('YYYY-MM-DD') === state.dateFilterDate1) {
+              return true
+            }
+            return false
+          }})
+        } else if (state.dateFilterPrep === 'between') {
+          and.push({$where: function () {
+            let date1 = moment(state.dateFilterDate1).add(23, 'hours').add(59, 'minutes').valueOf()
+            let date2 = moment(state.dateFilterDate2)
+            if (this.updatedAt <= date1 && this.updatedAt >= date2) {
+              return true
+            }
+            return false
+          }})
+        }
+      }
+      if (state.dateFilterTarget === 'reminder') {
+        if (state.dateFilterPrep === 'at') {
+          and.push({$where: function () {
+            if (moment(this.reminderDate).format('YYYY-MM-DD') === state.dateFilterDate1) {
+              return true
+            }
+            return false
+          }})
+        } else if (state.dateFilterPrep === 'between') {
+          and.push({$where: function () {
+            let date1 = moment(state.dateFilterDate1).add(23, 'hours').add(59, 'minutes').valueOf()
+            let date2 = moment(state.dateFilterDate2)
+            if (this.reminderDate <= date1 && this.reminderDate >= date2) {
+              return true
+            }
+            return false
+          }})
+        }
+      }
+    }
+
     let cond = {$and: and}
 
     db.find(cond).sort({createdAt: -1}).exec((err, docs) => {
