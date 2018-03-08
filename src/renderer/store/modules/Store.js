@@ -364,6 +364,7 @@ const actions = {
     })
   },
   searchNotes (context, obj) {
+    console.log('@@@@')
     this.commit('setSearchQuery', obj.query)
     let queryWords = obj.query.trim().split(' ')
     let and = []
@@ -1051,13 +1052,13 @@ const actions = {
     this.commit('setSearchFilter', state.history[state.historyIndex].f)
     if ('df' in state.history[state.historyIndex]) {
       this.commit('setDateFilterActive', state.history[state.historyIndex].df)
+      this.commit('setDateFilterTarget', state.history[state.historyIndex].dft)
+      this.commit('setDateFilterPrep', state.history[state.historyIndex].dfp)
+      this.commit('setDateFilterDate1', state.history[state.historyIndex].dfd1)
+      this.commit('setDateFilterDate2', state.history[state.historyIndex].dfd2)
     } else {
       this.commit('setDateFilterActive', false)
     }
-    this.commit('setDateFilterTarget', state.history[state.historyIndex].dft)
-    this.commit('setDateFilterPrep', state.history[state.historyIndex].dfp)
-    this.commit('setDateFilterDate1', state.history[state.historyIndex].dfd1)
-    this.commit('setDateFilterDate2', state.history[state.historyIndex].dfd2)
     this.dispatch('searchNotes', {
       query: state.history[state.historyIndex].q,
       cb: () => {
@@ -1077,13 +1078,13 @@ const actions = {
     this.commit('setSearchFilter', state.history[state.historyIndex].f)
     if ('df' in state.history[state.historyIndex]) {
       this.commit('setDateFilterActive', state.history[state.historyIndex].df)
+      this.commit('setDateFilterTarget', state.history[state.historyIndex].dft)
+      this.commit('setDateFilterPrep', state.history[state.historyIndex].dfp)
+      this.commit('setDateFilterDate1', state.history[state.historyIndex].dfd1)
+      this.commit('setDateFilterDate2', state.history[state.historyIndex].dfd2)
     } else {
       this.commit('setDateFilterActive', false)
     }
-    this.commit('setDateFilterTarget', state.history[state.historyIndex].dft)
-    this.commit('setDateFilterPrep', state.history[state.historyIndex].dfp)
-    this.commit('setDateFilterDate1', state.history[state.historyIndex].dfd1)
-    this.commit('setDateFilterDate2', state.history[state.historyIndex].dfd2)
     this.dispatch('searchNotes', {
       query: state.history[state.historyIndex].q,
       cb: () => {
@@ -1293,9 +1294,6 @@ const actions = {
       })
     }
     obj.cb()
-  },
-  toggleDateFilter (context) {
-    this.commit('toggleDateFilter')
   }
 }
 

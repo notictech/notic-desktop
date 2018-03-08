@@ -441,7 +441,7 @@
         this.$refs.exportedNotesCopyButton.focus()
       },
       toggleDateFilter () {
-        this.$store.dispatch('toggleDateFilter')
+        this.$store.commit('toggleDateFilter')
         this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
       },
       inputDateFilterTarget (event) {
