@@ -443,16 +443,16 @@
         return this.$store.dispatch('toggleDateFilter')
       },
       inputDateFilterTarget (event) {
-        console.log(event)
+        return this.$store.commit('setDateFilterTarget', event)
       },
       inputDateFilterPrep (event) {
-        console.log(event)
+        return this.$store.commit('setDateFilterPrep', event)
       },
       inputDateFilterDate1 (event) {
-        console.log(event)
+        return this.$store.commit('setDateFilterDate1', event)
       },
       inputDateFilterDate2 (event) {
-        console.log(event)
+        return this.$store.commit('setDateFilterDate2', event)
       }
     },
     computed: {
