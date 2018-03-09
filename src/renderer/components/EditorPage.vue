@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="content-wrap" @input="modify()">
-                <b-tabs card small no-fade v-model="tab">
+                <b-tabs card small no-fade v-model="tab" @input="tabChange($event)">
                     <b-tab title="Editor" active>
                         <b-form-group id="exampleInputGroup1" label-for="titleInput">
                             <b-form-input id="titleInput" type="text" class="title" placeholder="Title" @input="editorChangeTitle($event)" :value="noteTitle"></b-form-input>
@@ -38,7 +38,7 @@
                         <div class="secrets">
                             <editor-secret v-for="(secret, index) in noteSecrets" :key="index" :index="index" :secret="secret"></editor-secret>
                         </div>
-                        <b-button size="sm" style="margin-top: 10px;" @click="editorAddSecret()"><icon name="plus"></icon> Add</b-button>
+                        <b-button ref="editorNoteAddSecret" size="sm" style="margin-top: 10px;" @click="editorAddSecret()"><icon name="plus"></icon> Add</b-button>
                     </b-tab>
                     <b-tab title="Reminder">
                         <b-alert show variant="warning">Remember that you're won't getting reminders when you're not logged in.</b-alert>
@@ -177,14 +177,26 @@
       if (this.$store.state.Store.needFocusOn === 'editorNoteReminder') {
         this.$store.commit('setNeedFocusOn', null)
         this.$refs.editorNoteReminder.$el.getElementsByTagName('input')[0].focus()
+      } else if (this.$store.state.Store.needFocusOn === 'editorNoteAddSecret') {
+        this.$store.commit('setNeedFocusOn', null)
+        this.$refs.editorNoteAddSecret.focus()
+      } else if (this.$store.state.Store.needFocusOn === 'content') {
+        this.$store.commit('setNeedFocusOn', null)
+        this.$refs.content.focus()
       }
     },
     methods: {
       setTab0 () { this.tab = 0 },
       setTab1 () { this.tab = 1 },
-      setTab2 () {
-        this.tab = 2
-        this.$store.commit('setNeedFocusOn', 'editorNoteReminder')
+      setTab2 () { this.tab = 2 },
+      tabChange ($event) {
+        if (this.tab === 1) {
+          this.$store.commit('setNeedFocusOn', 'editorNoteAddSecret')
+        } else if (this.tab === 2) {
+          this.$store.commit('setNeedFocusOn', 'editorNoteReminder')
+        } else if (this.tab === 0) {
+          this.$store.commit('setNeedFocusOn', 'content')
+        }
       },
       modify () {
         this.$store.dispatch('setNoteIsModified', true)
