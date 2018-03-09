@@ -364,6 +364,7 @@ const actions = {
     })
   },
   searchNotes (context, obj) {
+    console.log('@@@@')
     this.commit('setSearchQuery', obj.query)
     let queryWords = obj.query.trim().split(' ')
     let and = []
@@ -1289,9 +1290,9 @@ const actions = {
       note.updatedAt = note.createdAt
       db.insert(note, (err, newDoc) => {
         if (err) console.log('ERROR: ' + err)
-        this.dispatch('searchNotes', {query: state.searchQuery})
       })
     }
+    this.dispatch('searchNotes', {query: state.searchQuery})
     obj.cb()
   }
 }
