@@ -632,6 +632,9 @@ const actions = {
       return
     }
 
+    let currentActiveNoteIndex = state.activeNoteIndex
+    let currentActiveNoteId = state.activeNoteId
+
     this.commit('cleanNote')
 
     this.commit('updateNoteTitle', state.note.title.trim())
@@ -672,6 +675,8 @@ const actions = {
           query: state.searchQuery,
           cb: () => {
             successCallback()
+            this.commit('setActiveNoteIndex', currentActiveNoteIndex)
+            this.commit('setActiveNoteId', currentActiveNoteId)
           }
         })
       })
