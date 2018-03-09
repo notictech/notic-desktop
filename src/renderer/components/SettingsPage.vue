@@ -7,7 +7,7 @@
                         <h4>Settings</h4>
                     </div>
                     <div class="col-6" style="text-align: right">
-                        <b-button size="sm" type="button" variant="success" @click="settingsSaveAndClose()"><icon name="save"></icon> Save & close</b-button>
+                        <b-button title="Ctrl+S" size="sm" type="button" variant="success" @click="settingsSaveAndClose()"><icon name="save"></icon> Save & close</b-button>
                         <b-button-group size="sm">
                             <b-btn variant="primary" @click="close()" title="Close (Esc)"><icon name="times"></icon></b-btn>
                         </b-button-group>
@@ -27,8 +27,8 @@
                                       :value="this.dbPath">
                         </b-form-input>
                         <b-input-group-append>
-                            <b-button size="sm" title="Open" @click="openDb()"><icon name="folder-open"></icon></b-button>
-                            <b-button size="sm" title="Create" @click="createDb()"><icon name="plus"></icon></b-button>
+                            <b-button ref="settingsOpenDb" size="sm" title="Open database" @click="openDb()"><icon name="folder-open"></icon></b-button>
+                            <b-button size="sm" title="Create database" @click="createDb()"><icon name="plus"></icon></b-button>
                         </b-input-group-append>
                     </b-input-group>
                 </b-form-group>
@@ -97,6 +97,9 @@
   export default {
     name: 'settings-page',
     components: {Icon},
+    mounted () {
+      this.$refs.settingsOpenDb.focus()
+    },
     created () {
       this.dbPath = this.$store.state.Store.settings.dbPath
       this.masterPassword = this.$store.state.Store.masterPassword
