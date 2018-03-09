@@ -8,8 +8,8 @@
                         <h4 v-else>Edit note <span class="deleted-badge" pill v-if="note.deleted">deleted</span></h4>
                     </div>
                     <div class="col-6" style="text-align: right">
-                        <b-button size="sm" type="button" variant="warning" v-show="this.$store.state.Store.noteIsModified" @click="editorSave()"><icon name="save"></icon></b-button>
-                        <b-button size="sm" type="button" variant="success" @click="editorSaveAndClose()"><icon name="save"></icon> Save & close</b-button>
+                        <b-button title="Quick save (Ctrl+Shift+S)" size="sm" type="button" variant="warning" v-show="this.$store.state.Store.noteIsModified" @click="editorSave()"><icon name="save"></icon></b-button>
+                        <b-button title="Ctrl+S" size="sm" type="button" variant="success" @click="editorSaveAndClose()"><icon name="save"></icon> Save & close</b-button>
                         <b-button-group size="sm">
                             <b-btn variant="primary" @click="close()" title="Close (Esc)"><icon name="times"></icon></b-btn>
                         </b-button-group>

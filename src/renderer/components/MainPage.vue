@@ -89,7 +89,7 @@
                             <b-button :variant="(searchFilter == 'reminder') ? 'warning' : 'secondary'" title="Reminders (Ctrl+4)" @click="setSearchFilter('reminder')"><icon name="bell"></icon></b-button>
                         </b-button-group>
                         <b-button-group size="sm">
-                            <b-btn style="margin-left: 10px;" :variant="(searchFilter == 'deleted') ? 'warning' : 'secondary'" title="Deleted (Ctrl+5)" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-btn>
+                            <b-btn style="margin-left: 10px;" :variant="(searchFilter == 'deleted') ? 'warning' : 'secondary'" title="Trash (Ctrl+5)" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-btn>
                         </b-button-group>
                         <b-button-group size="sm" style="margin-left: 10px">
                             <b-button title="History back (Ctrl+Left)" @click="historyBack()"><icon name="arrow-left"></icon></b-button>
