@@ -76,7 +76,8 @@ const state = {
   dateFilterTarget: 'updated',
   dateFilterPrep: 'at',
   dateFilterDate1: moment().format('YYYY-MM-DD'),
-  dateFilterDate2: moment('2016-01-01').format('YYYY-MM-DD')
+  dateFilterDate2: moment('2016-01-01').format('YYYY-MM-DD'),
+  needFocusOn: null
 }
 
 const mutations = {
@@ -94,6 +95,7 @@ const mutations = {
   setContextNoteIsDeleted: (state, data) => { state.contextNoteIsDeleted = data },
   toggleDateFilter: (state) => { state.dateFilterActive = !state.dateFilterActive },
   toggleMassSelect: (state) => { state.massSelect = !state.massSelect },
+  setNeedFocusOn: (state, data) => { state.needFocusOn = data },
   setContextNoteId: (state, data) => { state.contextNoteId = data },
   setDateFilterActive: (state, data) => { state.dateFilterActive = data },
   setDateFilterTarget: (state, data) => { state.dateFilterTarget = data },

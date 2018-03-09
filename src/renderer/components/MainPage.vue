@@ -127,6 +127,7 @@
                     </b-col>
                     <b-col>
                         <b-form-input
+                                ref="dateFilterDate1"
                                 @input="inputDateFilterDate1($event)"
                                 :value="this.$store.state.Store.dateFilterDate1"
                                 size="sm"
@@ -239,6 +240,10 @@
       this.$store.dispatch('loadOrCreateSettingsFile', onMounted)
     },
     updated () {
+      if (this.$store.state.Store.needFocusOn === 'dateFilterDate1') {
+        this.$refs.dateFilterDate1.focus()
+        this.$store.commit('setNeedFocusOn', null)
+      }
       if (this.$store.state.Store.loadedNotesCount - 1 <= this.$store.state.Store.activeNoteIndex) {
         this.$store.commit('setLoadedNotesCount', this.$store.state.Store.loadedNotesCount + 40)
         this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 40)
@@ -443,6 +448,11 @@
         this.$refs.exportedNotesCopyButton.focus()
       },
       toggleDateFilter () {
+        if (!this.$store.state.Store.dateFilterActive) {
+          this.$store.commit('setNeedFocusOn', 'dateFilterDate1')
+        } else {
+          this.$refs.search.focus()
+        }
         this.$store.commit('toggleDateFilter')
         this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
       },
