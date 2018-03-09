@@ -238,6 +238,7 @@
         })
       }
       this.$store.dispatch('loadOrCreateSettingsFile', onMounted)
+      this.$store.dispatch('scrollToActiveNote')
     },
     updated () {
       if (this.$store.state.Store.needFocusOn === 'dateFilterDate1') {
