@@ -1,5 +1,5 @@
 <template>
-    <div :id="'note_index_' + index" :class="{note: true, active: activeNoteIndex == index}" @mouseup.middle="openEditNotePage(note._id)" @contextmenu="showNoteContextMenu(note._id)" @click="clickNote(note._id, index)">
+    <div :id="'note_index_' + index" :class="{note: true, active: activeNoteIndex == index}" @mouseup.middle="openEditNotePage(note._id, index)" @contextmenu="showNoteContextMenu(note._id, index)" @click="clickNote(note._id, index)">
         <h5>
             <b-button size="sm" variant="success" v-if="searchFilter === 'deleted'" @click="restoreNote(note._id)">Restore</b-button>
             <b-button title="Mark as favorite" size="sm" v-if="!note.deleted" :variant="note.star ? 'warning' : ''" @click="toggleStar(note._id, index)"><icon name="star"></icon></b-button>
@@ -10,7 +10,7 @@
                 <!--<b-dropdown-item @click="cloneNote(note._id)"><icon name="files-o"></icon> Clone</b-dropdown-item>-->
                 <!--<b-dropdown-item @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon> Delete</b-dropdown-item>-->
             <!--</b-dropdown>-->
-            <b-button size="sm" :id="'note_actions_button_' + index" @click="showNoteContextMenu(note._id)"><icon name="bars"></icon></b-button>
+            <b-button size="sm" :id="'note_actions_button_' + index" @click="showNoteContextMenu(note._id, index)"><icon name="bars"></icon></b-button>
         </h5>
         <h1><b-form-checkbox v-if="this.$store.state.Store.massSelect" plain class="note-link-checkbox" :id="'notelink_checkbox_' + index" :checked="this.$store.state.Store.selectedNotes.includes(note._id)" @change="selectNote(note._id, $event)">
             </b-form-checkbox>{{ note.title }}</h1>
@@ -95,7 +95,10 @@
           }
         }
       },
-      openEditNotePage (id) {
+      openEditNotePage (id, index) {
+        this.$store.dispatch('setActiveNoteIndex', index)
+        this.$store.dispatch('setActiveNoteId', id)
+        this.$store.dispatch('addNoteToHistory', id)
         this.$store.dispatch('openEditNotePage', id)
         this.$router.replace('/editor')
       },
@@ -107,7 +110,10 @@
           this.$store.dispatch('restoreDeletedNote', id)
         }
       },
-      showNoteContextMenu (id) {
+      showNoteContextMenu (id, index) {
+        this.$store.dispatch('setActiveNoteIndex', index)
+        this.$store.dispatch('setActiveNoteId', id)
+        this.$store.dispatch('addNoteToHistory', id)
         this.$store.dispatch('showNoteContextMenu', id)
       },
       clickNote (id, index) {
