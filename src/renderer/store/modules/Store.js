@@ -366,7 +366,6 @@ const actions = {
     })
   },
   searchNotes (context, obj) {
-    console.log('@@@@')
     this.commit('setSearchQuery', obj.query)
     let queryWords = obj.query.trim().split(' ')
     let and = []
