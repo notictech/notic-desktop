@@ -27,7 +27,7 @@
                                              ref="content"
                                              class="content"
                                              placeholder="Content"
-                                             :rows="17" autofocus @input="editorChangeContent($event)"  :value="noteContent"
+                                             :rows="16" autofocus @input="editorChangeContent($event)"  :value="noteContent"
                             ></b-form-textarea>
                         </b-form-group>
                         <b-button-group size="sm" class="mx-1">
