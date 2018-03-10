@@ -559,6 +559,9 @@ const actions = {
       delete clone._id
       db.insert(clone, (err, newDoc) => {
         if (err) console.log('ERROR: ' + err)
+        this.dispatch('addNoteToHistory', newDoc._id)
+        this.commit('setRecentNoteId', newDoc._id)
+        this.dispatch('updateMiscData')
         this.dispatch('searchNotes', {query: state.searchQuery})
       })
     })
