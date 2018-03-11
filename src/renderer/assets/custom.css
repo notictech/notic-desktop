@@ -408,3 +408,12 @@ h4 {
 .date-filter-bar select {
     margin: 0 !important;
 }
+
+.btn {
+    min-width: 32px;
+}
+
+.btn > .fa-icon {
+    vertical-align: middle;
+    margin-bottom: 3px;
+}

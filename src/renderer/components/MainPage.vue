@@ -64,7 +64,7 @@
                     </b-button-group>
                     <b-button-group size="sm">
                         <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+`)"><icon name="check-square-o"></icon></b-btn>
-                        <b-dropdown v-if="this.$store.state.Store.massSelect" id="mass-select-dropdown" text="Action" title="Action with selected" size="sm" variant="warning">
+                        <b-dropdown v-if="this.$store.state.Store.massSelect" id="mass-select-dropdown" title="Action with selected" size="sm" variant="warning">
                             <b-dropdown-item @click="toggleMassCheck">Select / Un-select all</b-dropdown-item>
                             <b-dropdown-divider></b-dropdown-divider>
                             <b-dropdown-item @click="actionExportEnterPassword()">Export</b-dropdown-item>
@@ -89,9 +89,9 @@
                             <b-button :variant="(searchFilter == 'reminder') ? 'warning' : 'secondary'" title="Reminders (Ctrl+4)" @click="setSearchFilter('reminder')"><icon name="bell"></icon></b-button>
                         </b-button-group>
                         <b-button-group size="sm">
-                            <b-btn style="margin-left: 10px;" :variant="(searchFilter == 'deleted') ? 'warning' : 'secondary'" title="Trash (Ctrl+5)" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-btn>
+                            <b-btn style="margin-left: 4px;" :variant="(searchFilter == 'deleted') ? 'warning' : 'secondary'" title="Trash (Ctrl+5)" @click="setSearchFilter('deleted')"><icon name="trash"></icon></b-btn>
                         </b-button-group>
-                        <b-button-group size="sm" style="margin-left: 10px">
+                        <b-button-group size="sm" style="margin-left: 4px">
                             <b-button title="History back (Ctrl+Left)" @click="historyBack()"><icon name="arrow-left"></icon></b-button>
                             <b-button title="History forward (Ctrl+Right)" @click="historyForward()"><icon name="arrow-right"></icon></b-button>
                         </b-button-group>
