@@ -128,6 +128,7 @@
                     <b-col>
                         <b-form-input
                                 ref="dateFilterDate1"
+                                @keydown.native.ctrl.prevent
                                 @input="inputDateFilterDate1($event)"
                                 :value="this.$store.state.Store.dateFilterDate1"
                                 size="sm"
