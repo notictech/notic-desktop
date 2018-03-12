@@ -63,7 +63,7 @@
                         <b-btn variant="primary" :variant="this.$store.state.Store.notificationsIsUnread ? 'danger' : 'primary' " @click="openNotificationsPage()" title="Notifications (Ctrl+N)"><icon name="bell"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm">
-                        <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+`)"><icon name="check-square-o"></icon></b-btn>
+                        <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+M)"><icon name="check-square-o"></icon></b-btn>
                         <b-dropdown v-if="this.$store.state.Store.massSelect" id="mass-select-dropdown" title="Action with selected" size="sm" variant="warning">
                             <b-dropdown-item @click="toggleMassCheck">Select / Un-select all</b-dropdown-item>
                             <b-dropdown-divider></b-dropdown-divider>
@@ -357,6 +357,14 @@
         this.$store.commit('emptySelectedNotes')
         this.$store.commit('toggleMassSelect')
       },
+      selectActiveNote () {
+        if (this.$store.state.Store.massSelect) {
+          this.$store.dispatch('selectNote', {
+            'id': this.$store.state.Store.activeNoteId,
+            'value': !this.$store.state.Store.selectedNotes.includes(this.$store.state.Store.activeNoteId)
+          })
+        }
+      },
       toggleMassCheck () {
         if (this.$store.state.Store.selectedNotes.length < this.$store.state.Store.notes.length) {
           for (let i = 0; i < this.$store.state.Store.notes.length; i++) {
@@ -478,7 +486,8 @@
     computed: {
       keymap () {
         return {
-          'ctrl+`': this.toggleMassSelect,
+          'ctrl+m': this.toggleMassSelect,
+          'ctrl+.': this.selectActiveNote,
           'ctrl+d': this.toggleDateFilter,
           'ctrl+f': this.focusOnSearch,
           'ctrl+down': this.goToNextNote,
