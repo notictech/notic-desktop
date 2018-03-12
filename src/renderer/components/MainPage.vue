@@ -64,8 +64,8 @@
                     </b-button-group>
                     <b-button-group size="sm">
                         <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+M)"><icon name="check-square-o"></icon></b-btn>
-                        <b-dropdown v-if="this.$store.state.Store.massSelect" id="mass-select-dropdown" title="Action with selected" size="sm" variant="warning">
-                            <b-dropdown-item @click="toggleMassCheck">Select / Un-select all</b-dropdown-item>
+                        <b-dropdown v-if="this.$store.state.Store.massSelect" title="Action with selected (Ctrl+Shift+M)" size="sm" variant="warning" ref="massSelectDropdown">
+                            <b-dropdown-item @click="toggleMassCheck">Select / Un-select all (Ctrl+Shift+.)</b-dropdown-item>
                             <b-dropdown-divider></b-dropdown-divider>
                             <b-dropdown-item @click="actionExportEnterPassword()">Export</b-dropdown-item>
                             <b-dropdown-item @click="actionDeleteSelectedNotes()">Delete</b-dropdown-item>
@@ -357,6 +357,11 @@
         this.$store.commit('emptySelectedNotes')
         this.$store.commit('toggleMassSelect')
       },
+      clickMassSelectDropdown () {
+        if (this.$store.state.Store.massSelect) {
+          this.$refs.massSelectDropdown.show()
+        }
+      },
       selectActiveNote () {
         if (this.$store.state.Store.massSelect) {
           this.$store.dispatch('selectNote', {
@@ -364,6 +369,9 @@
             'value': !this.$store.state.Store.selectedNotes.includes(this.$store.state.Store.activeNoteId)
           })
         }
+      },
+      selectAllNotes () {
+        this.toggleMassCheck()
       },
       toggleMassCheck () {
         if (this.$store.state.Store.selectedNotes.length < this.$store.state.Store.notes.length) {
@@ -486,8 +494,10 @@
     computed: {
       keymap () {
         return {
+          'ctrl+shift+m': this.clickMassSelectDropdown,
           'ctrl+m': this.toggleMassSelect,
           'ctrl+.': this.selectActiveNote,
+          'ctrl+shift+.': this.selectAllNotes,
           'ctrl+d': this.toggleDateFilter,
           'ctrl+f': this.focusOnSearch,
           'ctrl+down': this.goToNextNote,
