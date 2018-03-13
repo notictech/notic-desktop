@@ -103,6 +103,7 @@
                     <b-col>
                         <b-form-select
                                 @input="inputDateFilterTarget($event)"
+                                @keydown.native="dateFilterKeydown($event)"
                                 :value="this.$store.state.Store.dateFilterTarget"
                                 :options="[{text: 'created', value: 'created'}, {text: 'updated', value: 'updated'}, {text: 'reminder', value: 'reminder'}]"
                                 class="mb-3"
@@ -111,6 +112,7 @@
                     <b-col>
                         <b-form-select
                                 @input="inputDateFilterPrep($event)"
+                                @keydown.native="dateFilterKeydown($event)"
                                 :value="this.$store.state.Store.dateFilterPrep"
                                 :options="[{text: 'at', value: 'at'}, {text: 'between', value: 'between'}]"
                                 class="mb-3"
@@ -120,6 +122,7 @@
                         <b-form-input
                                 ref="dateFilterDate2"
                                 @input="inputDateFilterDate2($event)"
+                                @keydown.native="dateFilterKeydown($event)"
                                 :value="this.$store.state.Store.dateFilterDate2"
                                 size="sm"
                                 type="date">
@@ -130,6 +133,7 @@
                                 ref="dateFilterDate1"
                                 @keydown.native.ctrl.prevent
                                 @input="inputDateFilterDate1($event)"
+                                @keydown.native="dateFilterKeydown($event)"
                                 :value="this.$store.state.Store.dateFilterDate1"
                                 size="sm"
                                 type="date">
@@ -482,6 +486,20 @@
         }
         this.$store.commit('toggleDateFilter')
         this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
+      },
+      dateFilterKeydown (event) {
+        if (event.code === 'KeyU') {
+          this.$store.commit('setDateFilterTarget', 'updated')
+        } else if (event.code === 'KeyC') {
+          this.$store.commit('setDateFilterTarget', 'created')
+        } else if (event.code === 'KeyR') {
+          this.$store.commit('setDateFilterTarget', 'reminder')
+        } else if (event.code === 'KeyA') {
+          this.$store.commit('setDateFilterPrep', 'at')
+        } else if (event.code === 'KeyB') {
+          this.$store.commit('setDateFilterPrep', 'between')
+        }
+        event.preventDefault()
       },
       inputDateFilterTarget (event) {
         this.$store.commit('setDateFilterTarget', event)
