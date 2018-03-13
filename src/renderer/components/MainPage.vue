@@ -317,21 +317,29 @@
         }
       },
       goToNextNote () {
-        this.$store.dispatch('goToNextNote', () => {})
+        this.$store.dispatch('goToNextNote', () => {
+          this.$store.dispatch('scrollToActiveNoteLink')
+        })
       },
       goToPreviousNote () {
-        this.$store.dispatch('goToPreviousNote', () => {})
+        this.$store.dispatch('goToPreviousNote', () => {
+          this.$store.dispatch('scrollToActiveNoteLink')
+        })
+      },
+      historyForward () {
+        this.$store.dispatch('historyForward', () => {
+          this.$store.dispatch('scrollToActiveNoteLink')
+        })
+      },
+      historyBack () {
+        this.$store.dispatch('historyBack', () => {
+          this.$store.dispatch('scrollToActiveNoteLink')
+        })
       },
       copyText () {
         this.$store.dispatch('copyText')
         // this.$store.dispatch('startClipboardCountdown')
         this.$toast('✓ copied')
-      },
-      historyForward () {
-        this.$store.dispatch('historyForward')
-      },
-      historyBack () {
-        this.$store.dispatch('historyBack')
       },
       showQR () {
         try {
