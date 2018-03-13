@@ -73,7 +73,7 @@ const state = {
   massSelect: false,
   selectedNotes: [],
   dateFilterActive: false,
-  dateFilterTarget: 'updated',
+  dateFilterTarget: 'created',
   dateFilterPrep: 'at',
   dateFilterDate1: moment().format('YYYY-MM-DD'),
   dateFilterDate2: moment('2016-01-01').format('YYYY-MM-DD'),

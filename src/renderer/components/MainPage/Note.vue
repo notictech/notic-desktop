@@ -6,21 +6,21 @@
             <!--<b-button title="Edit" size="sm" @click="openEditNotePage(note._id)"><icon name="pencil"></icon></b-button>-->
             <!--<b-button title="Delete" size="sm" @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon></b-button>-->
             <!--<b-dropdown class="m-md-2" size="sm">-->
-                <!--<b-dropdown-item @click="openEditNotePage(note._id)"><icon name="pencil"></icon> Edit</b-dropdown-item>-->
-                <!--<b-dropdown-item @click="cloneNote(note._id)"><icon name="files-o"></icon> Clone</b-dropdown-item>-->
-                <!--<b-dropdown-item @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon> Delete</b-dropdown-item>-->
+            <!--<b-dropdown-item @click="openEditNotePage(note._id)"><icon name="pencil"></icon> Edit</b-dropdown-item>-->
+            <!--<b-dropdown-item @click="cloneNote(note._id)"><icon name="files-o"></icon> Clone</b-dropdown-item>-->
+            <!--<b-dropdown-item @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon> Delete</b-dropdown-item>-->
             <!--</b-dropdown>-->
             <b-button size="sm" :id="'note_actions_button_' + index" @click="showNoteContextMenu(note._id, index)" title="Actions"><icon name="bars"></icon></b-button>
         </h5>
         <h1><b-form-checkbox v-if="this.$store.state.Store.massSelect" plain class="note-link-checkbox" :id="'notelink_checkbox_' + index" :checked="this.$store.state.Store.selectedNotes.includes(note._id)" @change="selectNote(note._id, $event)">
-            </b-form-checkbox>{{ note.title }}</h1>
+        </b-form-checkbox>{{ note.title }}</h1>
         <h2>{{ formattedNoteDate }}
             <b-button title="Reminders" class="note-reminder-btn" size="sm" :variant="(note.reminder) ? 'outline-danger' : 'outline-secondary'" @click="setEditorInitTab(note._id)"><icon name="bell"></icon></b-button><span v-show="note.reminder">{{ formattedReminderInfo }}</span>
         </h2>
         <h3 v-show="note.secrets.length">
             <b-button size="sm" variant="info" v-for="(secret, index) in note.secrets" :key="index" @click="copySecret(secret.content)" title="Click to copy"><icon name="key"></icon> {{secret.title}}</b-button>
         </h3>
-        <h4 v-if="!contentIsHidden">{{ note.content }}</h4>
+        <h4 v-if="!contentIsHidden" :contenteditable="this.$store.state.Store.activeNoteId === note._id" oncut="return false" onpaste="return false" onkeydown="return preventContentChanging(event)">{{ note.content }}</h4>
         <b-button variant="outline-primary" size="sm" class="content-is-hidden" v-if="contentIsHidden" @click="contentIsHidden = !contentIsHidden"><icon name="eye"></icon> Show the content</b-button>
     </div>
 </template>
