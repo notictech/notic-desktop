@@ -91,20 +91,20 @@ Menu.setApplicationMenu(mainMenu)
 
 const noteContextMenu = Menu.buildFromTemplate([
   {
-    label: 'Edit',
+    label: 'Edit note',
     click () {
       store.dispatch('openEditNotePage', store.state.Store.contextNoteId)
       router.replace('/editor')
     }
   },
   {
-    label: 'Clone',
+    label: 'Clone note',
     click () {
       store.dispatch('cloneNote', store.state.Store.contextNoteId)
     }
   },
   {
-    label: 'Delete',
+    label: 'Delete note',
     click () {
       if (confirm('Are you sure you want to delete this note?')) {
         if (store.state.Store.contextNoteIsDeleted) {

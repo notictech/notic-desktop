@@ -10,7 +10,7 @@
             <!--<b-dropdown-item @click="cloneNote(note._id)"><icon name="files-o"></icon> Clone</b-dropdown-item>-->
             <!--<b-dropdown-item @click="actionDeleteNote(note._id, searchFilter === 'deleted')"><icon name="trash"></icon> Delete</b-dropdown-item>-->
             <!--</b-dropdown>-->
-            <b-button size="sm" :id="'note_actions_button_' + index" @click="showNoteContextMenu(note._id, index)" @keydown="activeNoteActionsKeydown($event)" title="Actions" class="note-actions-button"><icon name="bars"></icon></b-button>
+            <b-button size="sm" :id="'note_actions_button_' + index" @click="showNoteContextMenu(note._id, index)" @keydown="activeNoteActionsKeydown($event)" title="Actions" class="note-actions-button"><icon name="magic"></icon></b-button>
         </h5>
         <h1><b-form-checkbox v-if="this.$store.state.Store.massSelect" plain class="note-link-checkbox" :id="'notelink_checkbox_' + index" :checked="this.$store.state.Store.selectedNotes.includes(note._id)" @change="selectNote(note._id, $event)">
         </b-form-checkbox>{{ note.title }}</h1>
