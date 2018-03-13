@@ -492,6 +492,7 @@ const actions = {
       if (state.dateFilterTarget === 'reminder') {
         if (state.dateFilterPrep === 'at') {
           and.push({$where: function () {
+            if (!this.reminder) return false
             if (moment(this.reminderDate).format('YYYY-MM-DD') === state.dateFilterDate1) {
               return true
             }
@@ -499,6 +500,7 @@ const actions = {
           }})
         } else if (state.dateFilterPrep === 'between') {
           and.push({$where: function () {
+            if (!this.reminder) return false
             let date1 = moment(state.dateFilterDate1).add(23, 'hours').add(59, 'minutes').valueOf()
             let date2 = moment(state.dateFilterDate2)
             if (this.reminderDate <= date1 && this.reminderDate >= date2) {
