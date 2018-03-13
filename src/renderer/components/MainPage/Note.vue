@@ -142,6 +142,8 @@
           this.openEditNotePage(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
         } else if (event.code === 'KeyR') {
           this.setEditorInitTab(this.$store.state.Store.activeNoteId)
+        } else if (event.code === 'KeyS') {
+          this.toggleStar(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
         } else if (event.code === 'KeyC' && event.shiftKey) {
           this.cloneNote(this.$store.state.Store.activeNoteId)
         } else if (event.code === 'KeyC' && !event.shiftKey) {
