@@ -133,7 +133,7 @@
         this.$store.dispatch('selectNote', {'id': id, 'value': event})
       },
       activeNoteActionsKeydown (event) {
-        if (event.shiftKey || event.ctrlKey) {
+        if (event.ctrlKey) {
           return
         }
         if (event.code === 'KeyD') {
@@ -142,7 +142,9 @@
           this.openEditNotePage(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
         } else if (event.code === 'KeyR') {
           this.setEditorInitTab(this.$store.state.Store.activeNoteId)
-        } else if (event.code === 'KeyC') {
+        } else if (event.code === 'KeyC' && event.shiftKey) {
+          this.cloneNote(this.$store.state.Store.activeNoteId)
+        } else if (event.code === 'KeyC' && !event.shiftKey) {
           document.getElementById('note_content_' + this.$store.state.Store.activeNoteIndex).focus()
         }
         event.preventDefault()
