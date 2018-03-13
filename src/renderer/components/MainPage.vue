@@ -420,7 +420,7 @@
         this.toggleMassSelect()
         this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
       },
-      openNoteMenu () {
+      focusOnNoteMenu () {
         document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).focus()
       },
       copyExportedNotesAndClose () {
@@ -506,7 +506,7 @@
           'ctrl+right': this.historyForward,
           'ctrl+space': this.openAddNotePage,
           'ctrl+e': this.openRecentNote,
-          'ctrl+enter': this.openNoteMenu,
+          'ctrl+enter': this.focusOnNoteMenu,
           'ctrl+n': this.openNotificationsPage,
           'ctrl+1': this.setSearchFilterNotes,
           'ctrl+2': this.setSearchFilterSecrets,
