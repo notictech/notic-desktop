@@ -15,7 +15,7 @@
         <h1><b-form-checkbox v-if="this.$store.state.Store.massSelect" plain class="note-link-checkbox" :id="'notelink_checkbox_' + index" :checked="this.$store.state.Store.selectedNotes.includes(note._id)" @change="selectNote(note._id, $event)">
         </b-form-checkbox>{{ note.title }}</h1>
         <h2>{{ formattedNoteDate }}
-            <b-button title="Reminders" class="note-reminder-btn" size="sm" :variant="(note.reminder) ? 'outline-danger' : 'outline-secondary'" @click="setEditorInitTab(note._id)"><icon name="bell"></icon></b-button><span v-show="note.reminder">{{ formattedReminderInfo }}</span>
+            <b-button title="Reminders" class="note-reminder-btn" size="sm" :variant="(note.reminder) ? 'outline-danger' : 'outline-secondary'" @click="setEditorInitTab(note._id, index)"><icon name="bell"></icon></b-button><span v-show="note.reminder">{{ formattedReminderInfo }}</span>
         </h2>
         <h3 v-show="note.secrets.length">
             <b-button size="sm" variant="info" v-for="(secret, index) in note.secrets" :key="index" @click="copySecret(secret.content)" title="Click to copy"><icon name="key"></icon> {{secret.title}}</b-button>
@@ -125,9 +125,9 @@
       toggleStar (id, index) {
         this.$store.dispatch('toggleNoteStar', {id: id, index: index})
       },
-      setEditorInitTab (id) {
+      setEditorInitTab (id, index) {
         this.$store.commit('setEditorInitTab', 2)
-        this.openEditNotePage(id)
+        this.openEditNotePage(id, index)
       },
       selectNote (id, event) {
         this.$store.dispatch('selectNote', {'id': id, 'value': event})
@@ -140,18 +140,23 @@
           this.actionDeleteNote(this.$store.state.Store.activeNoteId, this.$store.state.Store.notes[this.$store.state.Store.activeNoteIndex].deleted)
           event.preventDefault()
         } else if (event.code === 'KeyE') {
+          // this.clickNote(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
           this.openEditNotePage(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
           event.preventDefault()
         } else if (event.code === 'KeyR') {
-          this.setEditorInitTab(this.$store.state.Store.activeNoteId)
+          // this.clickNote(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
+          this.setEditorInitTab(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
           event.preventDefault()
         } else if (event.code === 'KeyS') {
+          this.clickNote(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
           this.toggleStar(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
           event.preventDefault()
         } else if (event.code === 'KeyC' && event.shiftKey) {
+          this.clickNote(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
           this.cloneNote(this.$store.state.Store.activeNoteId)
           event.preventDefault()
         } else if (event.code === 'KeyC' && !event.shiftKey) {
+          this.clickNote(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
           if (document.getElementById('show_content_' + this.$store.state.Store.activeNoteIndex)) {
             document.getElementById('show_content_' + this.$store.state.Store.activeNoteIndex).click()
           } else {

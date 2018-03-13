@@ -825,7 +825,7 @@ const actions = {
     const href = '#notelink_index_' + state.activeNoteIndex
     const el = href ? document.querySelector(href) : null
     if (el) {
-      document.querySelector('.sidebar').scrollTop = el.offsetTop
+      document.querySelector('.sidebar').scrollTop = el.offsetTop - 200
     }
   },
   loadHistory (context) {
