@@ -21,7 +21,7 @@
             <b-button size="sm" variant="info" v-for="(secret, index) in note.secrets" :key="index" @click="copySecret(secret.content)" title="Click to copy"><icon name="key"></icon> {{secret.title}}</b-button>
         </h3>
         <h4 v-if="!contentIsHidden" :id="'note_content_' + index" :contenteditable="this.$store.state.Store.activeNoteId === note._id" oncut="return false" onpaste="return false" onkeydown="return preventContentChanging(event)">{{ note.content }}</h4>
-        <b-button variant="outline-primary" size="sm" class="content-is-hidden" v-if="contentIsHidden" @click="contentIsHidden = !contentIsHidden"><icon name="eye"></icon> Show the content</b-button>
+        <b-button variant="outline-primary" :id="'show_content_' + index" size="sm" class="content-is-hidden" v-if="contentIsHidden" @click="contentIsHidden = !contentIsHidden"><icon name="eye"></icon> Show the content</b-button>
     </div>
 </template>
 
@@ -152,7 +152,11 @@
           this.cloneNote(this.$store.state.Store.activeNoteId)
           event.preventDefault()
         } else if (event.code === 'KeyC' && !event.shiftKey) {
-          document.getElementById('note_content_' + this.$store.state.Store.activeNoteIndex).focus()
+          if (document.getElementById('show_content_' + this.$store.state.Store.activeNoteIndex)) {
+            document.getElementById('show_content_' + this.$store.state.Store.activeNoteIndex).click()
+          } else {
+            document.getElementById('note_content_' + this.$store.state.Store.activeNoteIndex).focus()
+          }
           event.preventDefault()
         }
       }
