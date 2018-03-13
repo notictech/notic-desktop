@@ -418,9 +418,7 @@ h4 {
     margin-bottom: 3px;
 }
 
-/*.note-actions-button:focus {*/
-    /*color: #fff;*/
-    /*background-color: #007bff;*/
-    /*border-color: #007bff;*/
-    /*box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);*/
-/*}*/
+.screen.notes .notes .note h4:focus {
+    border:none;
+    outline:none;
+}
