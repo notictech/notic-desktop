@@ -418,7 +418,8 @@ h4 {
     margin-bottom: 3px;
 }
 
-.screen.notes .notes .note h4:focus {
+[contenteditable="true"]:active,
+[contenteditable="true"]:focus{
     border:none;
     outline:none;
 }
