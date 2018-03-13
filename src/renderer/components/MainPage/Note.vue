@@ -138,18 +138,23 @@
         }
         if (event.code === 'KeyD') {
           this.actionDeleteNote(this.$store.state.Store.activeNoteId, this.$store.state.Store.notes[this.$store.state.Store.activeNoteIndex].deleted)
+          event.preventDefault()
         } else if (event.code === 'KeyE') {
           this.openEditNotePage(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
+          event.preventDefault()
         } else if (event.code === 'KeyR') {
           this.setEditorInitTab(this.$store.state.Store.activeNoteId)
+          event.preventDefault()
         } else if (event.code === 'KeyS') {
           this.toggleStar(this.$store.state.Store.activeNoteId, this.$store.state.Store.activeNoteIndex)
+          event.preventDefault()
         } else if (event.code === 'KeyC' && event.shiftKey) {
           this.cloneNote(this.$store.state.Store.activeNoteId)
+          event.preventDefault()
         } else if (event.code === 'KeyC' && !event.shiftKey) {
           document.getElementById('note_content_' + this.$store.state.Store.activeNoteIndex).focus()
+          event.preventDefault()
         }
-        event.preventDefault()
       }
     }
   }
