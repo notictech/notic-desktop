@@ -499,7 +499,6 @@
         } else if (event.code === 'KeyB') {
           this.$store.commit('setDateFilterPrep', 'between')
         }
-        event.preventDefault()
       },
       inputDateFilterTarget (event) {
         this.$store.commit('setDateFilterTarget', event)
