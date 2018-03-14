@@ -874,6 +874,25 @@ const actions = {
       this.dispatch('setActiveNoteIndex', index)
     }
   },
+  defineFirstMark (context, cb) {
+    let marks = document.querySelectorAll('mark')
+    let index
+    let done = false
+    for (let i = 0; i < marks.length; i++) {
+      if (marks[i].parentElement.parentElement.classList.contains('note')) {
+        index = parseInt(marks[i].parentElement.parentElement.id.split('note_index_')[1])
+      } else {
+        index = parseInt(marks[i].parentElement.parentElement.parentElement.id.split('note_index_')[1])
+      }
+      marks[i].classList.remove('active')
+      if (index === state.activeNoteIndex && !done) {
+        marks[i].classList.add('active')
+        this.commit('setMarkPos', i)
+        done = true
+      }
+    }
+    if (cb) cb()
+  },
   scrollToActiveNote (context) {
     const href = '#note_index_' + state.activeNoteIndex
     const el = href ? document.querySelector(href) : null

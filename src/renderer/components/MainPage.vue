@@ -324,11 +324,13 @@
       goToNextNote () {
         this.$store.dispatch('goToNextNote', () => {
           this.$store.dispatch('scrollToActiveNoteLink')
+          this.$store.dispatch('defineFirstMark')
         })
       },
       goToPreviousNote () {
         this.$store.dispatch('goToPreviousNote', () => {
           this.$store.dispatch('scrollToActiveNoteLink')
+          this.$store.dispatch('defineFirstMark')
         })
       },
       goToNextMark () {
@@ -340,11 +342,13 @@
       historyForward () {
         this.$store.dispatch('historyForward', () => {
           this.$store.dispatch('scrollToActiveNoteLink')
+          this.$store.dispatch('defineFirstMark')
         })
       },
       historyBack () {
         this.$store.dispatch('historyBack', () => {
           this.$store.dispatch('scrollToActiveNoteLink')
+          this.$store.dispatch('defineFirstMark')
         })
       },
       copyText () {
