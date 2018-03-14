@@ -419,7 +419,7 @@
         let resultData = []
         for (let i = 0; i < this.$store.state.Store.notes.length; i++) {
           if (this.$store.state.Store.selectedNotes.includes(this.$store.state.Store.notes[i]._id)) {
-            let note = this.$store.state.Store.notes[i]
+            let note = JSON.parse(JSON.stringify(this.$store.state.Store.notes[i]))
             delete note._id
             note.deleted = false
             note.star = false
