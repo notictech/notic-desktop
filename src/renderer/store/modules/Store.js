@@ -77,7 +77,9 @@ const state = {
   dateFilterPrep: 'at',
   dateFilterDate1: moment().format('YYYY-MM-DD'),
   dateFilterDate2: moment('2016-01-01').format('YYYY-MM-DD'),
-  needFocusOn: null
+  needFocusOn: null,
+  markPos: 0,
+  marksCount: 0
 }
 
 const mutations = {
@@ -93,6 +95,8 @@ const mutations = {
     state.selectedNotes = []
   },
   setContextNoteIsDeleted: (state, data) => { state.contextNoteIsDeleted = data },
+  setMarkPos: (state, data) => { state.markPos = data },
+  setMarksCount: (state, data) => { state.marksCount = data },
   toggleDateFilter: (state) => { state.dateFilterActive = !state.dateFilterActive },
   toggleMassSelect: (state) => { state.massSelect = !state.massSelect },
   setNeedFocusOn: (state, data) => { state.needFocusOn = data },
@@ -524,6 +528,7 @@ const actions = {
         this.commit('setActiveNoteId', docs[0]._id)
         this.commit('setLoadedNotesCount', 40)
         this.commit('setLoadedNotesLinksCount', 40)
+        this.commit('setMarkPos', 0)
         if (obj.cb) obj.cb()
         this.commit('emptySelectedNotes')
       }
@@ -538,6 +543,11 @@ const actions = {
     markInstance.unmark({
       done: () => {
         markInstance.mark(keyword, options)
+        let marks = document.getElementsByTagName('mark')
+        if (marks.length) {
+          this.commit('setMarksCount', marks.length)
+          marks[state.markPos].classList.add('active')
+        }
       }
     })
   },
@@ -816,6 +826,26 @@ const actions = {
     this.dispatch('scrollToActiveNote')
     cb()
   },
+  goToNextMark (context, cb) {
+    if (state.markPos < state.marksCount - 1) {
+      this.commit('setMarkPos', state.markPos + 1)
+    } else {
+      this.commit('setMarkPos', 0)
+    }
+    this.dispatch('highlightNotes')
+    this.dispatch('scrollToActiveMark')
+    if (cb) cb()
+  },
+  goToPreviousMark (context, cb) {
+    if (state.markPos > 0) {
+      this.commit('setMarkPos', state.markPos - 1)
+    } else {
+      this.commit('setMarkPos', state.marksCount - 1)
+    }
+    this.dispatch('highlightNotes')
+    this.dispatch('scrollToActiveMark')
+    if (cb) cb()
+  },
   scrollToActiveNote (context) {
     const href = '#note_index_' + state.activeNoteIndex
     const el = href ? document.querySelector(href) : null
@@ -828,6 +858,12 @@ const actions = {
     const el = href ? document.querySelector(href) : null
     if (el) {
       document.querySelector('.sidebar').scrollTop = el.offsetTop - 200
+    }
+  },
+  scrollToActiveMark (context) {
+    const el = document.querySelector('mark.active')
+    if (el) {
+      document.querySelector('#notes').scrollTop = el.offsetTop - 200
     }
   },
   loadHistory (context) {

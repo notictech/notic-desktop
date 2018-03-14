@@ -423,3 +423,8 @@ h4 {
     border:none;
     outline:none;
 }
+
+.screen.notes mark.active {
+    background: #dc3545 !important;
+    color: #fff;
+}

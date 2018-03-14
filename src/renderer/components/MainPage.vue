@@ -331,6 +331,12 @@
           this.$store.dispatch('scrollToActiveNoteLink')
         })
       },
+      goToNextMark () {
+        this.$store.dispatch('goToNextMark')
+      },
+      goToPreviousMark () {
+        this.$store.dispatch('goToPreviousMark')
+      },
       historyForward () {
         this.$store.dispatch('historyForward', () => {
           this.$store.dispatch('scrollToActiveNoteLink')
@@ -528,6 +534,8 @@
           'ctrl+f': this.focusOnSearch,
           'ctrl+down': this.goToNextNote,
           'ctrl+up': this.goToPreviousNote,
+          'ctrl+shift+down': this.goToNextMark,
+          'ctrl+shift+up': this.goToPreviousMark,
           'ctrl+left': this.historyBack,
           'ctrl+right': this.historyForward,
           'ctrl+space': this.openAddNotePage,
