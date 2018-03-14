@@ -838,6 +838,7 @@ const actions = {
       marks[state.markPos].classList.add('active')
     }
     this.dispatch('scrollToActiveMark')
+    this.dispatch('setActiveNoteByMark')
     if (cb) cb()
   },
   goToPreviousMark (context, cb) {
@@ -857,7 +858,16 @@ const actions = {
       marks[state.markPos].classList.add('active')
     }
     this.dispatch('scrollToActiveMark')
+    this.dispatch('setActiveNoteByMark')
     if (cb) cb()
+  },
+  setActiveNoteByMark (context) {
+    let noteElement = document.querySelector('mark.active')
+    if (noteElement !== null) {
+      let index = parseInt(noteElement.parentElement.parentElement.id.split('note_index_')[1])
+      this.dispatch('setActiveNoteId', state.notes[index]._id)
+      this.dispatch('setActiveNoteIndex', index)
+    }
   },
   scrollToActiveNote (context) {
     const href = '#note_index_' + state.activeNoteIndex
