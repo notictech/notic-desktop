@@ -864,7 +864,12 @@ const actions = {
   setActiveNoteByMark (context) {
     let noteElement = document.querySelector('mark.active')
     if (noteElement !== null) {
-      let index = parseInt(noteElement.parentElement.parentElement.id.split('note_index_')[1])
+      let index
+      if (noteElement.parentElement.parentElement.classList.contains('note')) {
+        index = parseInt(noteElement.parentElement.parentElement.id.split('note_index_')[1])
+      } else {
+        index = parseInt(noteElement.parentElement.parentElement.parentElement.id.split('note_index_')[1])
+      }
       this.dispatch('setActiveNoteId', state.notes[index]._id)
       this.dispatch('setActiveNoteIndex', index)
     }
