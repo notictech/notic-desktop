@@ -543,11 +543,6 @@ const actions = {
     markInstance.unmark({
       done: () => {
         markInstance.mark(keyword, options)
-        let marks = document.getElementsByTagName('mark')
-        if (marks.length) {
-          this.commit('setMarksCount', marks.length)
-          marks[state.markPos].classList.add('active')
-        }
       }
     })
   },
@@ -832,7 +827,16 @@ const actions = {
     } else {
       this.commit('setMarkPos', 0)
     }
-    this.dispatch('highlightNotes')
+    let marks = document.getElementsByTagName('mark')
+    if (marks.length) {
+      this.commit('setMarksCount', marks.length)
+      if (state.markPos > 0) {
+        marks[state.markPos - 1].classList.remove('active')
+      } else {
+        marks[state.marksCount - 1].classList.remove('active')
+      }
+      marks[state.markPos].classList.add('active')
+    }
     this.dispatch('scrollToActiveMark')
     if (cb) cb()
   },
@@ -842,7 +846,16 @@ const actions = {
     } else {
       this.commit('setMarkPos', state.marksCount - 1)
     }
-    this.dispatch('highlightNotes')
+    let marks = document.getElementsByTagName('mark')
+    if (marks.length) {
+      this.commit('setMarksCount', marks.length)
+      if (state.markPos < state.marksCount - 1) {
+        marks[state.markPos + 1].classList.remove('active')
+      } else {
+        marks[0].classList.remove('active')
+      }
+      marks[state.markPos].classList.add('active')
+    }
     this.dispatch('scrollToActiveMark')
     if (cb) cb()
   },
