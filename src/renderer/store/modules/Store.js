@@ -546,6 +546,8 @@ const actions = {
         let marks = document.getElementsByTagName('mark')
         if (marks.length) {
           this.commit('setMarksCount', marks.length)
+        } else {
+          this.commit('setMarksCount', 0)
         }
       }
     })
