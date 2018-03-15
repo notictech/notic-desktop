@@ -120,6 +120,7 @@
         this.$store.dispatch('setActiveNoteIndex', index)
         this.$store.dispatch('setActiveNoteId', id)
         this.$store.dispatch('addNoteToHistory', id)
+        this.$store.dispatch('defineFirstMark')
         // this.$store.dispatch('scrollToActiveNoteLink')
       },
       toggleStar (id, index) {

@@ -543,6 +543,10 @@ const actions = {
     markInstance.unmark({
       done: () => {
         markInstance.mark(keyword, options)
+        let marks = document.getElementsByTagName('mark')
+        if (marks.length) {
+          this.commit('setMarksCount', marks.length)
+        }
       }
     })
   },
@@ -839,6 +843,7 @@ const actions = {
     }
     this.dispatch('scrollToActiveMark')
     this.dispatch('setActiveNoteByMark')
+    this.dispatch('scrollToActiveNoteLink')
     if (cb) cb()
   },
   goToPreviousMark (context, cb) {
@@ -859,6 +864,7 @@ const actions = {
     }
     this.dispatch('scrollToActiveMark')
     this.dispatch('setActiveNoteByMark')
+    this.dispatch('scrollToActiveNoteLink')
     if (cb) cb()
   },
   setActiveNoteByMark (context) {
