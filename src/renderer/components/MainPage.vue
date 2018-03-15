@@ -95,6 +95,10 @@
                             <b-button title="History back (Ctrl+Left)" @click="historyBack()"><icon name="arrow-left"></icon></b-button>
                             <b-button title="History forward (Ctrl+Right)" @click="historyForward()"><icon name="arrow-right"></icon></b-button>
                         </b-button-group>
+                        <b-button-group size="sm" style="margin-left: 4px" v-if="this.$store.state.Store.marksCount">
+                            <b-button title="Previous match (Ctrl+Shift+Left)" @click="goToPreviousMark()"><icon name="caret-square-o-left"></icon></b-button>
+                            <b-button title="Next match (Ctrl+Shift+Right)" @click="goToNextMark()"><icon name="caret-square-o-right"></icon></b-button>
+                        </b-button-group>
                     </b-input-group>
                 </div>
             </div>
