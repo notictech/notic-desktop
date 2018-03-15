@@ -428,3 +428,9 @@ h4 {
     background: #dc3545 !important;
     color: #fff;
 }
+
+.bottom-nav-bar {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+}
