@@ -546,6 +546,7 @@ const actions = {
         let marks = document.getElementsByTagName('mark')
         if (marks.length) {
           this.commit('setMarksCount', marks.length)
+          marks[0].classList.add('active')
         } else {
           this.commit('setMarksCount', 0)
         }
