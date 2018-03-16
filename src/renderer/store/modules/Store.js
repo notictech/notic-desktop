@@ -909,23 +909,32 @@ const actions = {
     const href = '#note_index_' + state.activeNoteIndex
     const el = href ? document.querySelector(href) : null
     if (el) {
-      // document.querySelector('#notes').scrollTop = el.offsetTop
-      $('#notes').animate({ scrollTop: el.offsetTop }, state.settings.animationSpeed)
+      if (state.settings.animationSpeed === 0) {
+        document.querySelector('#notes').scrollTop = el.offsetTop
+      } else {
+        $('#notes').animate({ scrollTop: el.offsetTop }, state.settings.animationSpeed)
+      }
     }
   },
   scrollToActiveNoteLink (context) {
     const href = '#notelink_index_' + state.activeNoteIndex
     const el = href ? document.querySelector(href) : null
     if (el) {
-      // document.querySelector('.sidebar').scrollTop = el.offsetTop - 200
-      $('.sidebar').animate({ scrollTop: el.offsetTop - 200 }, state.settings.animationSpeed)
+      if (state.settings.animationSpeed === 0) {
+        document.querySelector('.sidebar').scrollTop = el.offsetTop - 200
+      } else {
+        $('.sidebar').animate({ scrollTop: el.offsetTop - 200 }, state.settings.animationSpeed)
+      }
     }
   },
   scrollToActiveMark (context) {
     const el = document.querySelector('mark.active')
     if (el) {
-      // document.querySelector('#notes').scrollTop = el.offsetTop - 200
-      $('#notes').animate({ scrollTop: el.offsetTop - 200 }, state.settings.animationSpeed)
+      if (state.settings.animationSpeed === 0) {
+        document.querySelector('#notes').scrollTop = el.offsetTop - 200
+      } else {
+        $('#notes').animate({ scrollTop: el.offsetTop - 200 }, state.settings.animationSpeed)
+      }
     }
   },
   loadHistory (context) {
