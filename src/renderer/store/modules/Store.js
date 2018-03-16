@@ -1,6 +1,7 @@
 import menus from '../../../menu'
 import bus from '../../../renderer/bus'
 
+const $ = require('jquery')
 const remote = require('electron').remote
 const Datastore = require('nedb')
 const moment = require('moment')
@@ -906,20 +907,23 @@ const actions = {
     const href = '#note_index_' + state.activeNoteIndex
     const el = href ? document.querySelector(href) : null
     if (el) {
-      document.querySelector('#notes').scrollTop = el.offsetTop
+      // document.querySelector('#notes').scrollTop = el.offsetTop
+      $('#notes').animate({ scrollTop: el.offsetTop }, 200)
     }
   },
   scrollToActiveNoteLink (context) {
     const href = '#notelink_index_' + state.activeNoteIndex
     const el = href ? document.querySelector(href) : null
     if (el) {
-      document.querySelector('.sidebar').scrollTop = el.offsetTop - 200
+      // document.querySelector('.sidebar').scrollTop = el.offsetTop - 200
+      $('.sidebar').animate({ scrollTop: el.offsetTop }, 200)
     }
   },
   scrollToActiveMark (context) {
     const el = document.querySelector('mark.active')
     if (el) {
-      document.querySelector('#notes').scrollTop = el.offsetTop - 200
+      // document.querySelector('#notes').scrollTop = el.offsetTop - 200
+      $('#notes').animate({ scrollTop: el.offsetTop }, 200)
     }
   },
   loadHistory (context) {
