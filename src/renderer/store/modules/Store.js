@@ -908,7 +908,7 @@ const actions = {
     const el = href ? document.querySelector(href) : null
     if (el) {
       // document.querySelector('#notes').scrollTop = el.offsetTop
-      $('#notes').animate({ scrollTop: el.offsetTop }, 200)
+      $('#notes').animate({ scrollTop: el.offsetTop }, 500)
     }
   },
   scrollToActiveNoteLink (context) {
@@ -916,14 +916,14 @@ const actions = {
     const el = href ? document.querySelector(href) : null
     if (el) {
       // document.querySelector('.sidebar').scrollTop = el.offsetTop - 200
-      $('.sidebar').animate({ scrollTop: el.offsetTop }, 200)
+      $('.sidebar').animate({ scrollTop: el.offsetTop }, 500)
     }
   },
   scrollToActiveMark (context) {
     const el = document.querySelector('mark.active')
     if (el) {
       // document.querySelector('#notes').scrollTop = el.offsetTop - 200
-      $('#notes').animate({ scrollTop: el.offsetTop }, 200)
+      $('#notes').animate({ scrollTop: el.offsetTop }, 500)
     }
   },
   loadHistory (context) {
