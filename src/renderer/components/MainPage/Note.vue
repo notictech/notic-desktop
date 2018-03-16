@@ -96,8 +96,8 @@
         }
       },
       openEditNotePage (id, index) {
-        this.$store.dispatch('setActiveNoteIndex', index)
-        this.$store.dispatch('setActiveNoteId', id)
+        this.$store.commit('setActiveNoteIndex', index)
+        this.$store.commit('setActiveNoteId', id)
         this.$store.dispatch('addNoteToHistory', id)
         this.$store.dispatch('openEditNotePage', id)
         this.$router.replace('/editor')
@@ -111,14 +111,14 @@
         }
       },
       showNoteContextMenu (id, index) {
-        this.$store.dispatch('setActiveNoteIndex', index)
-        this.$store.dispatch('setActiveNoteId', id)
+        this.$store.commit('setActiveNoteIndex', index)
+        this.$store.commit('setActiveNoteId', id)
         this.$store.dispatch('addNoteToHistory', id)
         this.$store.dispatch('showNoteContextMenu', id)
       },
       clickNote (id, index) {
-        this.$store.dispatch('setActiveNoteIndex', index)
-        this.$store.dispatch('setActiveNoteId', id)
+        this.$store.commit('setActiveNoteIndex', index)
+        this.$store.commit('setActiveNoteId', id)
         this.$store.dispatch('addNoteToHistory', id)
         this.$store.dispatch('defineFirstMark')
         this.$store.dispatch('scrollToActiveNoteLink')

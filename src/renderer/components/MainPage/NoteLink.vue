@@ -22,22 +22,22 @@
     },
     methods: {
       goToNote (index) {
-        this.$store.dispatch('setActiveNoteIndex', index)
-        this.$store.dispatch('setActiveNoteId', this.$store.state.Store.notes[index]._id)
+        this.$store.commit('setActiveNoteIndex', index)
+        this.$store.commit('setActiveNoteId', this.$store.state.Store.notes[index]._id)
         this.$store.dispatch('addNoteToHistory', this.$store.state.Store.notes[index]._id)
         this.$store.dispatch('scrollToActiveNote')
         this.$store.dispatch('defineFirstMark')
       },
       openEditNotePage (id, index) {
-        this.$store.dispatch('setActiveNoteIndex', index)
-        this.$store.dispatch('setActiveNoteId', id)
+        this.$store.commit('setActiveNoteIndex', index)
+        this.$store.commit('setActiveNoteId', id)
         this.$store.dispatch('addNoteToHistory', id)
         this.$store.dispatch('openEditNotePage', id)
         this.$router.replace('/editor')
       },
       showNoteContextMenu (id, index) {
-        this.$store.dispatch('setActiveNoteIndex', index)
-        this.$store.dispatch('setActiveNoteId', id)
+        this.$store.commit('setActiveNoteIndex', index)
+        this.$store.commit('setActiveNoteId', id)
         this.$store.dispatch('addNoteToHistory', id)
         this.$store.dispatch('showNoteContextMenu', id)
       },
