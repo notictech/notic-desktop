@@ -48,7 +48,7 @@ const state = {
     logoutAfter: 0,
     eraseClipboardAfter: 0,
     windowOnTop: 0,
-    animationSpeed: 400
+    animationSpeed: 0
   },
   notes: [],
   note: {},
