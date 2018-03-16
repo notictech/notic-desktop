@@ -81,6 +81,10 @@
                 </div>
                 <div class="col-7">
                     <b-input-group size="sm">
+                        <b-button-group size="sm" style="margin-left: 4px" v-if="this.$store.state.Store.marksCount">
+                            <b-button title="Next match (Ctrl+Shift+Right)" @click="goToNextMark()"><icon name="toggle-down"></icon></b-button>
+                            <b-button title="Previous match (Ctrl+Shift+Left)" @click="goToPreviousMark()"><icon name="toggle-up"></icon></b-button>
+                        </b-button-group>
                         <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" ref="search" :value="searchQuery"></b-form-input>
                         <b-button-group size="sm" class="search-filters">
                             <b-button :variant="(searchFilter == 'notes') ? 'warning' : 'secondary'" title="All (Ctrl+1)" @click="setSearchFilter('notes')"><icon name="asterisk"></icon></b-button>
@@ -160,10 +164,6 @@
                 <!--<b-button title="Next note (Ctrl+Right)" @click="goToNextNote()"><icon name="arrow-down"></icon></b-button>-->
                 <!--<b-button title="Previous note (Ctrl+Left)" @click="goToPreviousNote()"><icon name="arrow-up"></icon></b-button>-->
             <!--</b-button-group>-->
-            <b-button-group size="sm" style="margin-left: 4px" v-if="this.$store.state.Store.marksCount">
-                <b-button title="Next match (Ctrl+Shift+Right)" @click="goToNextMark()"><icon name="toggle-down"></icon></b-button>
-                <b-button title="Previous match (Ctrl+Shift+Left)" @click="goToPreviousMark()"><icon name="toggle-up"></icon></b-button>
-            </b-button-group>
         </div>
     </b-container>
 </template>
