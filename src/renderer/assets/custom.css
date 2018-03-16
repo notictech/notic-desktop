@@ -64,18 +64,20 @@ button svg {
     font-size: 0.8em;
     white-space: pre-wrap;
     border-bottom: 1px solid #e6e6e6;
+    border-left: #fff 4px solid;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 .screen.notes .sidebar .note-link:focus {
     box-shadow: none;
-    background: #e8e8e8;
+    background: #fafafa;
 }
 .screen.notes .sidebar .note-link:hover {
-    background: #e8e8e8;
+    background: #fafafa;
 }
 .screen.notes .sidebar .note-link.active {
-    background: #a0d3ff;
+    border-left: #0787FF 4px solid;
+    background: #eee;
 }
 
 .screen.notes .sidebar .note-link-checkbox  {
@@ -85,6 +87,7 @@ button svg {
 
 .screen.notes .notes {
     padding-bottom: 100px;
+    margin-top: 2px;
 }
 .screen.notifications .notifications {
     padding: 20px;
@@ -249,10 +252,14 @@ h4 {
     font-size: 20px;
 }
 /* New note styles*/
-.screen.notifications .notifications .notification,
-.screen.notes .notes .note {
+.screen.notifications .notifications .notification {
     padding: 15px;
     border-radius: 3px;
+}
+.screen.notes .notes .note {
+    padding: 15px;
+    border-radius: 0.2rem;
+    border-top: 1px solid #fff;
 }
 .screen.notifications .notifications .notification h1,h2,h3,h4,h5,h6,
 .screen.notes .notes .note h1,h2,h3,h4,h5,h6 {
@@ -262,11 +269,12 @@ h4 {
 .screen.notes .notes .note h1 {
     font-size: 18px;
     font-weight: bold;
+    margin-right: 74px;
 }
 .screen.notifications .notifications .notification h2,
 .screen.notes .notes .note h2 {
     font-size: 11px;
-    color: grey;
+    color: #555555;
 }
 .screen.notifications .notifications .notification h2 > span,
 .screen.notes .notes .note h2 > span {
@@ -302,8 +310,9 @@ h4 {
     background: #fff2f7;
 }
 .screen.notes .notes .note.active {
-    border-left: #51adff 4px solid;
-    background: #fafafa;
+    border-left: #0787FF 4px solid;
+    border-top: 1px solid #eee;
+    background: #eee;
 }
 
 .screen.settings .content-wrap {
@@ -433,4 +442,5 @@ h4 {
     position: fixed;
     right: 101px;
     bottom: 0;
+    z-index: 1000;
 }
