@@ -85,6 +85,22 @@
                         </b-form-input>&nbsp;seconds after secret copying ("0" for disabling)
                     </b-input-group>
                 </b-form-group>
+                <b-form-group id="inputGroup6" v-if="this.$store.state.Store.isLoggedIn"
+                              label="Animation speed:">
+                    <b-input-group>
+                        <b-form-input id="input6"
+                                      type="number"
+                                      size="sm"
+                                      min="0"
+                                      max="1000"
+                                      step="50"
+                                      style="flex: none; width: 100px;"
+                                      required
+                                      v-model="animationSpeed"
+                                      :value="this.animationSpeed">
+                        </b-form-input>&nbsp;("0" for disabling)
+                    </b-input-group>
+                </b-form-group>
             </div>
         </b-container>
     </b-form>
@@ -107,6 +123,7 @@
       this.historyMaxLength = this.$store.state.Store.settings.historyMaxLength
       this.logoutAfter = this.$store.state.Store.settings.logoutAfter
       this.eraseClipboardAfter = this.$store.state.Store.settings.eraseClipboardAfter
+      this.animationSpeed = this.$store.state.Store.settings.animationSpeed
     },
     data () {
       return {
@@ -118,7 +135,8 @@
         ],
         historyMaxLength: 0,
         logoutAfter: 0,
-        eraseClipboardAfter: 0
+        eraseClipboardAfter: 0,
+        animationSpeed: 0
       }
     },
     computed: {
@@ -141,6 +159,7 @@
         this.$store.commit('setHistoryMaxLength', parseInt(this.historyMaxLength))
         this.$store.commit('setLogoutAfter', parseInt(this.logoutAfter))
         this.$store.commit('setEraseClipboardAfter', parseInt(this.eraseClipboardAfter))
+        this.$store.commit('setAnimationSpeed', parseInt(this.animationSpeed))
 
         this.$store.dispatch('settingsSaveAndClose', () => {
           this.$router.replace('/')

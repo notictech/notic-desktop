@@ -385,6 +385,7 @@
         this.$store.commit('setSearchQuery', '')
         this.$store.commit('setDateFilterActive', false)
         this.$store.dispatch('setSearchFilter', 'notes')
+        this.$store.dispatch('scrollToActiveNoteLink')
       },
       toggleMassSelect () {
         this.$store.commit('emptySelectedNotes')

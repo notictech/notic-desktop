@@ -47,7 +47,8 @@ const state = {
     historyMaxLength: 50,
     logoutAfter: 0,
     eraseClipboardAfter: 0,
-    windowOnTop: 0
+    windowOnTop: 0,
+    animationSpeed: 400
   },
   notes: [],
   note: {},
@@ -110,6 +111,7 @@ const mutations = {
   setEditorInitTab: (state, data) => { state.editorInitTab = data },
   setLastUsingTime: (state, data) => { state.lastUsingTime = data },
   setEraseClipboardAfter: (state, data) => { state.settings.eraseClipboardAfter = data },
+  setAnimationSpeed: (state, data) => { state.settings.animationSpeed = data },
   setLogoutAfter: (state, data) => { state.settings.logoutAfter = data },
   setHistoryMaxLength: (state, data) => { state.settings.historyMaxLength = data },
   setLocalKeymap: (state, data) => { state.settings.localKeymap = data },
@@ -908,7 +910,7 @@ const actions = {
     const el = href ? document.querySelector(href) : null
     if (el) {
       // document.querySelector('#notes').scrollTop = el.offsetTop
-      $('#notes').animate({ scrollTop: el.offsetTop }, 500)
+      $('#notes').animate({ scrollTop: el.offsetTop }, state.settings.animationSpeed)
     }
   },
   scrollToActiveNoteLink (context) {
@@ -916,14 +918,14 @@ const actions = {
     const el = href ? document.querySelector(href) : null
     if (el) {
       // document.querySelector('.sidebar').scrollTop = el.offsetTop - 200
-      $('.sidebar').animate({ scrollTop: el.offsetTop }, 500)
+      $('.sidebar').animate({ scrollTop: el.offsetTop - 200 }, state.settings.animationSpeed)
     }
   },
   scrollToActiveMark (context) {
     const el = document.querySelector('mark.active')
     if (el) {
       // document.querySelector('#notes').scrollTop = el.offsetTop - 200
-      $('#notes').animate({ scrollTop: el.offsetTop }, 500)
+      $('#notes').animate({ scrollTop: el.offsetTop - 200 }, state.settings.animationSpeed)
     }
   },
   loadHistory (context) {
