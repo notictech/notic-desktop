@@ -155,16 +155,16 @@
         <div class="left-status-bar">
             Found: {{ notes.length }}
         </div>
-        <!--<div class="bottom-nav-bar">-->
+        <div class="bottom-nav-bar">
             <!--<b-button-group size="sm" style="margin-left: 4px" v-if="this.$store.state.Store.notes.length">-->
                 <!--<b-button title="Next note (Ctrl+Right)" @click="goToNextNote()"><icon name="arrow-down"></icon></b-button>-->
                 <!--<b-button title="Previous note (Ctrl+Left)" @click="goToPreviousNote()"><icon name="arrow-up"></icon></b-button>-->
             <!--</b-button-group>-->
-            <!--<b-button-group size="sm" style="margin-left: 4px" v-if="this.$store.state.Store.marksCount">-->
-                <!--<b-button title="Next match (Ctrl+Shift+Right)" @click="goToNextMark()"><icon name="toggle-down"></icon></b-button>-->
-                <!--<b-button title="Previous match (Ctrl+Shift+Left)" @click="goToPreviousMark()"><icon name="toggle-up"></icon></b-button>-->
-            <!--</b-button-group>-->
-        <!--</div>-->
+            <b-button-group size="sm" style="margin-left: 4px" v-if="this.$store.state.Store.marksCount">
+                <b-button title="Next match (Ctrl+Shift+Right)" @click="goToNextMark()"><icon name="toggle-down"></icon></b-button>
+                <b-button title="Previous match (Ctrl+Shift+Left)" @click="goToPreviousMark()"><icon name="toggle-up"></icon></b-button>
+            </b-button-group>
+        </div>
     </b-container>
 </template>
 

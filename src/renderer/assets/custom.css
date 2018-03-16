@@ -431,6 +431,6 @@ h4 {
 
 .bottom-nav-bar {
     position: fixed;
-    left: 50%;
+    right: 101px;
     bottom: 0;
 }
