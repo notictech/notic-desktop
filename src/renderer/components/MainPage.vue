@@ -262,8 +262,8 @@
         this.$store.commit('setNeedFocusOn', null)
       }
       if (this.$store.state.Store.loadedNotesCount - 1 <= this.$store.state.Store.activeNoteIndex) {
-        this.$store.commit('setLoadedNotesCount', this.$store.state.Store.loadedNotesCount + 40)
-        this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 40)
+        this.$store.commit('setLoadedNotesCount', this.$store.state.Store.loadedNotesCount + 30)
+        this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 30)
         return
       }
       this.$store.dispatch('scrollToActiveNote')
@@ -273,8 +273,8 @@
       scrollNotes (event) {
         if (event.target.scrollTop + event.target.clientHeight === event.target.scrollHeight) {
           if (this.$store.state.Store.loadedNotesCount <= this.notes.length && this.$store.state.Store.loadedNotesLinksCount <= this.notes.length) {
-            this.$store.commit('setLoadedNotesCount', this.$store.state.Store.loadedNotesCount + 40)
-            this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 40)
+            this.$store.commit('setLoadedNotesCount', this.$store.state.Store.loadedNotesCount + 30)
+            this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 30)
           }
         }
       },

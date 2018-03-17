@@ -529,8 +529,8 @@ const actions = {
       if (docs.length) {
         this.commit('setActiveNoteIndex', 0)
         this.commit('setActiveNoteId', docs[0]._id)
-        this.commit('setLoadedNotesCount', 40)
-        this.commit('setLoadedNotesLinksCount', 40)
+        this.commit('setLoadedNotesCount', 30)
+        this.commit('setLoadedNotesLinksCount', 30)
         this.commit('setMarkPos', 0)
         if (obj.cb) obj.cb()
         this.commit('emptySelectedNotes')
