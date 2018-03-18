@@ -266,7 +266,7 @@
         this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 30)
         return
       }
-      this.$store.dispatch('scrollToActiveNote')
+      // this.$store.dispatch('scrollToActiveNote')
       // this.$store.dispatch('scrollToActiveNoteLink')
       this.$store.dispatch('highlightNotes')
     },
