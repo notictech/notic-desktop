@@ -43,7 +43,7 @@
                             The password is empty so database won't be encrypted.
                         </b-alert>
                         <div class="row justify-content-md-center">
-                            <b-button type="button" variant="primary" @click="submit()">Ok</b-button>
+                            <b-button type="button" variant="primary" @click="submit()">Set password</b-button>
                         </div>
 
                     </div>
