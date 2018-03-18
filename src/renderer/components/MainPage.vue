@@ -266,8 +266,11 @@
         this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 30)
         return
       }
-      // this.$store.dispatch('scrollToActiveNote')
-      // this.$store.dispatch('scrollToActiveNoteLink')
+      if (this.$store.state.Store.needScroll) {
+        this.$store.dispatch('scrollToActiveNote')
+        this.$store.dispatch('scrollToActiveNoteLink')
+        this.$store.commit('setNeedScroll', false)
+      }
       this.$store.dispatch('highlightNotes')
     },
     methods: {
@@ -352,12 +355,14 @@
       },
       historyForward () {
         this.$store.dispatch('historyForward', () => {
+          this.$store.commit('setNeedScroll', true)
           this.$store.dispatch('scrollToActiveNoteLink')
           this.$store.dispatch('defineFirstMark')
         })
       },
       historyBack () {
         this.$store.dispatch('historyBack', () => {
+          this.$store.commit('setNeedScroll', true)
           this.$store.dispatch('scrollToActiveNoteLink')
           this.$store.dispatch('defineFirstMark')
         })
@@ -386,7 +391,7 @@
         this.$store.commit('setSearchQuery', '')
         this.$store.commit('setDateFilterActive', false)
         this.$store.dispatch('setSearchFilter', 'notes')
-        this.$store.dispatch('scrollToActiveNoteLink')
+        this.$store.commit('setNeedScroll', true)
       },
       toggleMassSelect () {
         this.$store.commit('emptySelectedNotes')

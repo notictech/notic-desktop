@@ -81,7 +81,8 @@ const state = {
   dateFilterDate2: moment('2016-01-01').format('YYYY-MM-DD'),
   needFocusOn: null,
   markPos: 0,
-  marksCount: 0
+  marksCount: 0,
+  needScroll: false
 }
 
 const mutations = {
@@ -97,6 +98,7 @@ const mutations = {
     state.selectedNotes = []
   },
   setContextNoteIsDeleted: (state, data) => { state.contextNoteIsDeleted = data },
+  setNeedScroll: (state, data) => { state.needScroll = data },
   setMarkPos: (state, data) => { state.markPos = data },
   setMarksCount: (state, data) => { state.marksCount = data },
   toggleDateFilter: (state) => { state.dateFilterActive = !state.dateFilterActive },
