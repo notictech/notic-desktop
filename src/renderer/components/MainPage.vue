@@ -149,12 +149,12 @@
         </div>
         <div class="sidebar" v-if="notes.length" @scroll="scrollNotes($event)">
             <b-button-group vertical class="notes-links" id="notes-links">
-                <note-link v-for="(note, index) in notes.slice(0, loadedNotesLinksCount)" :note="note" :key="note._id" :index="index"></note-link>
+                <note-link v-for="(note, index) in visibleNotesLinks" :note="note" :key="note._id" :index="index"></note-link>
             </b-button-group>
         </div>
         <!--<div class="banner-empty" v-if="!notes.length">Nothing.</div>-->
         <div class="notes" v-if="notes.length" ref="notes" id="notes" @scroll="scrollNotes($event)">
-            <note v-for="(note, index) in notes.slice(0, loadedNotesCount)" :note="note" :key="note._id" :index="index"></note>
+            <note v-for="(note, index) in visibleNotes" :note="note" :key="note._id" :index="index"></note>
         </div>
         <div class="left-status-bar">
             Found: {{ notes.length }}
@@ -267,7 +267,7 @@
         return
       }
       this.$store.dispatch('scrollToActiveNote')
-      this.$store.dispatch('scrollToActiveNoteLink')
+      // this.$store.dispatch('scrollToActiveNoteLink')
       this.$store.dispatch('highlightNotes')
     },
     methods: {
@@ -569,6 +569,12 @@
           'f3': this.openAboutPage,
           'esc': this.resetSearch
         }
+      },
+      visibleNotes () {
+        return this.$store.getters.notes.slice(0, this.$store.state.Store.loadedNotesCount)
+      },
+      visibleNotesLinks () {
+        return this.$store.getters.notes.slice(0, this.$store.state.Store.loadedNotesLinksCount)
       },
       notes () {
         return this.$store.getters.notes
