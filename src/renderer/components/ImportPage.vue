@@ -57,7 +57,7 @@
                             </div>
                         </b-form-group>
                         <div class="row justify-content-md-center">
-                            <b-button type="button" variant="primary" @click="submit()">Let's go</b-button>
+                            <b-button type="button" variant="primary" @click="submit()">Ok</b-button>
                         </div>
                     </div>
                 </div>
