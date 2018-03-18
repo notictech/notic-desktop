@@ -550,6 +550,7 @@ const actions = {
         if (marks.length) {
           this.commit('setMarksCount', marks.length)
           marks[0].classList.add('active')
+          this.dispatch('defineFirstMark')
         } else {
           this.commit('setMarksCount', 0)
         }
