@@ -1099,44 +1099,34 @@ const actions = {
     clipboard.writeText(state.exportedNotes)
   },
   editorPastePassword (context) {
-    if (document.activeElement.id !== 'contentTextArea') {
-      return
-    }
-    typeInTextarea(document.activeElement, genPassword())
-    this.dispatch('editorChangeContent', document.activeElement.value)
-    this.commit('setNoteIsModified', true)
+    // if (document.activeElement.id !== 'contentTextArea') {
+    //   return
+    // }
+    document.execCommand('insertText', false, genPassword())
   },
   editorPasteCurrentDateTime (context) {
-    if (document.activeElement.id !== 'contentTextArea') {
-      return
-    }
-    typeInTextarea(document.activeElement, moment().format('DD.MM.YYYY HH:mm'))
-    this.dispatch('editorChangeContent', document.activeElement.value)
-    this.commit('setNoteIsModified', true)
+    // if (document.activeElement.id !== 'contentTextArea') {
+    //   return
+    // }
+    document.execCommand('insertText', false, moment().format('DD.MM.YYYY HH:mm'))
   },
   editorPasteLine (context) {
     if (document.activeElement.id !== 'contentTextArea') {
       return
     }
-    typeInTextarea(document.activeElement, '---------------------------------\n')
-    this.dispatch('editorChangeContent', document.activeElement.value)
-    this.commit('setNoteIsModified', true)
+    document.execCommand('insertText', false, '---------------------------------\n')
   },
   editorPasteDoubleLine (context) {
     if (document.activeElement.id !== 'contentTextArea') {
       return
     }
-    typeInTextarea(document.activeElement, '=================================\n')
-    this.dispatch('editorChangeContent', document.activeElement.value)
-    this.commit('setNoteIsModified', true)
+    document.execCommand('insertText', false, '=================================\n')
   },
   editorRepeatLine (context) {
     if (document.activeElement.id !== 'contentTextArea') {
       return
     }
-    typeInTextarea(document.activeElement, '\n' + getCurrentLineInTextarea(document.activeElement))
-    this.dispatch('editorChangeContent', document.activeElement.value)
-    this.commit('setNoteIsModified', true)
+    document.execCommand('insertText', false, '\n' + getCurrentLineInTextarea(document.activeElement))
   },
   startClipboardCountdown (context) {
     if (state.settings.eraseClipboardAfter === 0) {
@@ -1457,16 +1447,16 @@ function safeTags (str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
 
-function typeInTextarea (el, newText) {
-  let start = el.selectionStart
-  let end = el.selectionEnd
-  let text = el.value
-  let before = text.substring(0, start)
-  let after = text.substring(end, text.length)
-  el.value = (before + newText + after)
-  el.selectionStart = el.selectionEnd = start + newText.length
-  el.focus()
-}
+// function typeInTextarea (el, newText) {
+//   let start = el.selectionStart
+//   let end = el.selectionEnd
+//   let text = el.value
+//   let before = text.substring(0, start)
+//   let after = text.substring(end, text.length)
+//   el.value = (before + newText + after)
+//   el.selectionStart = el.selectionEnd = start + newText.length
+//   el.focus()
+// }
 
 function getCurrentLineInTextarea (el) {
   let caretPos = el.selectionEnd
@@ -1484,7 +1474,6 @@ function getCurrentLineInTextarea (el) {
   }
 
   let line = el.value.substring(start + 1, end)
-  console.log(line)
   return line
 }
 
