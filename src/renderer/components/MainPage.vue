@@ -267,6 +267,7 @@
         return
       }
       this.$store.dispatch('scrollToActiveNote')
+      this.$store.dispatch('scrollToActiveNoteLink')
       this.$store.dispatch('highlightNotes')
     },
     methods: {
