@@ -8,7 +8,7 @@
                     </div>
                     <div class="col-6" style="text-align: right">
                         <b-button-group size="sm">
-                            <b-button v-if="notifications.length" size="sm" type="button" variant="success" @click="readAll()"><icon name="check"></icon> Read all</b-button>
+                            <b-button ref="notificationsReadAll" v-if="notifications.length" size="sm" type="button" variant="success" @click="readAll()"><icon name="check"></icon> Read all</b-button>
                         </b-button-group>
                         <b-button-group size="sm">
                             <b-button v-if="notifications.length" size="sm" type="button" variant="danger" @click="deleteAll()"><icon name="trash-o"></icon> Delete all</b-button>
@@ -48,6 +48,7 @@
       if (this.$store.state.Store.appJustStarted) {
         this.$router.replace('/')
       }
+      this.$refs.notificationsReadAll.focus()
     },
     methods: {
       close () {
