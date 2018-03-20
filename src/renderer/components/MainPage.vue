@@ -147,14 +147,14 @@
                 </b-row>
             </div>
         </div>
-        <div class="sidebar" v-if="notes.length" @scroll="scrollNotes($event)">
+        <div class="sidebar" v-if="notes.length">
             <b-button-group vertical class="notes-links" id="notes-links">
-                <note-link v-for="(note, index) in visibleNotesLinks" :note="note" :key="note._id" :index="index"></note-link>
+                <note-link v-for="(note, index) in pageNotes" :note="note" :key="note._id" :index="index"></note-link>
             </b-button-group>
         </div>
         <!--<div class="banner-empty" v-if="!notes.length">Nothing.</div>-->
-        <div class="notes" v-if="notes.length" ref="notes" id="notes" @scroll="scrollNotes($event)">
-            <note v-for="(note, index) in visibleNotes" :note="note" :key="note._id" :index="index"></note>
+        <div class="notes" v-if="notes.length" ref="notes" id="notes">
+            <note v-for="(note, index) in pageNotes" :note="note" :key="note._id" :index="index"></note>
         </div>
         <div class="left-status-bar">
             Found: {{ notes.length }}
@@ -274,14 +274,6 @@
       this.$store.dispatch('highlightNotes')
     },
     methods: {
-      scrollNotes (event) {
-        if (event.target.scrollTop + event.target.clientHeight === event.target.scrollHeight) {
-          if (this.$store.state.Store.loadedNotesCount <= this.notes.length && this.$store.state.Store.loadedNotesLinksCount <= this.notes.length) {
-            this.$store.commit('setLoadedNotesCount', this.$store.state.Store.loadedNotesCount + 30)
-            this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 30)
-          }
-        }
-      },
       focusOnSearch () {
         this.$refs.search.focus()
       },
@@ -575,11 +567,12 @@
           'esc': this.resetSearch
         }
       },
-      visibleNotes () {
-        return this.$store.getters.notes.slice(0, this.$store.state.Store.loadedNotesCount)
-      },
-      visibleNotesLinks () {
-        return this.$store.getters.notes.slice(0, this.$store.state.Store.loadedNotesLinksCount)
+      pageNotes () {
+        // return this.$store.state.Store.notes.slice(this.$store.state.Store.pagerPage * this.$store.state.Store.pagerNotesPerPage, this.$store.state.Store.pagerNotesPerPage)
+        return this.$store.state.Store.notes.slice(
+          (this.$store.state.Store.pagerPage - 1) * this.$store.state.Store.pagerNotesPerPage,
+          (this.$store.state.Store.pagerPage - 1) * this.$store.state.Store.pagerNotesPerPage + this.$store.state.Store.pagerNotesPerPage
+        )
       },
       notes () {
         return this.$store.getters.notes

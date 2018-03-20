@@ -1487,9 +1487,9 @@ RegExp.quote = (str) => {
   return str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1')
 }
 
-function getPageByNoteIndex (index) {
-  return Math.ceil(index / state.pagerNotesPerPage)
-}
+// function getPageByNoteIndex (index) {
+//   return Math.ceil(index / state.pagerNotesPerPage)
+// }
 
 export default {
   state,
