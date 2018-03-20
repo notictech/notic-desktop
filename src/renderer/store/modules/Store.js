@@ -82,7 +82,9 @@ const state = {
   needFocusOn: null,
   markPos: 0,
   marksCount: 0,
-  needScroll: false
+  needScroll: false,
+  pagerPos: 0,
+  pagerLimit: 20
 }
 
 const mutations = {
