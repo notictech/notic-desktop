@@ -542,6 +542,7 @@
           return false
         }
         this.$store.commit('setPagerPage', 1)
+        this.$store.commit('setActiveNoteIndex', 0)
       },
       goToPreviousPage () {
         if (!this.$store.state.Store.pagerPagesCount) {
@@ -552,12 +553,14 @@
         } else {
           this.$store.commit('setPagerPage', this.$store.state.Store.pagerPage - 1)
         }
+        this.$store.commit('setActiveNoteIndex', 0)
       },
       goToLastPage () {
         if (!this.$store.state.Store.pagerPagesCount) {
           return false
         }
         this.$store.commit('setPagerPage', this.$store.state.Store.pagerPagesCount)
+        this.$store.commit('setActiveNoteIndex', 0)
       },
       goToNextPage () {
         if (!this.$store.state.Store.pagerPagesCount) {
@@ -568,6 +571,7 @@
         } else {
           this.$store.commit('setPagerPage', this.$store.state.Store.pagerPage + 1)
         }
+        this.$store.commit('setActiveNoteIndex', 0)
       }
     },
     computed: {
