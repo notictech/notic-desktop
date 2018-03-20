@@ -826,23 +826,33 @@ const actions = {
   },
   goToNextNote (context, cb) {
     if (!state.notes.length) return
-    if (state.activeNoteIndex === state.notes.length - 1) {
-      this.commit('setActiveNoteIndex', 0)
+    if (state.activeNoteIndex === state.pagerCurrentPageCount - 1) {
+      if (state.pagerPage < state.pagerPagesCount) {
+        this.commit('setPagerPage', state.pagerPage + 1)
+        this.commit('setActiveNoteIndex', 0)
+      } else {
+        return false
+      }
     } else {
       this.commit('setActiveNoteIndex', state.activeNoteIndex + 1)
     }
-    this.commit('setActiveNoteId', state.notes[state.activeNoteIndex]._id)
+    this.commit('setActiveNoteId', state.notes[this.getters.getAbsoluteNoteIndex(state.activeNoteIndex)]._id)
     this.dispatch('scrollToActiveNote')
     cb()
   },
   goToPreviousNote (context, cb) {
     if (!state.notes.length) return
     if (state.activeNoteIndex === 0) {
-      this.commit('setActiveNoteIndex', state.notes.length - 1)
+      if (state.pagerPage > 1) {
+        this.commit('setPagerPage', state.pagerPage - 1)
+        this.commit('setActiveNoteIndex', state.pagerCurrentPageCount - 1)
+      } else {
+        return false
+      }
     } else {
       this.commit('setActiveNoteIndex', state.activeNoteIndex - 1)
     }
-    this.commit('setActiveNoteId', state.notes[state.activeNoteIndex]._id)
+    this.commit('setActiveNoteId', state.notes[this.getters.getAbsoluteNoteIndex(state.activeNoteIndex)]._id)
     this.dispatch('scrollToActiveNote')
     cb()
   },
