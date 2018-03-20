@@ -83,11 +83,12 @@ const state = {
   markPos: 0,
   marksCount: 0,
   needScroll: false,
-  pagerPos: 0,
-  pagerLimit: 20
+  pagerPage: 1,
+  pagerNotesPerPage: 30
 }
 
 const mutations = {
+  setPage: (state, data) => { state.page = 1 },
   addNoteToSelected: (state, id) => {
     if (!state.selectedNotes.includes(id)) {
       state.selectedNotes.push(id)
@@ -1484,6 +1485,10 @@ function getCurrentLineInTextarea (el) {
 
 RegExp.quote = (str) => {
   return str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1')
+}
+
+function getPageByNoteIndex (index) {
+  return Math.ceil(index / state.pagerNotesPerPage)
 }
 
 export default {
