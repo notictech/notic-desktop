@@ -151,6 +151,7 @@
             <b-button-group vertical class="notes-links" id="notes-links">
                 <note-link v-for="(note, index) in pageNotes" :note="note" :key="note._id" :index="index"></note-link>
             </b-button-group>
+            <pagination v-if="pagerPagesCount > 1"></pagination>
         </div>
         <!--<div class="banner-empty" v-if="!notes.length">Nothing.</div>-->
         <div class="notes" v-if="notes.length" ref="notes" id="notes">
@@ -173,12 +174,13 @@
   import Icon from '../../../node_modules/vue-awesome/components/Icon.vue'
   import Note from '../components/MainPage/Note.vue'
   import NoteLink from '../components/MainPage/NoteLink.vue'
+  import Pagination from '../components/MainPage/Pagination.vue'
 
   const fs = require('fs')
 
   export default {
     name: 'main-page',
-    components: { Icon, Note, NoteLink },
+    components: { Icon, Note, NoteLink, Pagination },
     data () {
       return {
         exportedNotesPassword: '',
@@ -566,6 +568,12 @@
           'f3': this.openAboutPage,
           'esc': this.resetSearch
         }
+      },
+      pagerPage () {
+        return this.$store.state.Store.pagerPage
+      },
+      pagerPagesCount () {
+        return this.$store.state.Store.pagerPagesCount
       },
       pageNotes () {
         // return this.$store.state.Store.notes.slice(this.$store.state.Store.pagerPage * this.$store.state.Store.pagerNotesPerPage, this.$store.state.Store.pagerNotesPerPage)
