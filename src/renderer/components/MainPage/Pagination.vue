@@ -1,7 +1,7 @@
 <template>
     <div class="notes-pagination">
         <b-pagination size="sm"
-                      :limit="4"
+                      :limit="2"
                       :total-rows="this.$store.state.Store.notes.length"
                       :value="this.$store.state.Store.pagerPage"
                       @input="inputPage($event)"
