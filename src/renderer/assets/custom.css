@@ -281,6 +281,7 @@ h4 {
 .screen.notes .notes .note h2 > span {
     color: #dc3545;
     font-size: 11px;
+    margin-left: 3px;
 }
 .screen.notifications .notifications .notification h3,
 .screen.notes .notes .note h3 {
