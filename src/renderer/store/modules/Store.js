@@ -1207,7 +1207,10 @@ const actions = {
       query: state.history[state.historyIndex].q,
       cb: () => {
         this.commit('setActiveNoteId', state.history[state.historyIndex].i)
-        this.commit('setActiveNoteIndex', this.getters.getNoteIndexById(state.history[state.historyIndex].i))
+        this.commit('setPagerPagesCount', Math.ceil(state.notes.length / state.pagerNotesPerPage))
+        let localIndex = this.getters.getNoteIndexById(state.history[state.historyIndex].i)
+        this.commit('setPagerPage', getPagerPageByNoteIndex(localIndex))
+        this.commit('setActiveNoteIndex', localIndex % state.pagerNotesPerPage)
         if (cb) cb()
       }
     })
@@ -1491,9 +1494,9 @@ RegExp.quote = (str) => {
   return str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1')
 }
 
-// function getPagerPageByNoteIndex (index) {
-//   return Math.ceil(index / state.pagerNotesPerPage)
-// }
+function getPagerPageByNoteIndex (index) {
+  return Math.ceil(index / state.pagerNotesPerPage)
+}
 
 export default {
   state,

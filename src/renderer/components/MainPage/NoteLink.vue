@@ -22,9 +22,10 @@
     },
     methods: {
       goToNote (index) {
+        let absoluteIndex = (this.$store.state.Store.pagerPage - 1) * this.$store.state.Store.pagerNotesPerPage + index
         this.$store.commit('setActiveNoteIndex', index)
-        this.$store.commit('setActiveNoteId', this.$store.state.Store.notes[index]._id)
-        this.$store.dispatch('addNoteToHistory', this.$store.state.Store.notes[index]._id)
+        this.$store.commit('setActiveNoteId', this.$store.state.Store.notes[absoluteIndex]._id)
+        this.$store.dispatch('addNoteToHistory', this.$store.state.Store.notes[absoluteIndex]._id)
         this.$store.dispatch('scrollToActiveNote')
         this.$store.dispatch('defineFirstMark')
       },
