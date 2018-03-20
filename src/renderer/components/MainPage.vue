@@ -257,6 +257,7 @@
       this.$store.dispatch('loadOrCreateSettingsFile', onMounted)
       this.$store.dispatch('scrollToActiveNote')
       this.$store.dispatch('scrollToActiveNoteLink')
+      this.$store.dispatch('highlightNotes')
     },
     updated () {
       if (this.$store.state.Store.needFocusOn === 'dateFilterDate1') {
