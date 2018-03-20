@@ -124,7 +124,7 @@
         this.$store.dispatch('scrollToActiveNoteLink')
       },
       toggleStar (id, index) {
-        this.$store.dispatch('toggleNoteStar', {id: id, index: index})
+        this.$store.dispatch('toggleNoteStar', {id: id, index: this.$store.getters.getAbsoluteNoteIndex(index)})
       },
       setEditorInitTab (id, index) {
         this.$store.commit('setEditorInitTab', 2)

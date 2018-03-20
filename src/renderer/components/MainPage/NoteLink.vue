@@ -22,7 +22,7 @@
     },
     methods: {
       goToNote (index) {
-        let absoluteIndex = (this.$store.state.Store.pagerPage - 1) * this.$store.state.Store.pagerNotesPerPage + index
+        let absoluteIndex = this.$store.getters.getAbsoluteNoteIndex(index)
         this.$store.commit('setActiveNoteIndex', index)
         this.$store.commit('setActiveNoteId', this.$store.state.Store.notes[absoluteIndex]._id)
         this.$store.dispatch('addNoteToHistory', this.$store.state.Store.notes[absoluteIndex]._id)

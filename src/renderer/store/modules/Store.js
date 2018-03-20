@@ -290,6 +290,9 @@ const mutations = {
 }
 
 const getters = {
+  getAbsoluteNoteIndex: (state) => (index) => {
+    return (state.pagerPage - 1) * state.pagerNotesPerPage + index
+  },
   notes: state => {
     return state.notes
   },
