@@ -85,10 +85,12 @@ const state = {
   needScroll: false,
   pagerPage: 1,
   pagerNotesPerPage: 30,
-  pagerPagesCount: 0
+  pagerPagesCount: 0,
+  pagerCurrentPageCount: 0
 }
 
 const mutations = {
+  setPagerCurrentPageCount: (state, data) => { state.pagerCurrentPageCount = data },
   setPagerPagesCount: (state, data) => { state.pagerPagesCount = data },
   setPagerPage: (state, data) => { state.pagerPage = data },
   addNoteToSelected: (state, id) => {

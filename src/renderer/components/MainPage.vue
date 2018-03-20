@@ -616,11 +616,12 @@
         return this.$store.state.Store.pagerPagesCount
       },
       pageNotes () {
-        // return this.$store.state.Store.notes.slice(this.$store.state.Store.pagerPage * this.$store.state.Store.pagerNotesPerPage, this.$store.state.Store.pagerNotesPerPage)
-        return this.$store.state.Store.notes.slice(
+        let notes = this.$store.state.Store.notes.slice(
           (this.$store.state.Store.pagerPage - 1) * this.$store.state.Store.pagerNotesPerPage,
           (this.$store.state.Store.pagerPage - 1) * this.$store.state.Store.pagerNotesPerPage + this.$store.state.Store.pagerNotesPerPage
         )
+        this.$store.commit('setPagerCurrentPageCount', notes.length)
+        return notes
       },
       notes () {
         return this.$store.getters.notes
