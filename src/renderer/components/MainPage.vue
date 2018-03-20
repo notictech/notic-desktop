@@ -536,6 +536,38 @@
       inputDateFilterDate2 (event) {
         this.$store.commit('setDateFilterDate2', event)
         this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
+      },
+      goToFirstPage () {
+        if (!this.$store.state.Store.pagerPagesCount) {
+          return false
+        }
+        this.$store.commit('setPagerPage', 1)
+      },
+      goToPreviousPage () {
+        if (!this.$store.state.Store.pagerPagesCount) {
+          return false
+        }
+        if (this.$store.state.Store.pagerPage === 1) {
+          this.$store.commit('setPagerPage', this.$store.state.Store.pagerPagesCount)
+        } else {
+          this.$store.commit('setPagerPage', this.$store.state.Store.pagerPage - 1)
+        }
+      },
+      goToLastPage () {
+        if (!this.$store.state.Store.pagerPagesCount) {
+          return false
+        }
+        this.$store.commit('setPagerPage', this.$store.state.Store.pagerPagesCount)
+      },
+      goToNextPage () {
+        if (!this.$store.state.Store.pagerPagesCount) {
+          return false
+        }
+        if (this.$store.state.Store.pagerPage === this.$store.state.Store.pagerPagesCount) {
+          this.$store.commit('setPagerPage', 1)
+        } else {
+          this.$store.commit('setPagerPage', this.$store.state.Store.pagerPage + 1)
+        }
       }
     },
     computed: {
@@ -566,7 +598,11 @@
           'ctrl+q': this.showQR,
           'f2': this.openSettingsPage,
           'f3': this.openAboutPage,
-          'esc': this.resetSearch
+          'esc': this.resetSearch,
+          'ctrl+shift+[': this.goToFirstPage,
+          'ctrl+[': this.goToPreviousPage,
+          'ctrl+shift+]': this.goToLastPage,
+          'ctrl+]': this.goToNextPage
         }
       },
       pagerPage () {
