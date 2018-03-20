@@ -332,12 +332,14 @@
       },
       goToNextNote () {
         this.$store.dispatch('goToNextNote', () => {
+          this.$store.dispatch('scrollToActiveNote')
           this.$store.dispatch('scrollToActiveNoteLink')
           this.$store.dispatch('defineFirstMark')
         })
       },
       goToPreviousNote () {
         this.$store.dispatch('goToPreviousNote', () => {
+          this.$store.dispatch('scrollToActiveNote')
           this.$store.dispatch('scrollToActiveNoteLink')
           this.$store.dispatch('defineFirstMark')
         })
@@ -544,6 +546,8 @@
         }
         this.$store.commit('setPagerPage', 1)
         this.$store.commit('setActiveNoteIndex', 0)
+        this.$store.dispatch('scrollToActiveNote')
+        this.$store.dispatch('scrollToActiveNoteLink')
       },
       goToPreviousPage () {
         if (!this.$store.state.Store.pagerPagesCount) {
@@ -555,6 +559,8 @@
           this.$store.commit('setPagerPage', this.$store.state.Store.pagerPage - 1)
         }
         this.$store.commit('setActiveNoteIndex', 0)
+        this.$store.dispatch('scrollToActiveNote')
+        this.$store.dispatch('scrollToActiveNoteLink')
       },
       goToLastPage () {
         if (!this.$store.state.Store.pagerPagesCount) {
@@ -562,6 +568,8 @@
         }
         this.$store.commit('setPagerPage', this.$store.state.Store.pagerPagesCount)
         this.$store.commit('setActiveNoteIndex', 0)
+        this.$store.dispatch('scrollToActiveNote')
+        this.$store.dispatch('scrollToActiveNoteLink')
       },
       goToNextPage () {
         if (!this.$store.state.Store.pagerPagesCount) {
@@ -573,6 +581,8 @@
           this.$store.commit('setPagerPage', this.$store.state.Store.pagerPage + 1)
         }
         this.$store.commit('setActiveNoteIndex', 0)
+        this.$store.dispatch('scrollToActiveNote')
+        this.$store.dispatch('scrollToActiveNoteLink')
       }
     },
     computed: {

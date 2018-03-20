@@ -837,7 +837,6 @@ const actions = {
       this.commit('setActiveNoteIndex', state.activeNoteIndex + 1)
     }
     this.commit('setActiveNoteId', state.notes[this.getters.getAbsoluteNoteIndex(state.activeNoteIndex)]._id)
-    this.dispatch('scrollToActiveNote')
     cb()
   },
   goToPreviousNote (context, cb) {
@@ -853,7 +852,6 @@ const actions = {
       this.commit('setActiveNoteIndex', state.activeNoteIndex - 1)
     }
     this.commit('setActiveNoteId', state.notes[this.getters.getAbsoluteNoteIndex(state.activeNoteIndex)]._id)
-    this.dispatch('scrollToActiveNote')
     cb()
   },
   goToNextMark (context, cb) {
