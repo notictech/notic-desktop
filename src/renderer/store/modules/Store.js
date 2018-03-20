@@ -84,11 +84,13 @@ const state = {
   marksCount: 0,
   needScroll: false,
   pagerPage: 1,
-  pagerNotesPerPage: 30
+  pagerNotesPerPage: 30,
+  pagerPagesCount: 0
 }
 
 const mutations = {
-  setPage: (state, data) => { state.page = 1 },
+  setPagerPagesCount: (state, data) => { state.pagerPagesCount = data },
+  setPagerPage: (state, data) => { state.pagerPage = data },
   addNoteToSelected: (state, id) => {
     if (!state.selectedNotes.includes(id)) {
       state.selectedNotes.push(id)
