@@ -1181,7 +1181,10 @@ const actions = {
       query: state.history[state.historyIndex].q,
       cb: () => {
         this.commit('setActiveNoteId', state.history[state.historyIndex].i)
-        this.commit('setActiveNoteIndex', this.getters.getNoteIndexById(state.history[state.historyIndex].i))
+        this.commit('setPagerPagesCount', Math.ceil(state.notes.length / state.pagerNotesPerPage))
+        let localIndex = this.getters.getNoteIndexById(state.history[state.historyIndex].i)
+        this.commit('setPagerPage', getPagerPageByNoteIndex(localIndex))
+        this.commit('setActiveNoteIndex', localIndex % state.pagerNotesPerPage)
         if (cb) cb()
       }
     })
