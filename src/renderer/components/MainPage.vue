@@ -49,7 +49,7 @@
         </b-modal>
         <div class="topbar">
             <div class="row">
-                <div class="col-6">
+                <div class="col-5">
                     <b-button-group size="sm">
                         <b-btn variant="primary" @click="openAddNotePage()" title="Add note (Ctrl+Space)"><icon name="plus"></icon></b-btn>
                     </b-button-group>
@@ -79,7 +79,7 @@
                         <b-btn variant="danger" @click="emptyTrash()" title="Empty trash"><icon name="trash-o"></icon></b-btn>
                     </b-button-group>
                 </div>
-                <div class="col-6">
+                <div class="col-7">
                     <b-input-group size="sm">
                         <b-button-group size="sm" style="margin-left: 4px" v-if="this.$store.state.Store.marksCount">
                             <b-button title="Next match (Ctrl+Shift+Right)" @click="goToNextMark()"><icon name="toggle-down"></icon></b-button>
