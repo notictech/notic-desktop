@@ -88,6 +88,10 @@ function createWindow () {
     mainWindow.webContents.send('open-about')
     mainWindow.show()
   }
+  const clickOpenHelp = () => {
+    mainWindow.webContents.send('open-help')
+    mainWindow.show()
+  }
   const clickOpenChangeMasterPassword = () => {
     mainWindow.webContents.send('open-change-master-password')
     mainWindow.show()
@@ -124,6 +128,14 @@ function createWindow () {
     },
     {
       label: 'About', type: 'normal', click: clickOpenAbout
+    },
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'Russian (ru)', type: 'normal', click: clickOpenHelp
+        }
+      ]
     },
     {type: 'separator'},
     {

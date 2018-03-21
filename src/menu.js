@@ -67,7 +67,18 @@ const mainMenuTemplate = [
           bus.$emit('openAbout')
         }
       },
-      {type: 'separator'},
+      {
+        label: 'Help',
+        submenu: [
+          {
+            label: 'Russian (ru)',
+            accelerator: 'F10',
+            click () {
+              bus.$emit('openHelp')
+            }
+          }
+        ]
+      },
       {
         label: 'Quit',
         accelerator: 'CmdOrCtrl+Shift+Q',
@@ -77,6 +88,7 @@ const mainMenuTemplate = [
       }
     ]
   },
+  {type: 'separator'},
   {
     label: 'Logout (Ctrl+R)',
     accelerator: 'CmdOrCtrl+R',
@@ -159,6 +171,10 @@ ipcRenderer.on('open-settings', () => {
 
 ipcRenderer.on('open-about', () => {
   bus.$emit('openAbout')
+})
+
+ipcRenderer.on('open-help', () => {
+  bus.$emit('openHelp')
 })
 
 ipcRenderer.on('track-usage', () => {

@@ -150,6 +150,7 @@ button svg {
 
 .screen.import-notes.container-fluid,
 .screen.about.container-fluid,
+.screen.help.container-fluid,
 .screen.settings.container-fluid,
 .screen.editor.container-fluid,
 .screen.set-master-password.container-fluid,
@@ -167,6 +168,7 @@ button svg {
 }
 .screen.import-notes .topbar,
 .screen.about .topbar,
+.screen.help .topbar,
 .screen.settings .topbar,
 .screen.set-master-password .topbar,
 .screen.change-master-password .topbar,
@@ -182,6 +184,7 @@ button svg {
 }
 .screen.import-notes .content-wrap,
 .screen.about .content-wrap,
+.screen.help .content-wrap,
 .screen.settings .content-wrap,
 .screen.set-master-password .content-wrap,
 .screen.change-master-password .content-wrap,
@@ -454,4 +457,8 @@ h4 {
     margin-top: 5px;
     margin-left: 10px;
     margin-bottom: 10px;
+}
+
+.tutorial {
+    padding: 20px;
 }
