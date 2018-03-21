@@ -329,7 +329,7 @@ h4 {
     width: auto;
     bottom: 0;
     font-size: .7em;
-    color: grey;
+    color: #555555;
     padding: 4px;
 }
 
@@ -340,7 +340,7 @@ h4 {
     width: auto;
     bottom: 0;
     font-size: .7em;
-    color: grey;
+    color: #555555;
     right: 12px;
 }
 
