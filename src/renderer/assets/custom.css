@@ -462,3 +462,9 @@ h4 {
 .tutorial {
     padding: 20px;
 }
+.tutorial h1 { font-size: 24px; font-weight: bold }
+.tutorial h2 { font-size: 20px; font-weight: bold }
+.tutorial h3 { font-size: 20px; }
+.tutorial h4 { font-size: 20px; }
+.tutorial h5 { font-size: 20px; }
+.tutorial h6 { font-size: 20px; }

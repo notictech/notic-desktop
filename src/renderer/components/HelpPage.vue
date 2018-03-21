@@ -4,7 +4,7 @@
             <div class="topbar">
                 <div class="row" align-h="between">
                     <div class="col-6">
-                        <!--<h4>Help</h4>-->
+                        <h4>Help</h4>
                     </div>
                     <div class="col-6" style="text-align: right">
                         <b-button-group size="sm">
@@ -28,7 +28,7 @@
   export default {
     name: 'help-page',
     components: { VueMarkdown },
-    mounted () {
+    created () {
       fs.readFile('static/notic_tutorial_ru.md', 'utf8', (err, data) => {
         if (err) {
           console.log('ERROR: ' + err)
