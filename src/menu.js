@@ -72,7 +72,6 @@ const mainMenuTemplate = [
         submenu: [
           {
             label: 'Russian (ru)',
-            accelerator: 'F10',
             click () {
               ipcRenderer.send('show-help-window')
             }
