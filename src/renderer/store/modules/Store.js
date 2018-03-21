@@ -131,8 +131,6 @@ const mutations = {
   setMasterPassword: (state, data) => { state.masterPassword = data },
   setExportedNotesPassword: (state, data) => { state.exportedNotesPassword = data },
   setWindowMustBeHidden: (state, data) => { state.windowMustBeHidden = data },
-  setLoadedNotesCount: (state, data) => { state.loadedNotesCount = data },
-  setLoadedNotesLinksCount: (state, date) => { state.loadedNotesLinksCount = date },
   setNoteIsModified: (state, data) => { state.noteIsModified = data },
   setActiveNoteIndex: (state, data) => { state.activeNoteIndex = data },
   setActiveNoteId: (state, data) => { state.activeNoteId = data },
@@ -543,11 +541,9 @@ const actions = {
         this.commit('setPagerPage', 1)
         this.commit('setActiveNoteIndex', 0)
         this.commit('setActiveNoteId', docs[0]._id)
-        this.commit('setLoadedNotesCount', 30)
-        this.commit('setLoadedNotesLinksCount', 30)
         this.commit('setMarkPos', 0)
-        if (obj.cb) obj.cb()
         this.commit('emptySelectedNotes')
+        if (obj.cb) obj.cb()
       }
     })
   },

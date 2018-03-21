@@ -264,11 +264,6 @@
         this.$refs.dateFilterDate1.focus()
         this.$store.commit('setNeedFocusOn', null)
       }
-      if (this.$store.state.Store.loadedNotesCount - 1 <= this.$store.state.Store.activeNoteIndex) {
-        this.$store.commit('setLoadedNotesCount', this.$store.state.Store.loadedNotesCount + 30)
-        this.$store.commit('setLoadedNotesLinksCount', this.$store.state.Store.loadedNotesLinksCount + 30)
-        return
-      }
       if (this.$store.state.Store.needScroll) {
         this.$store.dispatch('scrollToActiveNote')
         this.$store.dispatch('scrollToActiveNoteLink')
@@ -353,14 +348,14 @@
       historyForward () {
         this.$store.dispatch('historyForward', () => {
           this.$store.commit('setNeedScroll', true)
-          this.$store.dispatch('scrollToActiveNoteLink')
+          // this.$store.dispatch('scrollToActiveNoteLink')
           this.$store.dispatch('defineFirstMark')
         })
       },
       historyBack () {
         this.$store.dispatch('historyBack', () => {
           this.$store.commit('setNeedScroll', true)
-          this.$store.dispatch('scrollToActiveNoteLink')
+          // this.$store.dispatch('scrollToActiveNoteLink')
           this.$store.dispatch('defineFirstMark')
         })
       },
