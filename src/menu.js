@@ -74,7 +74,7 @@ const mainMenuTemplate = [
             label: 'Russian (ru)',
             accelerator: 'F10',
             click () {
-              bus.$emit('openHelp')
+              ipcRenderer.send('show-help-window')
             }
           }
         ]
@@ -174,7 +174,7 @@ ipcRenderer.on('open-about', () => {
 })
 
 ipcRenderer.on('open-help', () => {
-  bus.$emit('openHelp')
+  ipcRenderer.send('show-help-window')
 })
 
 ipcRenderer.on('track-usage', () => {

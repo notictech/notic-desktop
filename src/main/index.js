@@ -172,6 +172,23 @@ app.on('activate', () => {
 
 const {ipcMain} = require('electron')
 
+ipcMain.on('show-help-window', (event, arg) => {
+  let win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    show: false,
+    parent: mainWindow,
+    useContentSize: true,
+    title: 'Help'
+  })
+  win.setMenu(null)
+  win.loadURL(`file://${__static}/notic_tutorial_ru.html`)
+  win.on('closed', () => {
+    win = null
+  })
+  win.show()
+})
+
 ipcMain.on('set-tray-icon-notif', (event, arg) => {
   appIcon.setImage(`${__static}/icons/notic-notif.png`)
   mainWindow.setIcon(`${__static}/icons/notic-notif.png`)

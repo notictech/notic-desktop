@@ -234,9 +234,6 @@
         bus.$on('openAbout', () => {
           this.openAboutPage()
         })
-        bus.$on('openHelp', () => {
-          this.openHelpPage()
-        })
         bus.$on('trackUsage', () => {
           this.$store.dispatch('trackUsage')
         })
@@ -385,9 +382,6 @@
       },
       openAboutPage () {
         this.$router.replace('/about')
-      },
-      openHelpPage () {
-        this.$router.replace('/help')
       },
       resetSearch () {
         this.$refs.search.focus()

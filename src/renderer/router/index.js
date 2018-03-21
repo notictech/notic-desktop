@@ -46,11 +46,6 @@ export default new Router({
       component: require('@/components/AboutPage').default
     },
     {
-      path: '/help',
-      name: 'help-page',
-      component: require('@/components/HelpPage').default
-    },
-    {
       path: '/import',
       name: 'import-page',
       component: require('@/components/ImportPage').default
