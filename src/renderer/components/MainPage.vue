@@ -276,7 +276,6 @@
         this.$refs.search.focus()
       },
       searchNotes (event) {
-        console.log('@@@@' + event)
         this.$store.dispatch('searchNotes', {query: event, cb: () => {}})
       },
       openAddNotePage () {
