@@ -276,7 +276,7 @@
         this.$refs.search.focus()
       },
       searchNotes (event) {
-        this.$store.dispatch('searchNotes', {query: event, cb: () => {}})
+        this.$store.dispatch('searchNotes', {query: event, cb: () => {}, doNotAffect: true})
       },
       openAddNotePage () {
         this.$store.dispatch('openAddNotePage')

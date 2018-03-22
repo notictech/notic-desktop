@@ -538,12 +538,14 @@ const actions = {
       }
       this.commit('updateNotes', docs)
       if (docs.length) {
-        this.commit('setPagerPagesCount', Math.ceil(docs.length / state.pagerNotesPerPage))
-        this.commit('setPagerPage', 1)
-        this.commit('setActiveNoteIndex', 0)
-        this.commit('setActiveNoteId', docs[0]._id)
-        this.commit('setMarkPos', 0)
-        this.commit('emptySelectedNotes')
+        if (!obj.doNotAffect) {
+          this.commit('setPagerPagesCount', Math.ceil(docs.length / state.pagerNotesPerPage))
+          this.commit('setPagerPage', 1)
+          this.commit('setActiveNoteIndex', 0)
+          this.commit('setActiveNoteId', docs[0]._id)
+          this.commit('setMarkPos', 0)
+          this.commit('emptySelectedNotes')
+        }
         if (obj.cb) obj.cb()
       }
     })
@@ -1224,6 +1226,8 @@ const actions = {
         let localIndex = this.getters.getNoteIndexById(state.history[state.historyIndex].i)
         this.commit('setPagerPage', getPagerPageByNoteIndex(localIndex))
         this.commit('setActiveNoteIndex', localIndex % state.pagerNotesPerPage)
+        this.commit('setMarkPos', 0)
+        this.commit('emptySelectedNotes')
         if (cb) cb()
       }
     })
