@@ -1508,7 +1508,8 @@ RegExp.quote = (str) => {
 }
 
 function getPagerPageByNoteIndex (index) {
-  return Math.ceil(index / state.pagerNotesPerPage)
+  let page = Math.ceil(index / state.pagerNotesPerPage)
+  return (page === 0) ? 1 : page
 }
 
 export default {
