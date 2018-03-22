@@ -86,10 +86,12 @@ const state = {
   pagerPage: 1,
   pagerNotesPerPage: 30,
   pagerPagesCount: 0,
-  pagerCurrentPageCount: 0
+  pagerCurrentPageCount: 0,
+  historyTransition: false
 }
 
 const mutations = {
+  setHistoryTransition: (state, data) => { state.historyTransition = data },
   setPagerCurrentPageCount: (state, data) => { state.pagerCurrentPageCount = data },
   setPagerPagesCount: (state, data) => { state.pagerPagesCount = data },
   setPagerPage: (state, data) => { state.pagerPage = data },
@@ -538,7 +540,7 @@ const actions = {
       }
       this.commit('updateNotes', docs)
       if (docs.length) {
-        if (!obj.doNotAffect) {
+        if (!state.historyTransition) {
           this.commit('setPagerPagesCount', Math.ceil(docs.length / state.pagerNotesPerPage))
           this.commit('setPagerPage', 1)
           this.commit('setActiveNoteIndex', 0)
@@ -546,6 +548,7 @@ const actions = {
           this.commit('setMarkPos', 0)
           this.commit('emptySelectedNotes')
         }
+        this.commit('setHistoryTransition', false)
         if (obj.cb) obj.cb()
       }
     })
@@ -1192,11 +1195,14 @@ const actions = {
     this.dispatch('searchNotes', {
       query: state.history[state.historyIndex].q,
       cb: () => {
+        this.commit('setHistoryTransition', true)
         this.commit('setActiveNoteId', state.history[state.historyIndex].i)
         this.commit('setPagerPagesCount', Math.ceil(state.notes.length / state.pagerNotesPerPage))
         let localIndex = this.getters.getNoteIndexById(state.history[state.historyIndex].i)
         this.commit('setPagerPage', getPagerPageByNoteIndex(localIndex))
         this.commit('setActiveNoteIndex', localIndex % state.pagerNotesPerPage)
+        this.commit('setMarkPos', 0)
+        this.commit('emptySelectedNotes')
         if (cb) cb()
       }
     })
@@ -1221,6 +1227,7 @@ const actions = {
     this.dispatch('searchNotes', {
       query: state.history[state.historyIndex].q,
       cb: () => {
+        this.commit('setHistoryTransition', true)
         this.commit('setActiveNoteId', state.history[state.historyIndex].i)
         this.commit('setPagerPagesCount', Math.ceil(state.notes.length / state.pagerNotesPerPage))
         let localIndex = this.getters.getNoteIndexById(state.history[state.historyIndex].i)
