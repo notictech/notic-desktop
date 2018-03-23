@@ -15,6 +15,7 @@ import 'vue2-toast/lib/toast.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/custom.css'
+import './assets/custom-dark.css'
 
 Vue.use(BootstrapVue)
 Vue.use(VueHotkey)
