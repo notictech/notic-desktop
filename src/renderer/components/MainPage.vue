@@ -85,7 +85,7 @@
                             <b-button title="Next match (Ctrl+Shift+Right)" @click="goToNextMark()"><icon name="toggle-down"></icon></b-button>
                             <b-button title="Previous match (Ctrl+Shift+Left)" @click="goToPreviousMark()"><icon name="toggle-up"></icon></b-button>
                         </b-button-group>
-                        <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" ref="search" :value="searchQuery"></b-form-input>
+                        <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" @keydown.native="searchKeydown($event)" ref="search" :value="searchQuery"></b-form-input>
                         <b-button-group size="sm" class="search-filters">
                             <b-button :variant="(searchFilter == 'notes') ? 'warning' : 'secondary'" title="All (Ctrl+1)" @click="setSearchFilter('notes')"><icon name="asterisk"></icon></b-button>
                             <b-button :variant="(searchFilter == 'secrets') ? 'warning' : 'secondary'" title="Secrets (Ctrl+2)" @click="setSearchFilter('secrets')"><icon name="key"></icon></b-button>
@@ -276,7 +276,17 @@
         this.$refs.search.focus()
       },
       searchNotes (event) {
-        this.$store.dispatch('searchNotes', {query: event, cb: () => {}})
+        this.$store.dispatch('searchNotes', {
+          query: event,
+          cb: () => {
+            this.$store.dispatch('scrollToActiveNote')
+            this.$store.dispatch('scrollToActiveNoteLink')
+          }
+        })
+      },
+      searchKeydown (event) {
+        this.$store.commit('setHistoryTransition', false)
+        console.log('%')
       },
       openAddNotePage () {
         this.$store.dispatch('openAddNotePage')
