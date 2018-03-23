@@ -392,7 +392,13 @@
         this.$refs.search.focus()
         this.$store.commit('setSearchQuery', '')
         this.$store.commit('setDateFilterActive', false)
-        this.$store.dispatch('setSearchFilter', 'notes')
+        this.$store.dispatch(
+          'setSearchFilter',
+          'notes',
+          () => {
+            this.$store.dispatch('scrollToActiveNote')
+            this.$store.dispatch('scrollToActiveNoteLink')
+          })
         this.$store.commit('setNeedScroll', true)
       },
       toggleMassSelect () {
