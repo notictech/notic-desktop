@@ -48,7 +48,9 @@
       if (this.$store.state.Store.appJustStarted) {
         this.$router.replace('/')
       }
-      this.$refs.notificationsReadAll.focus()
+      if (this.notifications.length) {
+        this.$refs.notificationsReadAll.focus()
+      }
     },
     methods: {
       close () {
