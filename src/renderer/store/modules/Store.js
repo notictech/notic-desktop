@@ -88,10 +88,12 @@ const state = {
   pagerNotesPerPage: 30,
   pagerPagesCount: 0,
   pagerCurrentPageCount: 0,
-  historyTransition: false
+  historyTransition: false,
+  needReload: false
 }
 
 const mutations = {
+  setNeedReload: (state, data) => { state.needReload = data },
   setHistoryTransition: (state, data) => { state.historyTransition = data },
   setPagerCurrentPageCount: (state, data) => { state.pagerCurrentPageCount = data },
   setPagerPagesCount: (state, data) => { state.pagerPagesCount = data },

@@ -153,6 +153,7 @@
           this.$store.commit('setDbPath', this.dbPath)
           this.$store.commit('setMasterPassword', this.masterPassword)
           this.$store.commit('setAppJustStarted', true)
+          this.$store.commit('setNeedReload', true)
         }
 
         this.$store.commit('setLocalKeymap', this.localKeymap)

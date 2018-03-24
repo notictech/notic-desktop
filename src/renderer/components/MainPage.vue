@@ -177,6 +177,7 @@
   import Pagination from '../components/MainPage/Pagination.vue'
 
   const fs = require('fs')
+  const {ipcRenderer} = require('electron')
 
   export default {
     name: 'main-page',
@@ -191,6 +192,9 @@
     },
     mounted () {
       let onMounted = () => {
+        if (this.$store.state.Store.needReload) {
+          ipcRenderer.send('logout')
+        }
         if (!fs.existsSync(this.$store.state.Store.settings.dbPath) && this.$store.state.Store.masterPassword === null) {
           this.$router.replace('/set-master-password')
           return
