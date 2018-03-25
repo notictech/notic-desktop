@@ -63,6 +63,7 @@ body.dark-theme {
 }
 .dark-theme .screen.notes .sidebar .note-link.active {
     background: #47494a;
+    border-left: #0787FF 4px solid;
     color: #dadada;
 }
 
