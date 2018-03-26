@@ -21,6 +21,7 @@
       inputPage (event) {
         this.$store.commit('setPagerPage', event)
         this.$store.dispatch('scrollToActiveNoteLink')
+        this.$store.dispatch('scrollToActiveNote')
       }
     }
   }
