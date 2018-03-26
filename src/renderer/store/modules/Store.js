@@ -601,6 +601,7 @@ const actions = {
         this.commit('setRecentNoteId', newDoc._id)
         this.dispatch('updateMiscData')
         this.dispatch('searchNotes', {query: state.searchQuery})
+        this.commit('setHistoryTransition', false)
       })
     })
   },
