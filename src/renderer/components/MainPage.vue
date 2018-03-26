@@ -364,6 +364,7 @@
           this.$store.commit('setNeedScroll', true)
           // this.$store.dispatch('scrollToActiveNoteLink')
           this.$store.dispatch('defineFirstMark')
+          this.$store.commit('setHistoryTransition', false)
         })
       },
       historyBack () {
@@ -371,6 +372,7 @@
           this.$store.commit('setNeedScroll', true)
           // this.$store.dispatch('scrollToActiveNoteLink')
           this.$store.dispatch('defineFirstMark')
+          this.$store.commit('setHistoryTransition', false)
         })
       },
       copyText () {
