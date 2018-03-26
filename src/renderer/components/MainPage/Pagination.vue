@@ -20,6 +20,7 @@
     methods: {
       inputPage (event) {
         this.$store.commit('setPagerPage', event)
+        this.$store.dispatch('scrollToActiveNoteLink')
       }
     }
   }
