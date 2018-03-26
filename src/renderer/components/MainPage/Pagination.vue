@@ -20,8 +20,10 @@
     methods: {
       inputPage (event) {
         this.$store.commit('setPagerPage', event)
+        this.$store.commit('setActiveNoteIndex', 0)
         this.$store.dispatch('scrollToActiveNoteLink')
         this.$store.dispatch('scrollToActiveNote')
+        this.$store.dispatch('defineFirstMark')
       }
     }
   }

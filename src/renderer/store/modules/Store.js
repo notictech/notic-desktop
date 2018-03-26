@@ -600,7 +600,14 @@ const actions = {
         this.dispatch('addNoteToHistory', newDoc._id)
         this.commit('setRecentNoteId', newDoc._id)
         this.dispatch('updateMiscData')
-        this.dispatch('searchNotes', {query: state.searchQuery})
+        this.dispatch('searchNotes', {
+          query: state.searchQuery,
+          cb: () => {
+            this.dispatch('scrollToActiveNoteLink')
+            this.dispatch('scrollToActiveNote')
+            this.dispatch('defineFirstMark')
+          }
+        })
         this.commit('setHistoryTransition', false)
       })
     })
