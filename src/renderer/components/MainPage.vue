@@ -280,6 +280,10 @@
         this.$refs.search.focus()
       },
       searchNotes (event) {
+        if (this.$store.state.Store.preventSearch) {
+          this.$store.commit('setPreventSearch', false)
+          return false
+        }
         this.$store.dispatch('searchNotes', {
           query: event,
           cb: () => {
@@ -365,6 +369,7 @@
           // this.$store.dispatch('scrollToActiveNoteLink')
           this.$store.dispatch('defineFirstMark')
           this.$store.commit('setHistoryTransition', false)
+          this.$store.commit('setPreventSearch', false)
         })
       },
       historyBack () {
@@ -373,6 +378,7 @@
           // this.$store.dispatch('scrollToActiveNoteLink')
           this.$store.dispatch('defineFirstMark')
           this.$store.commit('setHistoryTransition', false)
+          this.$store.commit('setPreventSearch', false)
         })
       },
       copyText () {

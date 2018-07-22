@@ -89,10 +89,12 @@ const state = {
   pagerPagesCount: 0,
   pagerCurrentPageCount: 0,
   historyTransition: false,
-  needReload: false
+  needReload: false,
+  preventSearch: false
 }
 
 const mutations = {
+  setPreventSearch: (state, data) => { state.preventSearch = data },
   setNeedReload: (state, data) => { state.needReload = data },
   setHistoryTransition: (state, data) => { state.historyTransition = data },
   setPagerCurrentPageCount: (state, data) => { state.pagerCurrentPageCount = data },
@@ -1189,6 +1191,7 @@ const actions = {
   },
   historyForward (context, cb) {
     if (!state.history.length) return
+    this.commit('setPreventSearch', true)
     if (state.historyIndex === state.history.length - 1 || state.historyIndex === state.history.length) {
       this.commit('setHistoryIndex', 0)
     } else {
@@ -1221,6 +1224,7 @@ const actions = {
   },
   historyBack (context, cb) {
     if (!state.history.length) return
+    this.commit('setPreventSearch', true)
     if (state.historyIndex === 0 || state.historyIndex >= state.history.length) {
       this.commit('setHistoryIndex', state.history.length - 1)
     } else {
