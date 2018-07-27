@@ -68,10 +68,10 @@ const mainMenuTemplate = [
         }
       },
       {
-        label: 'Help',
+        label: 'Documentation',
         submenu: [
           {
-            label: 'Russian (ru)',
+            label: 'Russian',
             click () {
               ipcRenderer.send('show-help-window')
             }

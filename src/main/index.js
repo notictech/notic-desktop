@@ -130,10 +130,10 @@ function createWindow () {
       label: 'About', type: 'normal', click: clickOpenAbout
     },
     {
-      label: 'Help',
+      label: 'Documentation',
       submenu: [
         {
-          label: 'Russian (ru)', type: 'normal', click: clickOpenHelp
+          label: 'Russian', type: 'normal', click: clickOpenHelp
         }
       ]
     },
@@ -179,10 +179,10 @@ ipcMain.on('show-help-window', (event, arg) => {
     show: false,
     parent: mainWindow,
     useContentSize: true,
-    title: 'Help'
+    title: 'Documentation'
   })
   win.setMenu(null)
-  win.loadURL(`file://${__static}/notic_tutorial_ru.html`)
+  win.loadURL(`file://${__static}/notic_documentation_ru.html`)
   win.on('closed', () => {
     win = null
   })

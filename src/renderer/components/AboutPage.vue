@@ -17,9 +17,10 @@
                 <b-img src="static/icons/notic-logo.png" fluid/>
                 <h3 style="margin-top: 10px;">Notic</h3>
                 <br>
-                <p>ver. 1.4.1 alpha</p>
-                <p>notictech@gmail.com</p>
-                <p>https://github.com/notictech/notic-desktop</p>
+                <p>Version: 1.4.2 alpha</p>
+                <p>License: <a href="http://www.gnu.org/licenses/gpl.html">GPLv3</a></p>
+                <p>Contact email: notictech@gmail.com</p>
+                <p>Website: <a href="#" @click="require('electron').shell.openExternal('https://github.com/notictech/notic-desktop')">github.com/notictech/notic-desktop</a></p>
                 <p>© 2016 - <span>{{ this.currentYear }}</span> Sergey Tolokonnikov</p>
             </div>
         </b-container>
