@@ -1476,7 +1476,12 @@ function copyObject (obj) {
 function genPassword (len = 32) {
   var text = ''
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789012345678901234567890123456789'
+  var first = 'abcdefghijklmnopqrstuvwxyz'
   for (var i = 0; i < len; i++) {
+    if (i == 0) {
+      text += first.charAt(Math.floor(Math.random() * first.length))
+      continue
+    }
     text += possible.charAt(Math.floor(Math.random() * possible.length))
   }
   return text
