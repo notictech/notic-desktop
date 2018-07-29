@@ -182,7 +182,7 @@ ipcMain.on('show-help-window', (event, arg) => {
     title: 'Documentation'
   })
   win.setMenu(null)
-  win.loadURL(`file://${__static}/notic_documentation_ru.html`)
+  win.loadURL(`file://${__static}/notic_manual_ru.html`)
   win.on('closed', () => {
     win = null
   })

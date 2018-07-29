@@ -46,13 +46,13 @@
             </div>
         </b-button-group>
         <b-button-group  size="sm" class="mx-1">
-            <b-btn @click="toggleVisibility(index)"><icon :name="secret.visibility ? 'eye-slash' : 'eye'"></icon></b-btn>
+            <b-btn @click="toggleVisibility(index)" :title="secret.visibility ? 'Show' : 'Hide'"><icon :name="secret.visibility ? 'eye-slash' : 'eye'"></icon></b-btn>
         </b-button-group>
         <b-button-group  size="sm" class="mx-1">
-            <b-btn @click="genSecret(index)"><icon name="bolt"></icon></b-btn>
+            <b-btn @click="genSecret(index)" title="Generate"><icon name="bolt"></icon></b-btn>
         </b-button-group>
         <b-button-group  size="sm" class="mx-1">
-            <b-btn @click="deleteSecret(index)"><icon name="trash"></icon></b-btn>
+            <b-btn @click="deleteSecret(index)" title="Delete"><icon name="trash"></icon></b-btn>
         </b-button-group>
     </b-button-toolbar>
 </template>
