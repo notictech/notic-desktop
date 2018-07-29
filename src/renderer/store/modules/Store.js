@@ -1478,7 +1478,7 @@ function genPassword (len = 32) {
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789012345678901234567890123456789'
   var first = 'abcdefghijklmnopqrstuvwxyz'
   for (var i = 0; i < len; i++) {
-    if (i == 0) {
+    if (i === 0) {
       text += first.charAt(Math.floor(Math.random() * first.length))
       continue
     }
