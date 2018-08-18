@@ -1337,12 +1337,12 @@ const actions = {
     this.dispatch('saveSettingsFile', successCallback)
   },
   saveSettingsFile (context, successCallback) {
-    fs.writeFileSync('./settings', JSON.stringify(state.settings, null, 2))
+    fs.writeFileSync('./notic_settings', JSON.stringify(state.settings, null, 2))
     successCallback()
   },
   loadSettingsFile (context, successCallback) {
-    if (fs.existsSync('./settings')) {
-      require('fs').readFile('./settings', (err, data) => {
+    if (fs.existsSync('./notic_settings')) {
+      require('fs').readFile('./notic_settings', (err, data) => {
         if (err) {
           console.log('ERROR: ' + err)
         }
@@ -1354,7 +1354,7 @@ const actions = {
     }
   },
   loadOrCreateSettingsFile (context, nextStep) {
-    if (!fs.existsSync('./settings')) {
+    if (!fs.existsSync('./notic_settings')) {
       this.dispatch('saveSettingsFile', () => {
         nextStep()
       })
