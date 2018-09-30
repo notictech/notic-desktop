@@ -54,7 +54,7 @@
                         <b-btn variant="primary" @click="openAddNotePage()" title="Add note (Ctrl+Space)"><icon name="plus"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm">
-                        <b-btn variant="primary" @click="openRecentNote()" title="Open recent note (Ctrl+E)"><icon name="pencil-square-o"></icon></b-btn>
+                        <b-btn variant="primary" @click="openRecentNote()" title="Open recent note (Ctrl+E)"><icon name="pen"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm">
                         <b-btn variant="primary" @click="showQR()" title="QR from clipboard (Ctrl+Q)"><icon name="qrcode"></icon></b-btn>
@@ -63,7 +63,7 @@
                         <b-btn variant="primary" :variant="this.$store.state.Store.notificationsIsUnread ? 'danger' : 'primary' " @click="openNotificationsPage()" title="Notifications (Ctrl+N)"><icon name="bell"></icon></b-btn>
                     </b-button-group>
                     <b-button-group size="sm">
-                        <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+M)"><icon name="check-square-o"></icon></b-btn>
+                        <b-btn :variant="this.$store.state.Store.massSelect ? 'warning' : 'primary' " @click="toggleMassSelect()" title="Mass select (Ctrl+M)"><icon name="check-square"></icon></b-btn>
                         <b-dropdown v-if="this.$store.state.Store.massSelect" title="Action with selected (Ctrl+Shift+M)" size="sm" variant="warning" ref="massSelectDropdown">
                             <b-dropdown-item @click="toggleMassCheck">Select / Un-select all (Ctrl+Shift+.)</b-dropdown-item>
                             <b-dropdown-divider></b-dropdown-divider>
@@ -76,14 +76,14 @@
                     </b-button-group>
                     <b-button-group size="sm" v-show="searchFilter === 'deleted'">
                         <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
-                        <b-btn variant="danger" @click="emptyTrash()" title="Empty trash"><icon name="trash-o"></icon></b-btn>
+                        <b-btn variant="danger" @click="emptyTrash()" title="Empty trash"><icon name="trash-alt"></icon></b-btn>
                     </b-button-group>
                 </div>
                 <div class="col-7">
                     <b-input-group size="sm">
                         <b-button-group size="sm" style="margin-left: 4px" v-if="this.$store.state.Store.marksCount">
-                            <b-button title="Next match (Ctrl+Shift+Right)" @click="goToNextMark()"><icon name="toggle-down"></icon></b-button>
-                            <b-button title="Previous match (Ctrl+Shift+Left)" @click="goToPreviousMark()"><icon name="toggle-up"></icon></b-button>
+                            <b-button title="Next match (Ctrl+Shift+Right)" @click="goToNextMark()"><icon name="caret-square-down"></icon></b-button>
+                            <b-button title="Previous match (Ctrl+Shift+Left)" @click="goToPreviousMark()"><icon name="caret-square-up"></icon></b-button>
                         </b-button-group>
                         <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" @keydown.native="searchKeydown($event)" ref="search" :value="searchQuery"></b-form-input>
                         <b-button-group size="sm" class="search-filters">

@@ -138,3 +138,8 @@ body.dark-theme {
 .dark-theme .modal-qr .modal-body {
     background: #fff;
 }
+
+.dark-theme .note-link .is-deleted {
+    color: #c7c7c7;
+    margin: 1px;
+}
