@@ -17,7 +17,7 @@
                 <b-img src="static/icons/notic-logo.png" fluid/>
                 <h3 style="margin-top: 10px;">Notic</h3>
                 <br>
-                <p>Version: 1.5.0 alpha</p>
+                <p>Version: 1.5.1 alpha</p>
                 <p>License: <a href="#" @click="require('electron').shell.openExternal('http://www.gnu.org/licenses/gpl.html')">GPLv3</a></p>
                 <p>Contact email: notictech@gmail.com</p>
                 <p>Website: <a href="#" @click="require('electron').shell.openExternal('https://github.com/notictech/notic-desktop')">github.com/notictech/notic-desktop</a></p>
