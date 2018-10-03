@@ -146,6 +146,7 @@
                     <b-col v-if="this.$store.state.Store.dateFilterPrep !== 'between'"></b-col>
                 </b-row>
             </div>
+            <cmd-hash v-if="searchCmd === '/hash'"></cmd-hash>
         </div>
         <div class="sidebar" v-if="notes.length">
             <b-button-group vertical class="notes-links" id="notes-links">
@@ -175,13 +176,14 @@
   import Note from '../components/MainPage/Note.vue'
   import NoteLink from '../components/MainPage/NoteLink.vue'
   import Pagination from '../components/MainPage/Pagination.vue'
+  import CmdHash from '../components/MainPage/CmdHash.vue'
 
   const fs = require('fs')
   const {ipcRenderer} = require('electron')
 
   export default {
     name: 'main-page',
-    components: { Icon, Note, NoteLink, Pagination },
+    components: { Icon, Note, NoteLink, Pagination, CmdHash },
     data () {
       return {
         exportedNotesPassword: '',
@@ -274,6 +276,7 @@
         this.$store.commit('setNeedScroll', false)
       }
       this.$store.dispatch('highlightNotes')
+      this.$store.dispatch('checkSearchCmd')
     },
     methods: {
       focusOnSearch () {
@@ -294,7 +297,6 @@
       },
       searchKeydown (event) {
         this.$store.commit('setHistoryTransition', false)
-        console.log('%')
       },
       openAddNotePage () {
         this.$store.dispatch('openAddNotePage')
@@ -677,6 +679,9 @@
       },
       exportedNotes () {
         return this.$store.state.Store.exportedNotes
+      },
+      searchCmd () {
+        return this.$store.state.Store.searchCmd
       }
     }
   }

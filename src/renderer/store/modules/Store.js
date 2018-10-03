@@ -90,10 +90,12 @@ const state = {
   pagerCurrentPageCount: 0,
   historyTransition: false,
   needReload: false,
-  preventSearch: false
+  preventSearch: false,
+  searchCmd: null
 }
 
 const mutations = {
+  setSearchCmd: (state, data) => { state.searchCmd = data },
   setPreventSearch: (state, data) => { state.preventSearch = data },
   setNeedReload: (state, data) => { state.needReload = data },
   setHistoryTransition: (state, data) => { state.historyTransition = data },
@@ -391,7 +393,6 @@ const actions = {
     })
   },
   searchNotes (context, obj) {
-    console.log('search')
     this.commit('setSearchQuery', obj.query)
     let queryWords = obj.query.trim().split(' ')
     let and = []
@@ -1466,6 +1467,13 @@ const actions = {
       this.dispatch('searchNotes', {query: state.searchQuery})
       obj.cb()
     })
+  },
+  checkSearchCmd (context) {
+    if (!state.searchQuery.startsWith('/')) {
+      this.commit('setSearchCmd', null)
+      return false
+    }
+    this.commit('setSearchCmd', state.searchQuery)
   }
 }
 

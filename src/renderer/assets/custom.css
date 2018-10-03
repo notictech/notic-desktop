@@ -468,3 +468,19 @@ h4 {
 .tutorial h4 { font-size: 20px; }
 .tutorial h5 { font-size: 20px; }
 .tutorial h6 { font-size: 20px; }
+
+.search-cmd-area {
+    padding: 20px;
+}
+
+.search-cmd-area h1{
+    font-size: 18px;
+    font-weight: bold;
+}
+.search-cmd-area h1{
+    font-size: 18px;
+}
+
+.search-cmd-area.hash .result{
+    margin: 20px 0 0 0;
+}
