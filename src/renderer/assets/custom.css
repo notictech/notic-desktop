@@ -484,3 +484,7 @@ h4 {
 .search-cmd-area.hash .result{
     margin: 20px 0 0 0;
 }
+
+.search-cmd-area.tz .diff{
+    font-size: 12px;
+}

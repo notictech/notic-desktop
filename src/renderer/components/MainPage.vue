@@ -147,6 +147,7 @@
                 </b-row>
             </div>
             <cmd-hash v-if="searchCmd === '/hash'"></cmd-hash>
+            <cmd-tz v-if="searchCmd === '/tz'"></cmd-tz>
         </div>
         <div class="sidebar" v-if="notes.length">
             <b-button-group vertical class="notes-links" id="notes-links">
@@ -177,13 +178,14 @@
   import NoteLink from '../components/MainPage/NoteLink.vue'
   import Pagination from '../components/MainPage/Pagination.vue'
   import CmdHash from '../components/MainPage/CmdHash.vue'
+  import CmdTz from '../components/MainPage/CmdTz.vue'
 
   const fs = require('fs')
   const {ipcRenderer} = require('electron')
 
   export default {
     name: 'main-page',
-    components: { Icon, Note, NoteLink, Pagination, CmdHash },
+    components: { Icon, Note, NoteLink, Pagination, CmdHash, CmdTz },
     data () {
       return {
         exportedNotesPassword: '',
