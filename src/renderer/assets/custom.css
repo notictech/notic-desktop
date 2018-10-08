@@ -21,6 +21,10 @@
     background: #d0d0d0;
 }
 
+input[type=search]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
+
 button, input[type=checkbox] {
     cursor: pointer;
 }
@@ -488,3 +492,4 @@ h4 {
 .search-cmd-area.tz .diff{
     font-size: 12px;
 }
+
