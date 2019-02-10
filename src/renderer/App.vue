@@ -7,22 +7,13 @@
         <router-view></router-view>
         <div class="right-status-bar">
             <b-form-checkbox :checked="this.$store.state.Store.settings.darkTheme"
-                             title="Dark theme (Ctrl+Shift+W)"
+                             title="Dark theme (Ctrl+W)"
                              ref="darkThemeCheckbox"
                              value="1"
                              unchecked-value="0"
                              plain
                              @input="toggleDarkTheme($event)">
                 dark
-            </b-form-checkbox>
-            <b-form-checkbox :checked="this.$store.state.Store.settings.windowOnTop"
-                             title="Window on top (Ctrl+W)"
-                             ref="windowOnTopCheckbox"
-                             value="1"
-                             unchecked-value="0"
-                             plain
-                             @input="toggleWindowOnTop($event)">
-                top
             </b-form-checkbox>
         </div>
     </div>
@@ -34,21 +25,13 @@
     computed: {
       keymap () {
         return {
-          'ctrl+shift+w': this.changeDarkTheme,
-          'ctrl+w': this.changeWindowOnTop
+          'ctrl+w': this.changeDarkTheme
         }
       }
     },
     methods: {
       trackUsage () {
         this.$store.dispatch('trackUsage')
-      },
-      toggleWindowOnTop (event) {
-        this.$store.dispatch('toggleWindowOnTop', parseInt(event))
-      },
-      changeWindowOnTop () {
-        let windowOnTopBool = !!this.$refs.windowOnTopCheckbox.checked
-        this.toggleWindowOnTop(+!windowOnTopBool)
       },
       toggleDarkTheme (event) {
         this.$store.dispatch('toggleDarkTheme', parseInt(event))

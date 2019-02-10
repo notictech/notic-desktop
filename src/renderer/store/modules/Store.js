@@ -47,7 +47,6 @@ const state = {
     historyMaxLength: 50,
     logoutAfter: 0,
     eraseClipboardAfter: 0,
-    windowOnTop: 0,
     darkTheme: 0,
     animationSpeed: 0
   },
@@ -136,7 +135,6 @@ const mutations = {
   setSettingsData: (state, data) => { state.settings = data },
   setDbPath: (state, data) => { state.settings.dbPath = data },
   setDarkTheme: (state, data) => { state.settings.darkTheme = data },
-  setWindowOnTop: (state, data) => { state.settings.windowOnTop = data },
   setIsLoggedIn: (state, data) => { state.isLoggedIn = data },
   setMasterPassword: (state, data) => { state.masterPassword = data },
   setExportedNotesPassword: (state, data) => { state.exportedNotesPassword = data },
@@ -358,13 +356,13 @@ const actions = {
       if (err) {
         this.commit('setMasterPassword', null)
         this.commit('setIsLoggedIn', false)
-        ipcRenderer.send('set-tray-icon-inactive')
+        ipcRenderer.send('set-icon-inactive')
         if (fs.existsSync(state.settings.dbPath)) {
           bus.$emit('enterMasterPassword')
         }
       } else {
         this.commit('setIsLoggedIn', true)
-        ipcRenderer.send('set-tray-icon-normal')
+        ipcRenderer.send('set-icon-normal')
       }
     })
     db.count({}, (err, count) => {
@@ -1306,9 +1304,9 @@ const actions = {
       }
     }
     if (!state.notificationsIsUnread) {
-      ipcRenderer.send('set-tray-icon-normal')
+      ipcRenderer.send('set-icon-normal')
     } else {
-      ipcRenderer.send('set-tray-icon-notif')
+      ipcRenderer.send('set-icon-notif')
     }
   },
   markNotificationRead (context, obj) {
@@ -1408,11 +1406,6 @@ const actions = {
     clipboard.writeText('')
     ipcRenderer.send('logout')
   },
-  toggleWindowOnTop (context, data) {
-    this.commit('setWindowOnTop', data)
-    require('electron').remote.getCurrentWindow().setAlwaysOnTop(!!data)
-    this.dispatch('saveSettingsFile', () => {})
-  },
   toggleDarkTheme (context, data) {
     this.commit('setDarkTheme', data)
     if (data) {
@@ -1421,9 +1414,6 @@ const actions = {
       $('body').removeClass('dark-theme')
     }
     this.dispatch('saveSettingsFile', () => {})
-  },
-  fixWindowOnTop (context) {
-    require('electron').remote.getCurrentWindow().setAlwaysOnTop(!!state.settings.windowOnTop)
   },
   selectNote (context, obj) {
     if (obj.value) {

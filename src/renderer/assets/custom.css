@@ -377,9 +377,11 @@ h4 {
 .btn-warning:hover {
     color: #4a5054;
 }
-.note-link .is-deleted {
+.btn-warning:hover {
     color: #4a5054;
-    margin: 1px;
+}
+.note-link {
+    background: #fff;
 }
 .note-link .is-secret {
     color: #17a2b8;
@@ -493,3 +495,7 @@ h4 {
     font-size: 12px;
 }
 
+.note-link .is-deleted {
+    color: #6c757d;
+    margin: 1px;
+}
